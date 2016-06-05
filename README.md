@@ -12,7 +12,7 @@ npm install ajv-keywords
 ## Usage
 
 ```javascript
-var Ajv = require("ajv');
+var Ajv = require('ajv');
 var defineKeywords = require('ajv-keywords');
 
 var ajv = new Ajv;

@@ -12,9 +12,8 @@ module.exports = defineKeywords;
  */
 function defineKeywords(ajv, keyword) {
   if (Array.isArray(keyword)) {
-    for (var i=0; i<keyword.length; i++) {
+    for (var i=0; i<keyword.length; i++)
       defineKeywords(ajv, keyword[i]);
-    }
     return;
   }
   ajv.addKeyword(keyword, get(keyword));
@@ -28,4 +27,4 @@ function get(keyword) {
   var def = KEYWORDS[keyword];
   if (!def) throw new Error('Unknown keyword ' + keyword);
   return def;
-};
+}

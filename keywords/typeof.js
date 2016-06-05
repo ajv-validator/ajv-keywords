@@ -9,6 +9,6 @@ module.exports = {
 
     return function (data) {
       return typeof data == schema;
-    }
+    };
   }
 };

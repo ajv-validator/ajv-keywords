@@ -22,7 +22,7 @@ module.exports = {
 
     return function (data) {
       return data instanceof Constructor;
-    }
+    };
   },
   CONSTRUCTORS: CONSTRUCTORS
 };

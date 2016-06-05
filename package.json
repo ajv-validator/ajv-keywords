@@ -4,7 +4,8 @@
   "description": "Custom JSON-Schema keywords for ajv validator",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test-cov",
+    "test": "npm run eslint && npm run test-cov",
+    "eslint": "eslint index.js keywords/*.js",
     "test-spec": "mocha spec/*.spec.js -R spec",
     "test-cov": "istanbul cover -x 'spec/**' node_modules/mocha/bin/_mocha -- spec/*.spec.js -R spec"
   },
@@ -26,6 +27,7 @@
   "devDependencies": {
     "ajv": "^4.1.2",
     "chai": "^3.5.0",
+    "eslint": "^2.11.1",
     "istanbul": "^0.4.3",
     "mocha": "^2.5.3"
   }
