@@ -1,0 +1,32 @@
+{
+  "name": "ajv-keywords",
+  "version": "0.1.0",
+  "description": "Custom JSON-Schema keywords for ajv validator",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test-cov",
+    "test-spec": "mocha spec/*.spec.js -R spec",
+    "test-cov": "istanbul cover -x 'spec/**' node_modules/mocha/bin/_mocha -- spec/*.spec.js -R spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epoberezkin/ajv-keywords.git"
+  },
+  "keywords": [
+    "JSON-Schema",
+    "ajv",
+    "keywords"
+  ],
+  "author": "Evgeny Poberezkin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/epoberezkin/ajv-keywords/issues"
+  },
+  "homepage": "https://github.com/epoberezkin/ajv-keywords#readme",
+  "devDependencies": {
+    "ajv": "^4.1.2",
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.5.3"
+  }
+}
