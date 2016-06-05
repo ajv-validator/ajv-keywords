@@ -27,6 +27,7 @@
   "devDependencies": {
     "ajv": "^4.1.2",
     "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
     "eslint": "^2.11.1",
     "istanbul": "^0.4.3",
     "mocha": "^2.5.3"
