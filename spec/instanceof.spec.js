@@ -42,7 +42,7 @@ describe('keyword "instanceof"', function() {
       function MyClass() {}
 
       should.throw(function() {
-        ajv.validate({ instanceof: 'MyClass' }, new MyClass);
+        ajv.compile({ instanceof: 'MyClass' });
       });
 
       definition.CONSTRUCTORS.MyClass = MyClass;
@@ -55,7 +55,7 @@ describe('keyword "instanceof"', function() {
       ajv.removeSchema();
 
       should.throw(function() {
-        ajv.validate({ instanceof: 'MyClass' }, new MyClass);
+        ajv.compile({ instanceof: 'MyClass' });
       });
 
       defineKeywords.get('instanceof').CONSTRUCTORS.MyClass = MyClass;

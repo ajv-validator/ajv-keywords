@@ -1,6 +1,6 @@
 # ajv-keywords
 
-Custom JSON-Schema keywords for ajv validator
+Custom JSON-Schema keywords for [ajv](https://github.com/epoberezkin/ajv) validator
 
 [![Build Status](https://travis-ci.org/epoberezkin/ajv-keywords.svg?branch=master)](https://travis-ci.org/epoberezkin/ajv-keywords)
 [![npm version](https://badge.fury.io/js/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)

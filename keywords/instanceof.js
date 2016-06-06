@@ -10,6 +10,7 @@ var CONSTRUCTORS = {
   RegExp: RegExp
 };
 
+/* istanbul ignore else */
 if (typeof Buffer != 'undefined')
   CONSTRUCTORS.Buffer = Buffer;
 

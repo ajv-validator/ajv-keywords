@@ -25,4 +25,12 @@ describe('keyword "typeof"', function() {
       ajv.validate({ typeof: 'symbol' }, {}) .should.equal(false);
     });
   });
+
+  ajvs.forEach(function (ajv, i) {
+    it('should throw when unknown type is passed #' + i, function() {
+      should.throw(function() {
+        ajv.compile({ typeof: 'unknownType' });
+      });
+    });
+  });
 });
