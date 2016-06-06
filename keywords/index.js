@@ -2,5 +2,6 @@
 
 module.exports = {
   'typeof': require('./typeof'),
-  'instanceof': require('./instanceof')
+  'instanceof': require('./instanceof'),
+  'range': require('./range')
 };

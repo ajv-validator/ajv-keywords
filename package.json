@@ -30,6 +30,7 @@
     "coveralls": "^2.11.9",
     "eslint": "^2.11.1",
     "istanbul": "^0.4.3",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "pre-commit": "^1.1.3"
   }
 }

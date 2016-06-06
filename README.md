@@ -75,6 +75,31 @@ ajv.validate({ instanceof: 'MyClass' }, new MyClass); // true
 ```
 
 
+## `range` and `exclusiveRange`
+
+Syntax sugar for the combination of minimum and maximum keywords, also fails schema compilation if there are no numbers in the range.
+
+The value of this keyword must be the array consisting of two numbers, the second must be greater or equal than the first one.
+
+If the validated value is not a number the validation passes, otherwise to pas validation the value should be greater (or equal) than the first number and smaller (or equal) than the second number in the array. If `exclusiveRange` keyword is present in the same schema and its value is true, the validated value must not be equal to the range boundaries.
+
+```javascript
+var schema = { range: [1, 3] };
+ajv.validate(schema, 1); // true
+ajv.validate(schema, 2); // true
+ajv.validate(schema, 3); // true
+ajv.validate(schema, 0.99); // false
+ajv.validate(schema, 3.01); // false
+
+var schema = { range: [1, 3], exclusiveRange: true };
+ajv.validate(schema, 1.01); // true
+ajv.validate(schema, 2); // true
+ajv.validate(schema, 2.99); // true
+ajv.validate(schema, 1); // false
+ajv.validate(schema, 3); // false
+```
+
+
 ## License
 
 [MIT](https://github.com/JSONScript/ajv-keywords/blob/master/LICENSE)
