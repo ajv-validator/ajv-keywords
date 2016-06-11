@@ -4,11 +4,22 @@ var KNOWN_TYPES = ['undefined', 'string', 'number', 'object', 'function', 'boole
 
 module.exports = {
   compile: function (schema) {
-    if (typeof schema != 'string' || KNOWN_TYPES.indexOf(schema) == -1)
-      throw new Error('invalid "typeof" keyword value');
+    if (typeof schema == 'string') {
+      checkType(schema);
+      return function (data) {
+        return typeof data == schema;
+      };
+    } else if (Array.isArray(schema)) {
+      schema.forEach(checkType);
+      return function(data) {
+        return schema.indexOf(typeof data) >= 0;
+      };
+    }
+    throw new Error('invalid "typeof" keyword value');
 
-    return function (data) {
-      return typeof data == schema;
-    };
+    function checkType(t) {
+      if (KNOWN_TYPES.indexOf(t) == -1)
+        throw new Error('invalid "typeof" keyword value');
+    }
   }
 };

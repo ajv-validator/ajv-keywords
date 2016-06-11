@@ -42,13 +42,14 @@ ajv.addKeyword('instanceof', instanceofDefinition);
 
 Based on JavaScript `typeof` operation.
 
-The value of the keyword should be a string: `"undefined"`, `"string"`, `"number"`, `"object"`, `"function"`, `"boolean"` or `"symbol"`.
+The value of the keyword should be a string (`"undefined"`, `"string"`, `"number"`, `"object"`, `"function"`, `"boolean"` or `"symbol"`) or array of strings.
 
-To pass validation the result of `typeof` operation on the value should be equal to the string.
+To pass validation the result of `typeof` operation on the value should be equal to the string (or one of the strings in the array).
 
 ```
 ajv.validate({ typeof: 'undefined' }, undefined); // true
 ajv.validate({ typeof: 'undefined' }, null); // false
+ajv.validate({ typeof: ['undefined', 'object'] }, null); // true
 ```
 
 
