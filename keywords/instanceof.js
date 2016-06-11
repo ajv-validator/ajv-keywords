@@ -17,13 +17,27 @@ if (typeof Buffer != 'undefined')
 
 module.exports = {
   compile: function (schema) {
-    var Constructor = CONSTRUCTORS[schema];
-    if (typeof schema != 'string' || !Constructor)
-      throw new Error('invalid "typeof" keyword value');
-
-    return function (data) {
-      return data instanceof Constructor;
-    };
+    if (typeof schema == 'string') {
+      var Constructor = getConstructor(schema);
+      return function (data) {
+        return data instanceof Constructor;
+      };
+    } else if (Array.isArray(schema)) {
+      var constructors = schema.map(getConstructor);
+      return function (data) {
+        for (var i=0; i<constructors.length; i++)
+          if (data instanceof constructors[i]) return true;
+        return false;
+      };
+    }
+    throw new Error('invalid "instanceof" keyword value');
   },
   CONSTRUCTORS: CONSTRUCTORS
 };
+
+
+function getConstructor(c) {
+  var Constructor = CONSTRUCTORS[c];
+  if (Constructor) return Constructor;
+  throw new Error('invalid "instanceof" keyword value');
+}

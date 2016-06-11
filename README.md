@@ -57,13 +57,14 @@ ajv.validate({ typeof: ['undefined', 'object'] }, null); // true
 
 Based on JavaScript `typeof` operation.
 
-The value of the keyword should be a string: `"Object"`, `"Array"`, `"Function"`, `"Number"`, `"String"`, `"Date"`, `"RegExp"` or `"Buffer"`.
+The value of the keyword should be a string (`"Object"`, `"Array"`, `"Function"`, `"Number"`, `"String"`, `"Date"`, `"RegExp"` or `"Buffer"`) or array of strings.
 
 To pass validation the result of `data instanceof ...` operation on the value should be true:
 
 ```
 ajv.validate({ instanceof: 'Array' }, []); // true
 ajv.validate({ instanceof: 'Array' }, {}); // false
+ajv.validate({ instanceof: ['Array', 'Function'] }, funciton(){}); // true
 ```
 
 You can add your own constructor function to be recognised by this keyword:

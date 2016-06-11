@@ -35,9 +35,13 @@ describe('keyword "instanceof"', function() {
       ajv.validate({ instanceof: 'Buffer' }, 'foo') .should.equal(false);
       ajv.validate({ instanceof: 'Buffer' }, {}) .should.equal(false);
     });
-  });
 
-  ajvs.forEach(function (ajv, i) {
+    it('should validate multiple classes #' + i, function() {
+      ajv.validate({ instanceof: ['Array', 'Function'] }, []) .should.equal(true);
+      ajv.validate({ instanceof: ['Array', 'Function'] }, function(){}) .should.equal(true);
+      ajv.validate({ instanceof: ['Array', 'Function'] }, {}) .should.equal(false);
+    });
+
     it('should allow adding classes #' + i, function() {
       function MyClass() {}
 
@@ -66,6 +70,12 @@ describe('keyword "instanceof"', function() {
 
       delete definition.CONSTRUCTORS.MyClass;
       ajv.removeSchema();
+    });
+
+    it('should throw when not string or array is passed #' + i, function() {
+      should.throw(function() {
+        ajv.compile({ instanceof: 1 });
+      });
     });
   });
 });
