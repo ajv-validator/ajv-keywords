@@ -16,10 +16,10 @@ module.exports = {
       };
     }
     throw new Error('invalid "typeof" keyword value');
-
-    function checkType(t) {
-      if (KNOWN_TYPES.indexOf(t) == -1)
-        throw new Error('invalid "typeof" keyword value');
-    }
   }
 };
+
+function checkType(t) {
+  if (KNOWN_TYPES.indexOf(t) == -1)
+    throw new Error('invalid "typeof" keyword value');
+}
