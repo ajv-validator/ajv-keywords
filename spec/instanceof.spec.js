@@ -1,15 +1,16 @@
 'use strict';
 
 var Ajv = require('ajv');
-var definition = require('../keywords/instanceof');
+var defFunc = require('../keywords/instanceof');
 var defineKeywords = require('..');
 var should = require('chai').should();
 
 
 describe('keyword "instanceof"', function() {
-  var ajvs = [ new Ajv, new Ajv ];
-  ajvs[0].addKeyword('instanceof', definition);
+  var ajvs = [ new Ajv, new Ajv, new Ajv ];
+  defFunc(ajvs[0]);
   defineKeywords(ajvs[1], 'instanceof');
+  defineKeywords(ajvs[2]);
 
   ajvs.forEach(function (ajv, i) {
     it('should validate classes #' + i, function() {
@@ -49,26 +50,26 @@ describe('keyword "instanceof"', function() {
         ajv.compile({ instanceof: 'MyClass' });
       });
 
-      definition.CONSTRUCTORS.MyClass = MyClass;
+      defFunc.definition.CONSTRUCTORS.MyClass = MyClass;
 
       ajv.validate({ instanceof: 'MyClass' }, new MyClass) .should.equal(true);
       ajv.validate({ instanceof: 'Object' }, new MyClass) .should.equal(true);
       ajv.validate({ instanceof: 'MyClass' }, {}) .should.equal(false);
 
-      delete definition.CONSTRUCTORS.MyClass;
+      delete defFunc.definition.CONSTRUCTORS.MyClass;
       ajv.removeSchema();
 
       should.throw(function() {
         ajv.compile({ instanceof: 'MyClass' });
       });
 
-      defineKeywords.get('instanceof').CONSTRUCTORS.MyClass = MyClass;
+      defineKeywords.get('instanceof').definition.CONSTRUCTORS.MyClass = MyClass;
 
       ajv.validate({ instanceof: 'MyClass' }, new MyClass) .should.equal(true);
       ajv.validate({ instanceof: 'Object' }, new MyClass) .should.equal(true);
       ajv.validate({ instanceof: 'MyClass' }, {}) .should.equal(false);
 
-      delete definition.CONSTRUCTORS.MyClass;
+      delete defFunc.definition.CONSTRUCTORS.MyClass;
       ajv.removeSchema();
     });
 

@@ -1,8 +1,10 @@
 'use strict';
 
+module.exports = defFunc;
+
 var KNOWN_TYPES = ['undefined', 'string', 'number', 'object', 'function', 'boolean', 'symbol'];
 
-module.exports = {
+var definition = defFunc.definition = {
   compile: function (schema) {
     return typeof schema == 'string' ? singleType : multipleTypes;
 
@@ -30,3 +32,7 @@ module.exports = {
     ]
   }
 };
+
+function defFunc(ajv) {
+  ajv.addKeyword('typeof', definition);
+}

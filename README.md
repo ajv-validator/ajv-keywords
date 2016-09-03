@@ -16,24 +16,33 @@ npm install ajv-keywords
 
 ## Usage
 
+To add all available keywords:
+
 ```javascript
 var Ajv = require('ajv');
-var defineKeywords = require('ajv-keywords');
-
 var ajv = new Ajv;
-defineKeywords(ajv, 'instanceof');
+require('ajv-keywords')(ajv);
 
 ajv.validate({ instanceof: 'RegExp' }, /.*/); // true
 ajv.validate({ instanceof: 'RegExp' }, '.*'); // false
 ```
 
-or if using in browser (to avoid adding unused code):
+To add a single keyword:
 
 ```javascript
-var Ajv = require('ajv');
-var ajv = new Ajv;
-var instanceofDefinition = require('ajv-keywords/keywords/instanceof')
-ajv.addKeyword('instanceof', instanceofDefinition);
+require('ajv-keywords')(ajv, 'instanceof');
+```
+
+To add multiple keywords:
+
+```javascript
+require('ajv-keywords')(ajv, ['typeof', instanceof']);
+```
+
+To add a single keyword in browser (to avoid adding unused code):
+
+```javascript
+require('ajv-keywords/keywords/instanceof')(ajv);
 ```
 
 
@@ -72,6 +81,8 @@ You can add your own constructor function to be recognised by this keyword:
 
 ```javascript
 function MyClass() {}
+var instanceofDefinition = require('ajv-keywords').get('instanceof').definition;
+// or require('ajv-keywords/keywords/instanceof').definition;
 instanceofDefinition.CONSTRUCTORS.MyClass = MyClass;
 
 ajv.validate({ instanceof: 'MyClass' }, new MyClass); // true

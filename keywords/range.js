@@ -1,6 +1,8 @@
 'use strict';
 
-module.exports = {
+module.exports = defFunc;
+
+var definition = defFunc.definition = {
   type: 'number',
   macro: function (schema, parentSchema) {
     var min = schema[0]
@@ -24,6 +26,10 @@ module.exports = {
   }
 };
 
+function defFunc(ajv) {
+  ajv.addKeyword('range', definition);
+  ajv.addKeyword('exclusiveRange');
+}
 
 function validateRangeSchema(min, max, exclusive) {
   if (exclusive !== undefined && typeof exclusive != 'boolean')

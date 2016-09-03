@@ -1,5 +1,7 @@
 'use strict';
 
+module.exports = defFunc;
+
 var CONSTRUCTORS = {
   Object: Object,
   Array: Array,
@@ -14,8 +16,7 @@ var CONSTRUCTORS = {
 if (typeof Buffer != 'undefined')
   CONSTRUCTORS.Buffer = Buffer;
 
-
-module.exports = {
+var definition = defFunc.definition = {
   compile: function (schema) {
     if (typeof schema == 'string') {
       var Constructor = getConstructor(schema);
@@ -43,6 +44,9 @@ module.exports = {
   }
 };
 
+function defFunc(ajv) {
+  ajv.addKeyword('instanceof', definition);
+}
 
 function getConstructor(c) {
   var Constructor = CONSTRUCTORS[c];

@@ -1,15 +1,16 @@
 'use strict';
 
 var Ajv = require('ajv');
-var definition = require('../keywords/range');
+var defFunc = require('../keywords/range');
 var defineKeywords = require('..');
 var should = require('chai').should();
 
 
 describe('keyword "range"', function() {
-  var ajvs = [ new Ajv, new Ajv ];
-  ajvs[0].addKeyword('range', definition);
+  var ajvs = [ new Ajv, new Ajv, new Ajv ];
+  defFunc(ajvs[0]);
   defineKeywords(ajvs[1], 'range');
+  defineKeywords(ajvs[2]);
 
   ajvs.forEach(function (ajv, i) {
     it('should validate that value is in range #' + i, function() {

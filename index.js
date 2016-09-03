@@ -8,23 +8,26 @@ module.exports = defineKeywords;
 /**
  * Defines one or several keywords in ajv instance
  * @param  {Ajv} ajv validator instance
- * @param  {String|Array<String>} keyword keyword(s) to define
+ * @param  {String|Array<String>|undefined} keyword keyword(s) to define
  */
 function defineKeywords(ajv, keyword) {
   if (Array.isArray(keyword)) {
     for (var i=0; i<keyword.length; i++)
-      ajv.addKeyword(keyword[i], get(keyword[i]));
+      get(keyword[i])(ajv);
     return;
   }
-  ajv.addKeyword(keyword, get(keyword));
+  if (keyword) {
+    get(keyword)(ajv);
+    return;
+  }
+  for (keyword in KEYWORDS) get(keyword)(ajv);
 }
 
 
 defineKeywords.get = get;
 
-
 function get(keyword) {
-  var def = KEYWORDS[keyword];
-  if (!def) throw new Error('Unknown keyword ' + keyword);
-  return def;
+  var defFunc = KEYWORDS[keyword];
+  if (!defFunc) throw new Error('Unknown keyword ' + keyword);
+  return defFunc;
 }

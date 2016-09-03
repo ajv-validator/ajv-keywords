@@ -20,5 +20,9 @@ describe('defineKeywords', function() {
     should.throw(function() {
       defineKeywords(ajv, 'unknownKeyword');
     });
+
+    should.throw(function() {
+      defineKeywords(ajv, ['typeof', 'unknownKeyword']);
+    });
   });
 });

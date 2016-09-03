@@ -1,15 +1,16 @@
 'use strict';
 
 var Ajv = require('ajv');
-var definition = require('../keywords/typeof');
+var defFunc = require('../keywords/typeof');
 var defineKeywords = require('..');
 var should = require('chai').should();
 
 
 describe('keyword "typeof"', function() {
-  var ajvs = [ new Ajv, new Ajv ];
-  ajvs[0].addKeyword('typeof', definition);
+  var ajvs = [ new Ajv, new Ajv, new Ajv ];
+  defFunc(ajvs[0]);
   defineKeywords(ajvs[1], 'typeof');
+  defineKeywords(ajvs[2]);
 
   ajvs.forEach(function (ajv, i) {
     it('should validate value types #' + i, function() {
