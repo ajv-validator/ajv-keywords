@@ -114,6 +114,35 @@ ajv.validate(schema, 3); // false
 ```
 
 
+### `propertyNames`
+
+This keyword allows to define the schema for the property names of the object. The value of this keyword should be a valid JSON schema (v5 schemas are supported with Ajv option `{v5: true}`).
+
+```javascript
+var schema = {
+  type: 'object'
+  propertyNames: {
+    anyOf: [
+      { format: ipv4 },
+      { format: hostname }
+    ]
+  }
+};
+
+var validData = {
+  '192.128.0.1': {},
+  'test.example.com': {}
+};
+
+var invalidData = {
+  '1.2.3': {}
+};
+
+ajv.validate(schema, validData); // true
+ajv.validate(schema, invalidData); // false
+```
+
+
 ## License
 
 [MIT](https://github.com/JSONScript/ajv-keywords/blob/master/LICENSE)
