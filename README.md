@@ -78,7 +78,7 @@ ajv.validate({ instanceof: 'MyClass' }, new MyClass); // true
 ```
 
 
-## `range` and `exclusiveRange`
+### `range` and `exclusiveRange`
 
 Syntax sugar for the combination of minimum and maximum keywords, also fails schema compilation if there are no numbers in the range.
 

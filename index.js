@@ -13,7 +13,7 @@ module.exports = defineKeywords;
 function defineKeywords(ajv, keyword) {
   if (Array.isArray(keyword)) {
     for (var i=0; i<keyword.length; i++)
-      defineKeywords(ajv, keyword[i]);
+      ajv.addKeyword(keyword[i], get(keyword[i]));
     return;
   }
   ajv.addKeyword(keyword, get(keyword));

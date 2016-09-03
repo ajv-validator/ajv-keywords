@@ -4,22 +4,29 @@ var KNOWN_TYPES = ['undefined', 'string', 'number', 'object', 'function', 'boole
 
 module.exports = {
   compile: function (schema) {
-    if (typeof schema == 'string') {
-      checkType(schema);
-      return function (data) {
-        return typeof data == schema;
-      };
-    } else if (Array.isArray(schema)) {
-      schema.forEach(checkType);
-      return function(data) {
-        return schema.indexOf(typeof data) >= 0;
-      };
+    return typeof schema == 'string' ? singleType : multipleTypes;
+
+    function singleType(data) {
+      return typeof data == schema;
     }
-    throw new Error('invalid "typeof" keyword value');
+
+    function multipleTypes(data) {
+      return schema.indexOf(typeof data) >= 0;
+    }
+  },
+  metaSchema: {
+    anyOf: [
+      {
+        type: 'string',
+        enum: KNOWN_TYPES
+      },
+      {
+        type: 'array',
+        items: {
+          type: 'string',
+          enum: KNOWN_TYPES
+        }
+      }
+    ]
   }
 };
-
-function checkType(t) {
-  if (KNOWN_TYPES.indexOf(t) == -1)
-    throw new Error('invalid "typeof" keyword value');
-}

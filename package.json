@@ -24,8 +24,11 @@
     "url": "https://github.com/epoberezkin/ajv-keywords/issues"
   },
   "homepage": "https://github.com/epoberezkin/ajv-keywords#readme",
+  "peerDependencies": {
+    "ajv": ">=4.2.0"
+  },
   "devDependencies": {
-    "ajv": "^4.1.2",
+    "ajv": "^4.6.1",
     "chai": "^3.5.0",
     "coveralls": "^2.11.9",
     "eslint": "^2.11.1",

@@ -7,25 +7,28 @@ module.exports = {
       , max = schema[1]
       , exclusive = parentSchema.exclusiveRange;
 
-    validateRangeSchema(schema, min, max, exclusive);
+    validateRangeSchema(min, max, exclusive);
 
     return {
-      minimum: schema[0],
+      minimum: min,
       exclusiveMinimum: exclusive,
-      maximum: schema[1],
+      maximum: max,
       exclusiveMaximum: exclusive
     };
+  },
+  metaSchema: {
+    type: 'array',
+    minItems: 2,
+    maxItems: 2,
+    items: { type: 'number' }
   }
 };
 
 
-function validateRangeSchema(schema, min, max, exclusive) {
-  if (!Array.isArray(schema) || schema.length != 2 || typeof min != 'number' || typeof max != 'number')
-    throw new Error('Invalid schema for range keyword, should be array of 2 numbers');
-
+function validateRangeSchema(min, max, exclusive) {
   if (exclusive !== undefined && typeof exclusive != 'boolean')
-    throw new Error('Invalid schema for exclusiveRange keyword, should be bolean');
+    throw new Error('Invalid schema for exclusiveRange keyword, should be boolean');
 
-  if (schema[0] > schema[1] || (exclusive && schema[0] == schema[1]))
+  if (min > max || (exclusive && min == max))
     throw new Error('There are no numbers in range');
 }

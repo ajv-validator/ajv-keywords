@@ -22,17 +22,25 @@ module.exports = {
       return function (data) {
         return data instanceof Constructor;
       };
-    } else if (Array.isArray(schema)) {
-      var constructors = schema.map(getConstructor);
-      return function (data) {
-        for (var i=0; i<constructors.length; i++)
-          if (data instanceof constructors[i]) return true;
-        return false;
-      };
     }
-    throw new Error('invalid "instanceof" keyword value');
+
+    var constructors = schema.map(getConstructor);
+    return function (data) {
+      for (var i=0; i<constructors.length; i++)
+        if (data instanceof constructors[i]) return true;
+      return false;
+    };
   },
-  CONSTRUCTORS: CONSTRUCTORS
+  CONSTRUCTORS: CONSTRUCTORS,
+  metaSchema: {
+    anyOf: [
+      { type: 'string' },
+      {
+        type: 'array',
+        items: { type: 'string' }
+      }
+    ]
+  }
 };
 
 
