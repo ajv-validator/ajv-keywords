@@ -36,7 +36,7 @@ require('ajv-keywords')(ajv, 'instanceof');
 To add multiple keywords:
 
 ```javascript
-require('ajv-keywords')(ajv, ['typeof', instanceof']);
+require('ajv-keywords')(ajv, ['typeof', 'instanceof']);
 ```
 
 To add a single keyword in browser (to avoid adding unused code):
