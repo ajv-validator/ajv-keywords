@@ -34,10 +34,10 @@ describe('keyword "propertyNames"', function() {
   ajvs.forEach(function (ajv, i) {
     it('should throw when propertyNames schema is invalid #' + i, function() {
       [
-        { type: 1 },
-        [],
-        1,
-        'foo'
+        { propertyNames: { type: 1 } },
+        { propertyNames: [] },
+        { propertyNames: 1 },
+        { propertyNames: 'foo' }
       ].forEach(function (schema) {
         should.throw(function() {
           ajv.compile(schema);
