@@ -143,6 +143,31 @@ ajv.validate(schema, invalidData); // false
 ```
 
 
+### `regexp`
+
+This keyword allows to use regular expressions with flags in schemas (the standard `pattern` keyword does not support flags). The value of this keyword can be either a string (the result of `regexp.toString()`) or an object with the properties `pattern` and `flags` (the same strings that should be passed to RegExp constructor).
+
+```javascript
+var schema = {
+  type: 'object',
+  properties: {
+    foo: { regexp: '/foo/i' },
+    bar: { regexp: { pattern: 'bar', flags: 'i' } }
+  }
+};
+
+var validData = {
+  foo: 'Food',
+  bar: 'Barmen'
+};
+
+var invalidData = {
+  foo: 'fog',
+  bar: 'bad'
+};
+```
+
+
 ## License
 
 [MIT](https://github.com/JSONScript/ajv-keywords/blob/master/LICENSE)
