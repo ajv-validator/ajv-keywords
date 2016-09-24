@@ -3,12 +3,8 @@
 module.exports = function (ajv) {
   ajv.addKeyword('regexp', {
     type: 'string',
-    compile: function (schema) {
-      var regexp = getRegExp();
-
-      return function (data) {
-        return regexp.test(data);
-      };
+    inline: function (it, keyword, schema) {
+      return getRegExp() + '.test(data' + (it.dataLevel || '') + ')';
 
       function getRegExp() {
         try {

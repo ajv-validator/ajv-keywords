@@ -1,16 +1,18 @@
 'use strict';
 
 var Ajv = require('ajv');
+var ajvPack = require('ajv-pack');
 var defFunc = require('../keywords/regexp');
 var defineKeywords = require('..');
 var should = require('chai').should();
 
 
 describe('keyword "regexp"', function() {
-  var ajvs = [ new Ajv, new Ajv({allErrors: true}), new Ajv({v5: true}) ];
+  var ajvs = [ new Ajv, new Ajv({allErrors: true}), new Ajv, ajvPack.instance(new Ajv({sourceCode: true})) ];
   defFunc(ajvs[0]);
   defineKeywords(ajvs[1], 'regexp');
   defineKeywords(ajvs[2]);
+  defFunc(ajvs[3]);
 
   ajvs.forEach(function (ajv, i) {
     it('should validate that values match regular expressions with flags #' + i, function() {
