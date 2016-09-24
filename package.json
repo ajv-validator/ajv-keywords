@@ -1,6 +1,6 @@
 {
   "name": "ajv-keywords",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Custom JSON-Schema keywords for ajv validator",
   "main": "index.js",
   "scripts": {
@@ -28,7 +28,8 @@
     "ajv": ">=4.2.0"
   },
   "devDependencies": {
-    "ajv": "^4.6.1",
+    "ajv": "^4.7.4",
+    "ajv-pack": "^0.2.0",
     "chai": "^3.5.0",
     "coveralls": "^2.11.9",
     "eslint": "^2.11.1",

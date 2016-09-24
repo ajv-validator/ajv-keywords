@@ -5,16 +5,11 @@ module.exports = defFunc;
 var KNOWN_TYPES = ['undefined', 'string', 'number', 'object', 'function', 'boolean', 'symbol'];
 
 var definition = defFunc.definition = {
-  compile: function (schema) {
-    return typeof schema == 'string' ? singleType : multipleTypes;
-
-    function singleType(data) {
-      return typeof data == schema;
-    }
-
-    function multipleTypes(data) {
-      return schema.indexOf(typeof data) >= 0;
-    }
+  inline: function (it, keyword, schema) {
+    var data = 'data' + (it.dataLevel || '');
+    if (typeof schema == 'string') return 'typeof ' + data + ' == "' + schema + '"';
+    schema = 'validate.schema' + it.schemaPath + '.' + keyword;
+    return schema + '.indexOf(typeof ' + data + ') >= 0';
   },
   metaSchema: {
     anyOf: [
