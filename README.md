@@ -7,6 +7,20 @@ Custom JSON-Schema keywords for [ajv](https://github.com/epoberezkin/ajv) valida
 [![Coverage Status](https://coveralls.io/repos/github/epoberezkin/ajv-keywords/badge.svg?branch=master)](https://coveralls.io/github/epoberezkin/ajv-keywords?branch=master)
 
 
+## Contents
+
+- [Install](#install)
+- [Usage](#usage)
+- [Keywords](#keywords)
+  - [typeof](#typeof)
+  - [instanceof](#instanceof)
+  - [range and exclusiveRange](#range-and-exclusiverange)
+  - [propertyNames](#propertynames)
+  - [regexp](#regexp)
+  - [dynamicDefaults](#dynamicdefaults)
+- [License](#license)
+
+
 ## Install
 
 ```
@@ -164,6 +178,117 @@ var validData = {
 var invalidData = {
   foo: 'fog',
   bar: 'bad'
+};
+```
+
+
+### `dynamicDefaults`
+
+This keyword allows to assign dynamic defaults to properties, such as timestamps, unique IDs etc.
+
+This keyword only works if `useDefaults` options is used and not inside `anyOf` keywrods etc., in the same way as [default keyword treated by Ajv](https://github.com/epoberezkin/ajv#assigning-defaults).
+
+The keyword should be added on the object level. Its value should be an object with each property corresponding to a property name, in the same way as in standard `properties` keyword. The value of each property can be:
+
+- an identifier of default function (a string)
+- an object with properties `func` (an identifier) and `args` (an object with parameters that will be passed to this function during schema compilation - see examples).
+
+The properties used in `dynamicDefaults` should not be added to `required` keyword (or validation will fail), because unlike `default` this keyword is processed after validation.
+
+There are several predefined dynamic default functions:
+
+- `"timestamp"` - current timestamp in milliseconds
+- `"datetime"' - current date and time as string (ISO, valid according to `date-time` format)
+- `"date"' - current date as string (ISO, valid according to `date` format)
+- `"time"` - current time as string (ISO, valid according to `time` format)
+- `"random"` - pseudo-random number in [0, 1) interval
+- `"randomint"` - pseudo-random integer number. If string is used as a property value, the function will randomly return 0 or 1. If object `{func: 'randomint', max: N}` is used then the default will be an integer number in [0, N) interval.
+- `"seq"` - sequential integer number starting from 0. If string is used as a property value, the default sequence will be used. If object `{func: 'seq', name: 'foo'}` is used then the sequence with name `"foo"` will be used. Sequences are global, even if different ajv instances are used.
+
+```javascript
+var schema = {
+  type: 'object',
+  dynamicDefaults: {
+    ts: 'datetime',
+    r: { func: 'randomint', max: 100 },
+    id: { func: 'seq', name: 'id' }
+  },
+  properties: {
+    ts: {
+      type: 'string',
+      format: 'datetime'
+    },
+    r: {
+      type: 'integer',
+      minimum: 0,
+      maximum: 100,
+      exclusiveMaximum: true
+    },
+    id: {
+      type: 'integer',
+      minimum: 0
+    }
+  }
+};
+
+var data = {};
+ajv.validate(data); // true
+data; // { ts: '2016-12-01T22:07:28.829Z', r: 25, id: 0 }
+
+var data1 = {};
+ajv.validate(data1); // true
+data1; // { ts: '2016-12-01T22:07:29.832Z', r: 68, id: 1 }
+
+ajv.validate(data1); // true
+data1; // didn't change, as all properties were defined
+```
+
+You can add your own dynamic default function to be recognised by this keyword:
+
+```javascript
+var uuid = require('uuid');
+
+function uuidV4() { return uuid.v4(); }
+
+var definition = require('ajv-keywords').get('dynamicDefaults').definition;
+// or require('ajv-keywords/keywords/dynamicDefaults').definition;
+definition.DEFAULTS.uuid = uuidV4;
+
+var schema = {
+  dynamicDefaults: { id: 'uuid' },
+  properties: { id: { type: 'string', format: 'uuid' } }
+};
+
+var data = {};
+ajv.validate(schema, data); // true
+data; // { id: 'a1183fbe-697b-4030-9bcc-cfeb282a9150' };
+
+var data1 = {};
+ajv.validate(schema, data1); // true
+data1; // { id: '5b008de7-1669-467a-a5c6-70fa244d7209' }
+```
+
+You also can define dynamic default that accepts parameters, e.g. version of uuid:
+
+```javascript
+var uuid = require('uuid');
+
+function getUuid(args) {
+  var version = 'v' + (arvs && args.v || 4);
+  return function() {
+    return uuid[version]();
+  };
+}
+
+var definition = require('ajv-keywords').get('dynamicDefaults').definition;
+definition.DEFAULTS.uuid = getUuid;
+
+var schema = {
+  dynamicDefaults: {
+    id1: 'uuid', // v4
+    id2: { func: 'uuid', v: 4 }, // v4
+    id3: { func: 'uuid', v: 1 } // v1
+  }
 };
 ```
 
