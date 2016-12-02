@@ -198,8 +198,8 @@ The properties used in `dynamicDefaults` should not be added to `required` keywo
 There are several predefined dynamic default functions:
 
 - `"timestamp"` - current timestamp in milliseconds
-- `"datetime"' - current date and time as string (ISO, valid according to `date-time` format)
-- `"date"' - current date as string (ISO, valid according to `date` format)
+- `"datetime"` - current date and time as string (ISO, valid according to `date-time` format)
+- `"date"` - current date as string (ISO, valid according to `date` format)
 - `"time"` - current time as string (ISO, valid according to `time` format)
 - `"random"` - pseudo-random number in [0, 1) interval
 - `"randomint"` - pseudo-random integer number. If string is used as a property value, the function will randomly return 0 or 1. If object `{func: 'randomint', max: N}` is used then the default will be an integer number in [0, N) interval.
