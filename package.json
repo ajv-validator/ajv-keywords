@@ -18,6 +18,10 @@
     "ajv",
     "keywords"
   ],
+  "files": [
+    "index.js",
+    "keywords"
+  ],
   "author": "Evgeny Poberezkin",
   "license": "MIT",
   "bugs": {
