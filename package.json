@@ -4,6 +4,8 @@
   "description": "Custom JSON-Schema keywords for ajv validator",
   "main": "index.js",
   "scripts": {
+    "build": "node node_modules/ajv/scripts/compile-dots.js node_modules/ajv/lib keywords",
+    "prepublish": "npm run build",
     "test": "npm run eslint && npm run test-cov",
     "eslint": "eslint index.js keywords/*.js",
     "test-spec": "mocha spec/*.spec.js -R spec",
