@@ -58,6 +58,7 @@ module.exports = function defFunc(ajv) {
   };
 
   ajv.addKeyword('dynamicDefaults', defFunc.definition);
+  return ajv;
 
   function getDefault(d) {
     var def = DEFAULTS[d];

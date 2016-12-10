@@ -7,6 +7,8 @@ module.exports = function defFunc(ajv) {
   defFunc.definition = {
     type: 'object',
     inline: require('./dotjs/patternRequired'),
+    statements: true,
+    errors: 'full',
     metaSchema: {
       type: 'array',
       items: {
@@ -18,4 +20,5 @@ module.exports = function defFunc(ajv) {
   };
 
   ajv.addKeyword('patternRequired', defFunc.definition);
+  return ajv;
 };

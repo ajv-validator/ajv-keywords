@@ -27,6 +27,7 @@ module.exports = function defFunc(ajv) {
 
   ajv.addKeyword('range', defFunc.definition);
   ajv.addKeyword('exclusiveRange');
+  return ajv;
 
   function validateRangeSchema(min, max, exclusive) {
     if (exclusive !== undefined && typeof exclusive != 'boolean')

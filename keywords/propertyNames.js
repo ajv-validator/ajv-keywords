@@ -47,4 +47,5 @@ module.exports = function defFunc(ajv) {
   };
 
   ajv.addKeyword('propertyNames', defFunc.definition);
+  return ajv;
 };

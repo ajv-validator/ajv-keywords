@@ -1,6 +1,7 @@
 'use strict';
 
-module.exports = function (keyword) {
+module.exports = function (minMax) {
+  var keyword = 'format' + minMax;
   return function defFunc(ajv) {
     if (ajv.RULES.keywords[keyword])
       return console.warn('Keyword', keyword, 'is already defined');
@@ -8,6 +9,8 @@ module.exports = function (keyword) {
     defFunc.definition = {
       type: 'string',
       inline: require('./dotjs/_formatLimit'),
+      statements: true,
+      errors: 'full',
       metaSchema: {
         anyOf: [
           { type: 'string' },
@@ -30,5 +33,7 @@ module.exports = function (keyword) {
     };
 
     ajv.addKeyword(keyword, defFunc.definition);
+    ajv.addKeyword('formatExclusive' + minMax);
+    return ajv;
   };
 };

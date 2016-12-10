@@ -28,4 +28,5 @@ module.exports = function defFunc(ajv) {
   };
 
   ajv.addKeyword('typeof', defFunc.definition);
+  return ajv;
 };

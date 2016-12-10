@@ -32,4 +32,5 @@ module.exports = function defFunc(ajv) {
   };
 
   ajv.addKeyword('regexp', defFunc.definition);
+  return ajv;
 };

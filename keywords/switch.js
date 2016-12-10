@@ -10,6 +10,8 @@ module.exports = function defFunc(ajv) {
 
   defFunc.definition = {
     inline: require('./dotjs/switch'),
+    statements: true,
+    errors: 'full',
     metaSchema: {
       type: 'array',
       items: {
@@ -33,4 +35,5 @@ module.exports = function defFunc(ajv) {
   };
 
   ajv.addKeyword('switch', defFunc.definition);
+  return ajv;
 };
