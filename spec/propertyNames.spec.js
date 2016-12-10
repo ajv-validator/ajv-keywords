@@ -7,10 +7,11 @@ var should = require('chai').should();
 
 
 describe('keyword "propertyNames"', function() {
-  var ajvs = [ new Ajv, new Ajv({allErrors: true}), new Ajv({v5: true}) ];
-  defFunc(ajvs[0]);
-  defineKeywords(ajvs[1], 'propertyNames');
-  defineKeywords(ajvs[2]);
+  var ajvs = [
+    defFunc(new Ajv),
+    defineKeywords(new Ajv({allErrors: true}), 'propertyNames'),
+    defineKeywords(new Ajv({v5: true}))
+  ];
 
   ajvs.forEach(function (ajv, i) {
     it('should validate that all property names are valid #' + i, function() {
