@@ -7,7 +7,8 @@ var defineKeywords = require('..');
 var ajvs = [
   defineKeywords(getAjv(),
     ['switch', 'patternRequired', 'formatMinimum', 'formatMaximum']),
-  defineKeywords(getAjv())
+  defineKeywords(getAjv()),
+  defineKeywords(getAjv(true))
 ];
 
 
@@ -23,6 +24,11 @@ jsonSchemaTest(ajvs, {
 });
 
 
-function getAjv() {
-  return new Ajv({ v5: true, unknownFormats: ['allowedUnknown'] });
+function getAjv(extras) {
+  return new Ajv({
+    v5: true,
+    allErrors: extras,
+    verbose: extras,
+    unknownFormats: ['allowedUnknown']
+  });
 }

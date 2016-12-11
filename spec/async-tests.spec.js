@@ -6,7 +6,8 @@ var defineKeywords = require('..');
 
 var ajvs = [
   defineKeywords(getAjv(), 'switch'),
-  defineKeywords(getAjv())
+  defineKeywords(getAjv()),
+  defineKeywords(getAjv(true))
 ];
 
 
@@ -23,8 +24,8 @@ jsonSchemaTest(ajvs, {
 });
 
 
-function getAjv() {
-  var ajv = new Ajv;
+function getAjv(extras) {
+  var ajv = new Ajv({ allErrors: extras, verbose: extras });
   ajv.addKeyword('idExists', {
     async: true,
     type: 'number',
