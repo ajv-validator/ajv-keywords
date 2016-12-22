@@ -16,6 +16,7 @@ Custom JSON-Schema keywords for [ajv](https://github.com/epoberezkin/ajv) valida
   - [instanceof](#instanceof)
   - [range and exclusiveRange](#range-and-exclusiverange)
   - [propertyNames](#propertynames)
+  - [if/then/else](#if-then-else)
   - [regexp](#regexp)
   - [dynamicDefaults](#dynamicdefaults)
 - [License](#license)
@@ -155,6 +156,34 @@ var invalidData = {
 ajv.validate(schema, validData); // true
 ajv.validate(schema, invalidData); // false
 ```
+
+__ Please note__: This keyword will be added to the next version of the JSON-Schema standard (draft-6), after it is published the keyword will be included in Ajv as standard validation keyword.
+
+
+### `if`/`then`/`else`
+
+These keywords allow to implement conditional validation. Their values should be valid JSON-schemas. At the moment it requires using Ajv with v5 option.
+
+If the data is valid according to the sub-schema in `if` keyword, then the result is equal to the result of data validation against the sub-schema in `then` keyword, otherwise - in `else` keyword (if `else` is absent, the validation succeeds).
+
+```javascript
+var schema = {
+  type: 'array',
+  items: {
+    type: 'integer',
+    minimum: 1,
+    if: { maximum: 10 },
+    then: { multipleOf: 2 },
+    else: { multipleOf: 5 }
+  }
+};
+
+var validItems = [ 2, 4, 6, 8, 10, 15, 20, 25 ]; // etc.
+
+var invalidItems = [ 1, 3, 5, 11, 12 ]; // etc.
+```
+
+This keyword is [proposed](https://github.com/json-schema-org/json-schema-spec/issues/180) for the future version of JSON-Schema standard.
 
 
 ### `regexp`

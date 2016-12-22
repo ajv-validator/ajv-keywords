@@ -6,7 +6,7 @@ module.exports = function defFunc(ajv) {
   defFunc.definition = {
     macro: function (schema, parentSchema) {
       if (parentSchema.then === undefined)
-        throw new Error('keyword then is absent');
+        throw new Error('keyword "then" is absent');
       var cases = [ { 'if': schema, 'then': parentSchema.then } ];
       if (parentSchema.else !== undefined)
         cases[1] = { 'then': parentSchema.else };
