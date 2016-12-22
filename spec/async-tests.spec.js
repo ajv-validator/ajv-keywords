@@ -5,13 +5,14 @@ var jsonSchemaTest = require('json-schema-test');
 var defineKeywords = require('..');
 
 var ajvs = [
-  defineKeywords(getAjv(), 'switch'),
+  // defineKeywords(getAjv(), 'switch'),
   defineKeywords(getAjv()),
   defineKeywords(getAjv(true))
 ];
 
 
 jsonSchemaTest(ajvs, {
+  skip: true,
   description: 'keywords "switch" with async schemas',
   suites: {
     'tests': './async-tests/{**/,}*.json'
