@@ -47,46 +47,128 @@
     "description": "deepRequired keyword with items",
     "schema": {
       "type": "object",
-      "deepRequired": [ "/foo/1/bar", "/foo/2/baz", "/quux/3" ]
+      "properties": {
+        "inside": {
+          "type": "object",
+          "deepRequired": [ "/foo/1/bar", "/foo/2/baz", "/quux/3" ]
+        }
+      }
     },
     "tests": [
       {
         "description": "object with all required properties/items is valid",
         "data": {
-          "foo": [
-            {},
-            { "bar": 1 },
-            { "baz": 2 }
-          ],
-          "quux": [ 0, 1, 2, 3 ]
+          "inside": {
+            "foo": [
+              {},
+              { "bar": 1 },
+              { "baz": 2 }
+            ],
+            "quux": [ 0, 1, 2, 3 ]
+          }
         },
         "valid": true
       },
       {
         "description": "object without any required properties is invalid",
         "data": {
-          "foo": [{}, {}, {}],
-          "quux": [0, 1, 2]
+          "inside": {
+            "foo": [{}, {}, {}],
+            "quux": [0, 1, 2]
+          }
         },
         "valid": false
       },
       {
         "description": "object with one required property is invalid",
         "data": {
-          "quux": [ 0, 1, 2, 3 ]
+          "inside": {
+            "quux": [ 0, 1, 2, 3 ]
+          }
         },
         "valid": false
       },
       {
         "description": "object with one required sub-property is invalid",
         "data": {
-          "foo": [
-            {},
-            { "bar": 1 },
-            {}
-          ],
-          "quux": [ 0, 1, 2, 3 ]
+          "inside": {
+            "foo": [
+              {},
+              { "bar": 1 },
+              {}
+            ],
+            "quux": [ 0, 1, 2, 3 ]
+          }
         },
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "deepRequired keyword with empty sub-properties",
+    "schema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "deepRequired": [ "/", "/foo/", "/bar//baz" ]
+      }
+    },
+    "tests": [
+      {
+        "description": "object with required properties is valid",
+        "data": [
+          {
+            "": 0,
+            "foo": {
+              "": 1
+            },
+            "bar": {
+              "": {
+                "baz": 2
+              }
+            }
+          }
+        ],
+        "valid": true
+      },
+      {
+        "description": "object without any required properties is invalid",
+        "data": [
+          {
+            "foo": {},
+            "bar": {
+              "": {}
+            }
+          }
+        ],
+        "valid": false
+      },
+      {
+        "description": "object with one required property is invalid",
+        "data": [
+          {
+            "": 0,
+            "foo": {},
+            "bar": {
+              "": {}
+            }
+          }
+        ],
+        "valid": false
+      },
+      {
+        "description": "object with one required sub-property is invalid",
+        "data": [
+          {
+            "": 0,
+            "foo": {
+              "": 1
+            },
+            "bar": {
+              "": {}
+            }
+          }
+        ],
         "valid": false
       }
     ]

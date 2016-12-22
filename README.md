@@ -18,6 +18,7 @@ Custom JSON-Schema keywords for [ajv](https://github.com/epoberezkin/ajv) valida
   - [range and exclusiveRange](#range-and-exclusiverange)
   - [propertyNames](#propertynames)
   - [if/then/else](#ifthenelse)
+  - [deepRequired](#deeprequired)
   - [regexp](#regexp)
   - [dynamicDefaults](#dynamicdefaults)
 - [License](#license)
@@ -168,6 +169,8 @@ These keywords allow to implement conditional validation. Their values should be
 If the data is valid according to the sub-schema in `if` keyword, then the result is equal to the result of data validation against the sub-schema in `then` keyword, otherwise - in `else` keyword (if `else` is absent, the validation succeeds).
 
 ```javascript
+require('ajv-keywords')(ajv, 'if');
+
 var schema = {
   type: 'array',
   items: {
@@ -182,9 +185,45 @@ var schema = {
 var validItems = [ 2, 4, 6, 8, 10, 15, 20, 25 ]; // etc.
 
 var invalidItems = [ 1, 3, 5, 11, 12 ]; // etc.
+
+ajv.validate(schema, validItems); // true
+ajv.validate(schema, invalidItems); // false
 ```
 
 This keyword is [proposed](https://github.com/json-schema-org/json-schema-spec/issues/180) for the future version of JSON-Schema standard.
+
+
+### `deepRequired`
+
+This keyword allows to check that some deep properties (identified by JSON pointers) are available. The value should be an array of JSON pointers to the data, starting from the current position in data.
+
+```javascript
+var schema = {
+  type: 'object',
+  deepRequired: ["users/1/role"]
+};
+
+var validData = {
+  users: [
+    {},
+    {
+      id: 123,
+      role: 'admin'
+    }
+  ]
+};
+
+var invalidData = {
+  users: [
+    {},
+    {
+      id: 123
+    }
+  ]
+};
+```
+
+See [json-schema-org/json-schema-spec#203](https://github.com/json-schema-org/json-schema-spec/issues/203#issue-197211916) for an example of the equivalent schema without `deepRequired` keyword.
 
 
 ### `regexp`

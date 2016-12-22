@@ -7,7 +7,7 @@ module.exports = function defFunc(ajv) {
       var expr = '';
       for (var i=0; i<schema.length; i++) {
         if (i) expr += ' && ';
-        expr += '(' + getData(schema[i], it.dataLvl) + ' !== undefined)';
+        expr += '(' + getData(schema[i], it.dataLevel) + ' !== undefined)';
       }
       return expr;
     }
@@ -24,12 +24,10 @@ function getData(jsonPointer, lvl) {
 
   var expr = data;
   var segments = jsonPointer.split('/');
-  for (var i=0; i<segments.length; i++) {
+  for (var i=1; i<segments.length; i++) {
     var segment = segments[i];
-    if (segment) {
-      data += getProperty(unescapeJsonPointer(segment));
-      expr += ' && ' + data;
-    }
+    data += getProperty(unescapeJsonPointer(segment));
+    expr += ' && ' + data;
   }
   return expr;
 }
