@@ -8,11 +8,12 @@ var should = require('chai').should();
 
 
 describe('keyword "typeof"', function() {
-  var ajvs = [ new Ajv, new Ajv, new Ajv, ajvPack.instance(new Ajv({sourceCode: true})) ];
-  defFunc(ajvs[0]);
-  defineKeywords(ajvs[1], 'typeof');
-  defineKeywords(ajvs[2]);
-  defFunc(ajvs[3]);
+  var ajvs = [
+    defFunc(new Ajv),
+    defineKeywords(new Ajv, 'typeof'),
+    defineKeywords(new Ajv),
+    defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
+  ];
 
   ajvs.forEach(function (ajv, i) {
     it('should validate value types #' + i, function() {

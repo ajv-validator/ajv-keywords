@@ -6,5 +6,9 @@ module.exports = {
   range: require('./range'),
   regexp: require('./regexp'),
   'typeof': require('./typeof'),
-  dynamicDefaults: require('./dynamicDefaults')
+  dynamicDefaults: require('./dynamicDefaults'),
+  formatMinimum: require('./formatMinimum'),
+  formatMaximum: require('./formatMaximum'),
+  patternRequired: require('./patternRequired'),
+  'switch': require('./switch')
 };

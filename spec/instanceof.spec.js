@@ -7,10 +7,11 @@ var should = require('chai').should();
 
 
 describe('keyword "instanceof"', function() {
-  var ajvs = [ new Ajv, new Ajv, new Ajv ];
-  defFunc(ajvs[0]);
-  defineKeywords(ajvs[1], 'instanceof');
-  defineKeywords(ajvs[2]);
+  var ajvs = [
+    defFunc(new Ajv),
+    defineKeywords(new Ajv, 'instanceof'),
+    defineKeywords(new Ajv)
+  ];
 
   ajvs.forEach(function (ajv, i) {
     it('should validate classes #' + i, function() {

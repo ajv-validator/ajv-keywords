@@ -11,11 +11,11 @@ var uuid = require('uuid');
 describe('keyword "dynamicDefaults"', function() {
   function getAjv() { return new Ajv({useDefaults: true, unknownFormats: true}); }
 
-  var ajvs = [ getAjv(), getAjv(), getAjv() ];
-
-  defFunc(ajvs[0]);
-  defineKeywords(ajvs[1], 'dynamicDefaults');
-  defineKeywords(ajvs[2]);
+  var ajvs = [
+    defFunc(getAjv()),
+    defineKeywords(getAjv(), 'dynamicDefaults'),
+    defineKeywords(getAjv())
+  ];
 
   ajvs.forEach(function (ajv, i) {
     it('should assign defaults #' + i, function (done) {

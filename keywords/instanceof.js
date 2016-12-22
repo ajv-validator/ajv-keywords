@@ -44,6 +44,7 @@ module.exports = function defFunc(ajv) {
   };
 
   ajv.addKeyword('instanceof', defFunc.definition);
+  return ajv;
 
   function getConstructor(c) {
     var Constructor = CONSTRUCTORS[c];
