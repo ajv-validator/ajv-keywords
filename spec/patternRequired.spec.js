@@ -6,7 +6,7 @@ var defineKeywords = require('..');
 var should = require('chai').should();
 
 
-describe.skip('keywords "patternRequired"', function() {
+describe('keywords "patternRequired"', function() {
   var ajvs = getAjvs();
   var ajvsOP = getAjvs(true);
 
@@ -27,7 +27,7 @@ describe.skip('keywords "patternRequired"', function() {
   });
 
   function getAjv(ownProperties) {
-    return new Ajv({ allErrors: true, ownProperties: ownProperties });
+    return new Ajv({ v5: true, allErrors: true, ownProperties: ownProperties });
   }
 
   function getAjvs(ownProperties) {

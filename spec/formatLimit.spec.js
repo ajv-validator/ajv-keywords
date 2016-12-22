@@ -6,8 +6,8 @@ var defineKeywords = require('..');
 var should = require('chai').should();
 
 
-describe.skip('keywords "formatMinimum" and "formatMaximum"', function() {
-  var ajvs = getAjvs();
+describe('keywords "formatMinimum" and "formatMaximum"', function() {
+  var ajvs = getAjvs(true);
   var ajvsFF = getAjvs(false);
 
   ajvs.forEach(function (ajv, i) {
@@ -26,7 +26,7 @@ describe.skip('keywords "formatMinimum" and "formatMaximum"', function() {
   });
 
   function getAjv(format) {
-    return new Ajv({ allErrors: true, format: format });
+    return new Ajv({ v5: true, allErrors: true, format: format });
   }
 
   function getAjvs(format) {

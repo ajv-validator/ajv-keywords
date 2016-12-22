@@ -7,14 +7,14 @@ var defineKeywords = require('..');
 var ajvs = [
   // defineKeywords(getAjv(),
   //   ['switch', 'patternRequired', 'formatMinimum', 'formatMaximum']),
+  defineKeywords(getAjv(), ['if']),
   defineKeywords(getAjv()),
   defineKeywords(getAjv(true))
 ];
 
 
 jsonSchemaTest(ajvs, {
-  skip: true,
-  description: 'keywords "switch", "patternRequired", "formatMinimum", "formatMaximum"',
+  description: 'json test suite',
   suites: {
     'tests': './tests/{**/,}*.json'
   },

@@ -12,7 +12,6 @@ var ajvs = [
 
 
 jsonSchemaTest(ajvs, {
-  skip: true,
   description: 'keywords "switch" with async schemas',
   suites: {
     'tests': './async-tests/{**/,}*.json'
@@ -26,7 +25,7 @@ jsonSchemaTest(ajvs, {
 
 
 function getAjv(extras) {
-  var ajv = new Ajv({ allErrors: extras, verbose: extras });
+  var ajv = new Ajv({ v5: true, allErrors: extras, verbose: extras });
   ajv.addKeyword('idExists', {
     async: true,
     type: 'number',
