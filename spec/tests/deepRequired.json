@@ -1,0 +1,94 @@
+[
+  {
+    "description": "deepRequired keyword validation",
+    "schema": {
+      "type": "object",
+      "deepRequired": [ "/foo/bar", "/foo/baz", "/quux" ]
+    },
+    "tests": [
+      {
+        "description": "object with all required properties is valid",
+        "data": {
+          "foo": {
+            "bar": 1,
+            "baz": 2
+          },
+          "quux": 3
+        },
+        "valid": true
+      },
+      {
+        "description": "object without any required properties is invalid",
+        "data": {
+          "foo": {}
+        },
+        "valid": false
+      },
+      {
+        "description": "object with one required property is invalid",
+        "data": {
+          "quux": 3
+        },
+        "valid": false
+      },
+      {
+        "description": "object with one required sub-property is invalid",
+        "data": {
+          "foo": {
+            "bar": 1
+          },
+          "quux": 3
+        },
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "deepRequired keyword with items",
+    "schema": {
+      "type": "object",
+      "deepRequired": [ "/foo/1/bar", "/foo/2/baz", "/quux/3" ]
+    },
+    "tests": [
+      {
+        "description": "object with all required properties/items is valid",
+        "data": {
+          "foo": [
+            {},
+            { "bar": 1 },
+            { "baz": 2 }
+          ],
+          "quux": [ 0, 1, 2, 3 ]
+        },
+        "valid": true
+      },
+      {
+        "description": "object without any required properties is invalid",
+        "data": {
+          "foo": [{}, {}, {}],
+          "quux": [0, 1, 2]
+        },
+        "valid": false
+      },
+      {
+        "description": "object with one required property is invalid",
+        "data": {
+          "quux": [ 0, 1, 2, 3 ]
+        },
+        "valid": false
+      },
+      {
+        "description": "object with one required sub-property is invalid",
+        "data": {
+          "foo": [
+            {},
+            { "bar": 1 },
+            {}
+          ],
+          "quux": [ 0, 1, 2, 3 ]
+        },
+        "valid": false
+      }
+    ]
+  }
+]

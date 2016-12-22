@@ -7,7 +7,8 @@ module.exports = {
   regexp: require('./regexp'),
   'typeof': require('./typeof'),
   dynamicDefaults: require('./dynamicDefaults'),
-  'if': require('./if')
+  'if': require('./if'),
+  deepRequired: require('./deepRequired')
   // formatMinimum: require('./formatMinimum'),
   // formatMaximum: require('./formatMaximum'),
   // patternRequired: require('./patternRequired'),
