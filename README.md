@@ -160,7 +160,7 @@ ajv.validate(schema, invalidData); // false
 __ Please note__: This keyword will be added to the next version of the JSON-Schema standard (draft-6), after it is published the keyword will be included in Ajv as standard validation keyword.
 
 
-### `if`/`then`/`else`
+### `if` / `then` / `else`
 
 These keywords allow to implement conditional validation. Their values should be valid JSON-schemas. At the moment it requires using Ajv with v5 option.
 
