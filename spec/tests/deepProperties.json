@@ -1,0 +1,341 @@
+[
+  {
+    "description": "deepProperties keyword validation",
+    "schema": {
+      "type": "object",
+      "deepProperties": {
+         "/foo/bar": { "type": "number" },
+         "/foo/baz": { "type": "string" },
+         "/quux": { "type": "boolean" }
+      }
+    },
+    "tests": [
+      {
+        "description": "object with all valid properties is valid",
+        "data": {
+          "foo": {
+            "bar": 1,
+            "baz": "2"
+          },
+          "quux": true
+        },
+        "valid": true
+      },
+      {
+        "description": "object with some valid properties is valid",
+        "data": {
+          "foo": {
+            "bar": 1
+          },
+          "quux": true
+        },
+        "valid": true
+      },
+      {
+        "description": "object with all invalid properties is invalid",
+        "data": {
+          "foo": {
+            "bar": null,
+            "baz": null
+          },
+          "quux": null
+        },
+        "valid": false
+      },
+      {
+        "description": "object with one invalid property is invalid",
+        "data": {
+          "quux": null
+        },
+        "valid": false
+      },
+      {
+        "description": "object with one invalid sub-property is invalid",
+        "data": {
+          "foo": {
+            "bar": null
+          },
+          "quux": true
+        },
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "deepProperties keyword with items",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "inside": {
+          "type": "object",
+          "deepProperties": {
+             "/foo/1/bar": { "type": "number" },
+             "/foo/2/baz": { "type": "string" },
+             "/quux/3": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "tests": [
+      {
+        "description": "object with all valid properties/items is valid",
+        "data": {
+          "inside": {
+            "foo": [
+              {},
+              { "bar": 1 },
+              { "baz": "2" }
+            ],
+            "quux": [ 0, 0, 0, true ]
+          }
+        },
+        "valid": true
+      },
+      {
+        "description": "object with some valid properties/items is valid",
+        "data": {
+          "inside": {
+            "foo": [
+              {},
+              { "bar": 1 }
+            ],
+            "quux": [ 0, 0, 0, true ]
+          }
+        },
+        "valid": true
+      },
+      {
+        "description": "object with all invalid properties is invalid",
+        "data": {
+          "inside": {
+            "foo": [
+              {},
+              { "bar": null },
+              { "baz": null }
+            ],
+            "quux": [ 0, 0, 0, null ]
+          }
+        },
+        "valid": false
+      },
+      {
+        "description": "object with one invalid property is invalid",
+        "data": {
+          "inside": {
+            "foo": [
+              {},
+              { "bar": 1 },
+              { "baz": "2" }
+            ],
+            "quux": [ 0, 0, 0, null ]
+          }
+        },
+        "valid": false
+      },
+      {
+        "description": "object with one invalid sub-property is invalid",
+        "data": {
+          "inside": {
+            "foo": [
+              {},
+              { "bar": 1 },
+              { "baz": null }
+            ],
+            "quux": [ 0, 0, 0, true ]
+          }
+        },
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "deepProperties keyword with empty sub-properties",
+    "schema": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "deepProperties": {
+          "/": { "type": "number" },
+          "/foo/": { "type": "string" },
+          "/bar//baz": { "type": "boolean" }
+        }
+      }
+    },
+    "tests": [
+      {
+        "description": "object with all valid properties is valid",
+        "data": [
+          {
+            "": 1,
+            "foo": {
+              "": "2"
+            },
+            "bar": {
+              "": {
+                "baz": true
+              }
+            }
+          }
+        ],
+        "valid": true
+      },
+      {
+        "description": "object with some valid properties is valid",
+        "data": [
+          {
+            "": 1,
+            "bar": {
+              "": {
+                "baz": true
+              }
+            }
+          }
+        ],
+        "valid": true
+      },
+      {
+        "description": "object with all invalid properties is invalid",
+        "data": [
+          {
+            "": null,
+            "foo": {
+              "": null
+            },
+            "bar": {
+              "": {
+                "baz": null
+              }
+            }
+          }
+        ],
+        "valid": false
+      },
+      {
+        "description": "object with one invalid property is invalid",
+        "data": [
+          {
+            "": null,
+            "foo": {
+              "": "2"
+            },
+            "bar": {
+              "": {
+                "baz": true
+              }
+            }
+          }
+        ],
+        "valid": false
+      },
+      {
+        "description": "object with one invalid sub-property is invalid",
+        "data": [
+          {
+            "": 1,
+            "foo": {
+              "": "2"
+            },
+            "bar": {
+              "": {
+                "baz": null
+              }
+            }
+          }
+        ],
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "deepProperties keyword with numbered properties",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "inside": {
+          "type": "object",
+          "deepProperties": {
+             "/foo/1/bar": { "type": "number" },
+             "/foo/2/baz": { "type": "string" },
+             "/quux/3": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "tests": [
+      {
+        "description": "object with all valid properties is valid",
+        "data": {
+          "inside": {
+            "foo": {
+              "1": { "bar": 1 },
+              "2": { "baz": "2" }
+            },
+            "quux": {
+              "3": true
+            }
+          }
+        },
+        "valid": true
+      },
+      {
+        "description": "object with some valid properties is valid",
+        "data": {
+          "inside": {
+            "foo": {
+              "1": { "bar": 1 }
+            },
+            "quux": {
+              "3": true
+            }
+          }
+        },
+        "valid": true
+      },
+      {
+        "description": "object with all invalid properties is invalid",
+        "data": {
+          "inside": {
+            "foo": {
+              "1": { "bar": null },
+              "2": { "baz": null }
+            },
+            "quux": {
+              "3": null
+            }
+          }
+        },
+        "valid": false
+      },
+      {
+        "description": "object with one invalid property is invalid",
+        "data": {
+          "inside": {
+            "foo": {
+              "1": { "bar": 1 },
+              "2": { "baz": "2" }
+            },
+            "quux": {
+              "3": null
+            }
+          }
+        },
+        "valid": false
+      },
+      {
+        "description": "object with one invalid sub-property is invalid",
+        "data": {
+          "inside": {
+            "foo": {
+              "1": { "bar": 1 },
+              "2": { "baz": null }
+            },
+            "quux": {
+              "3": true
+            }
+          }
+        },
+        "valid": false
+      }
+    ]
+  }
+]

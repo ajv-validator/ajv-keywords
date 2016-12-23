@@ -18,6 +18,7 @@ Custom JSON-Schema keywords for [ajv](https://github.com/epoberezkin/ajv) valida
   - [range and exclusiveRange](#range-and-exclusiverange)
   - [propertyNames](#propertynames)
   - [if/then/else](#ifthenelse)
+  - [deepProperties](#deepproperties)
   - [deepRequired](#deeprequired)
   - [regexp](#regexp)
   - [dynamicDefaults](#dynamicdefaults)
@@ -224,6 +225,58 @@ var invalidData = {
 ```
 
 See [json-schema-org/json-schema-spec#203](https://github.com/json-schema-org/json-schema-spec/issues/203#issue-197211916) for an example of the equivalent schema without `deepRequired` keyword.
+
+
+## `deepProperties`
+
+This keyword allows to validate deep properties (identified by JSON pointers). The value should be an object, where keys are JSON pointers to the data, starting from the current position in data, and the values are corresponding schemas.
+
+```javascript
+var schema = {
+  type: 'object',
+  deepProperties: {
+    "users/1/role": { "enum": ["admin"] }
+  }
+};
+
+var validData = {
+  users: [
+    {},
+    {
+      id: 123,
+      role: 'admin'
+    }
+  ]
+};
+
+var alsoValidData = {
+  users: {
+    "1": {
+      id: 123,
+      role: 'admin'
+    }
+  }
+};
+
+var invalidData = {
+  users: [
+    {},
+    {
+      id: 123,
+      role: 'user'
+    }
+  ]
+};
+
+var alsoInvalidData = {
+  users: {
+    "1": {
+      id: 123,
+      role: 'user'
+    }
+  }
+};
+```
 
 
 ### `regexp`
