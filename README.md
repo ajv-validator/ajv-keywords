@@ -83,7 +83,7 @@ ajv.validate({ typeof: ['undefined', 'object'] }, null); // true
 
 ### `instanceof`
 
-Based on JavaScript `typeof` operation.
+Based on JavaScript `instanceof` operation.
 
 The value of the keyword should be a string (`"Object"`, `"Array"`, `"Function"`, `"Number"`, `"String"`, `"Date"`, `"RegExp"` or `"Buffer"`) or array of strings.
 
@@ -113,7 +113,7 @@ Syntax sugar for the combination of minimum and maximum keywords, also fails sch
 
 The value of this keyword must be the array consisting of two numbers, the second must be greater or equal than the first one.
 
-If the validated value is not a number the validation passes, otherwise to pas validation the value should be greater (or equal) than the first number and smaller (or equal) than the second number in the array. If `exclusiveRange` keyword is present in the same schema and its value is true, the validated value must not be equal to the range boundaries.
+If the validated value is not a number the validation passes, otherwise to pass validation the value should be greater (or equal) than the first number and smaller (or equal) than the second number in the array. If `exclusiveRange` keyword is present in the same schema and its value is true, the validated value must not be equal to the range boundaries.
 
 ```javascript
 var schema = { range: [1, 3] };
@@ -201,7 +201,7 @@ This keyword allows to check that some deep properties (identified by JSON point
 ```javascript
 var schema = {
   type: 'object',
-  deepRequired: ["users/1/role"]
+  deepRequired: ["/users/1/role"]
 };
 
 var validData = {
@@ -235,7 +235,7 @@ This keyword allows to validate deep properties (identified by JSON pointers). T
 var schema = {
   type: 'object',
   deepProperties: {
-    "users/1/role": { "enum": ["admin"] }
+    "/users/1/role": { "enum": ["admin"] }
   }
 };
 
