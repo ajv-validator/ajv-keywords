@@ -10,6 +10,12 @@ module.exports = function defFunc(ajv) {
         expr += '(' + getData(schema[i], it.dataLevel) + ' !== undefined)';
       }
       return expr;
+    },
+    metaSchema: {
+      items: {
+        type: 'string',
+        format: 'json-pointer'
+      }
     }
   };
 

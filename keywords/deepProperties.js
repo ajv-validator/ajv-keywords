@@ -8,6 +8,16 @@ module.exports = function defFunc(ajv) {
       for (var pointer in schema)
         schemas.push(getSchema(pointer, schema[pointer]));
       return { 'allOf': schemas };
+    },
+    metaSchema: {
+      patternProperties: {
+        '^(\\/([^~\\/]|~0|~1)*)*(\\/)?$': {
+          $ref: ajv._opts.v5
+                ? 'https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/json-schema-v5.json#'
+                : 'http://json-schema.org/draft-04/schema#'
+        }
+      },
+      additionalProperties: false
     }
   };
 
