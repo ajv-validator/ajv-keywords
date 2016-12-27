@@ -22,6 +22,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
   - [deepProperties](#deepproperties)
   - [deepRequired](#deeprequired)
   - [regexp](#regexp)
+  - [formatMaximum / formatMinimum and formatExclusiveMaximum / formatExclusiveMinimum](#formatmaximum--formatminimum-and-formatexclusivemaximum--formatexclusiveminimum)
   - [dynamicDefaults](#dynamicdefaults)
 - [License](#license)
 
@@ -371,6 +372,34 @@ var invalidData = {
   foo: 'fog',
   bar: 'bad'
 };
+```
+
+
+### `formatMaximum` / `formatMinimum` and `formatExclusiveMaximum` / `formatExclusiveMinimum`
+
+These keywords allow to define minimum/maximum constraints when the format keyword defines ordering.
+
+These keywords apply only to strings. If the data is not a string, the validation succeeds.
+
+The value of keyword `formatMaximum` (`formatMinimum`) should be a string. This value is the maximum (minimum) allowed value for the data to be valid as determined by `format` keyword.
+
+When this keyword is added, it defines comparison rules for formats `"date"`, `"time"` and `"date-time". Custom formats also can have comparison rules. See [addFormat](https://github.com/epoberezkin/ajv#api-addformat) method.
+
+The value of keyword `formatExclusiveMaximum` (`formatExclusiveMinimum`) should be a boolean value. These keyword cannot be used without `formatMaximum` (`formatMinimum`). If this keyword value is equal to `true`, the data to be valid should not be equal to the value in `formatMaximum` (`formatMinimum`) keyword.
+
+```javascript
+require('ajv-keywords')(ajv, ['formatMinimum', 'formatMaximum']);
+
+var schema = {
+  format: 'date',
+  formatMinimum: '2016-02-06',
+  formatMaximum: '2016-12-27',
+  formatExclusiveMaximum: true
+}
+
+var validDataList = ['2016-02-06', '2016-12-26', 1];
+
+var invalidDataList = ['2016-02-05', '2016-12-27', 'abc'];
 ```
 
 
