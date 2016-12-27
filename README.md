@@ -17,6 +17,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
   - [instanceof](#instanceof)
   - [range and exclusiveRange](#range-and-exclusiverange)
   - [if/then/else](#ifthenelse)
+  - [switch](#switch)
   - [deepProperties](#deepproperties)
   - [deepRequired](#deeprequired)
   - [regexp](#regexp)
@@ -160,6 +161,74 @@ ajv.validate(schema, invalidItems); // false
 ```
 
 This keyword is [proposed](https://github.com/json-schema-org/json-schema-spec/issues/180) for the future version of JSON-Schema standard.
+
+
+### `switch`
+
+This keyword allows to perform advanced conditional validation.
+
+The value of the keyword is the array of if/then clauses. Each clause is the object with the following properties:
+
+- `if` (optional) - the value is JSON-schema
+- `then` (required) - the value is JSON-schema or boolean
+- `continue` (optional) - the value is boolean
+
+The validation process is dynamic; all clauses are executed sequentially in the following way:
+
+1. `if`:
+    1.  `if` property is JSON-schema according to which the data is:
+        1.  valid => go to step 2.
+        2.  invalid => go to the NEXT clause, if this was the last clause the validation of `switch` SUCCEEDS.
+    2.  `if` property is absent => go to step 2.
+2. `then`:
+    1.  `then` property is `true` or it is JSON-schema according to which the data is valid => go to step 3.
+    2.  `then` property is `false` or it is JSON-schema according to which the data is invalid => the validation of `switch` FAILS.
+3. `continue`:
+    1.  `continue` property is `true` => go to the NEXT clause, if this was the last clause the validation of `switch` SUCCEEDS.
+    2.  `continue` property is `false` or absent => validation of `switch` SUCCEEDS.
+
+
+```javascript
+var schema = {
+  type: 'array',
+  items: {
+    type: 'integer',
+    'switch': [
+      { if: { not: { minimum: 1 } }, then: false },
+      { if: { maximum: 10 }, then: true },
+      { if: { maximum: 100 }, then: { multipleOf: 10 } },
+      { if: { maximum: 1000 }, then: { multipleOf: 100 } },
+      { then: false }
+    ]
+  }
+};
+
+var validItems = [1, 5, 10, 20, 50, 100, 200, 500, 1000];
+
+var invalidItems = [1, 0, 2000, 11, 57, 123, 'foo'];
+```
+
+__Please note__: this keyword is moved here from Ajv, mainly to preserve beckward compatibility. It is unlikely to become a standard. It's preferreable to use `if`/`then`/`else` keywords if possible, as they are likely to be added to the standard. The above schema is equivalent to (for example):
+
+```javascript
+{
+  type: 'array',
+  items: {
+    type: 'integer',
+    if: { minimum: 1, maximum: 10 },
+    then: true,
+    else: {
+      if: { maximum: 100 },
+      then: { multipleOf: 10 },
+      else: {
+        if: { maximum: 1000 },
+        then: { multipleOf: 100 },
+        else: false
+      }
+    }
+  }
+}
+```
 
 
 ### `deepRequired`
