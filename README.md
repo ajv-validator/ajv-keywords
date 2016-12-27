@@ -18,6 +18,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
   - [range and exclusiveRange](#range-and-exclusiverange)
   - [if/then/else](#ifthenelse)
   - [switch](#switch)
+  - [patternRequired](#patternrequired)
   - [deepProperties](#deepproperties)
   - [deepRequired](#deeprequired)
   - [regexp](#regexp)
@@ -262,6 +263,26 @@ var invalidData = {
 ```
 
 See [json-schema-org/json-schema-spec#203](https://github.com/json-schema-org/json-schema-spec/issues/203#issue-197211916) for an example of the equivalent schema without `deepRequired` keyword.
+
+
+## `patternRequired`
+
+This keyword allows to require the presense of properties that match some pattern(s).
+
+This keyword applies only to object. If the data is not an object, the validation succeeds.
+
+The value of this keyword should be an array of strings, each string being a regular expression. For data object to be valid each regular expression in this array should match at least one property name in the data object.
+
+If the array contains multiple regular expressions, more than one expression can match the same property name.
+
+```javascript
+var schema = { patternRequired: [ 'f.*o', 'b.*r' ] };
+
+var validData = { foo: 1, bar: 2 };
+var alsoValidData = { foobar: 3 };
+
+var invalidDataList = [ {}, { foo: 1 }, { bar: 2 } ];
+```
 
 
 ## `deepProperties`
