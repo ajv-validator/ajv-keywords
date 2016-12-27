@@ -30,6 +30,11 @@ describe('keyword "regexp"', function() {
         bar: 'Barmen'
       };
 
+      var alsoValidData = {
+        foo: 1,
+        bar: 2
+      };
+
       var invalidData = {
         foo: 'fog',
         bar: 'bad'
@@ -37,6 +42,7 @@ describe('keyword "regexp"', function() {
 
       ajv.validate(schema, {}) .should.equal(true);
       ajv.validate(schema, validData) .should.equal(true);
+      ajv.validate(schema, alsoValidData) .should.equal(true);
       ajv.validate(schema, invalidData) .should.equal(false);
     });
   });

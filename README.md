@@ -232,44 +232,11 @@ __Please note__: this keyword is moved here from Ajv, mainly to preserve beckwar
 ```
 
 
-### `deepRequired`
-
-This keyword allows to check that some deep properties (identified by JSON pointers) are available. The value should be an array of JSON pointers to the data, starting from the current position in data.
-
-```javascript
-var schema = {
-  type: 'object',
-  deepRequired: ["/users/1/role"]
-};
-
-var validData = {
-  users: [
-    {},
-    {
-      id: 123,
-      role: 'admin'
-    }
-  ]
-};
-
-var invalidData = {
-  users: [
-    {},
-    {
-      id: 123
-    }
-  ]
-};
-```
-
-See [json-schema-org/json-schema-spec#203](https://github.com/json-schema-org/json-schema-spec/issues/203#issue-197211916) for an example of the equivalent schema without `deepRequired` keyword.
-
-
 ## `patternRequired`
 
 This keyword allows to require the presense of properties that match some pattern(s).
 
-This keyword applies only to object. If the data is not an object, the validation succeeds.
+This keyword applies only to objects. If the data is not an object, the validation succeeds.
 
 The value of this keyword should be an array of strings, each string being a regular expression. For data object to be valid each regular expression in this array should match at least one property name in the data object.
 
@@ -287,7 +254,11 @@ var invalidDataList = [ {}, { foo: 1 }, { bar: 2 } ];
 
 ## `deepProperties`
 
-This keyword allows to validate deep properties (identified by JSON pointers). The value should be an object, where keys are JSON pointers to the data, starting from the current position in data, and the values are corresponding schemas.
+This keyword allows to validate deep properties (identified by JSON pointers).
+
+This keyword applies only to objects. If the data is not an object, the validation succeeds.
+
+The value should be an object, where keys are JSON pointers to the data, starting from the current position in data, and the values are JSON schemas. For data object to be valid the value of each JSON pointer should be valid according to the corresponding schema.
 
 ```javascript
 var schema = {
@@ -337,9 +308,50 @@ var alsoInvalidData = {
 ```
 
 
+### `deepRequired`
+
+This keyword allows to check that some deep properties (identified by JSON pointers) are available.
+
+This keyword applies only to objects. If the data is not an object, the validation succeeds.
+
+The value should be an array of JSON pointers to the data, starting from the current position in data. For data object to be valid each JSON pointer should be some existing part of the data.
+
+```javascript
+var schema = {
+  type: 'object',
+  deepRequired: ["/users/1/role"]
+};
+
+var validData = {
+  users: [
+    {},
+    {
+      id: 123,
+      role: 'admin'
+    }
+  ]
+};
+
+var invalidData = {
+  users: [
+    {},
+    {
+      id: 123
+    }
+  ]
+};
+```
+
+See [json-schema-org/json-schema-spec#203](https://github.com/json-schema-org/json-schema-spec/issues/203#issue-197211916) for an example of the equivalent schema without `deepRequired` keyword.
+
+
 ### `regexp`
 
-This keyword allows to use regular expressions with flags in schemas (the standard `pattern` keyword does not support flags). The value of this keyword can be either a string (the result of `regexp.toString()`) or an object with the properties `pattern` and `flags` (the same strings that should be passed to RegExp constructor).
+This keyword allows to use regular expressions with flags in schemas (the standard `pattern` keyword does not support flags).
+
+This keyword applies only to strings. If the data is not a string, the validation succeeds.
+
+The value of this keyword can be either a string (the result of `regexp.toString()`) or an object with the properties `pattern` and `flags` (the same strings that should be passed to RegExp constructor).
 
 ```javascript
 var schema = {
