@@ -1,6 +1,6 @@
 # ajv-keywords
 
-Custom JSON-Schema keywords for [ajv](https://github.com/epoberezkin/ajv) validator
+Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) validator
 
 [![Build Status](https://travis-ci.org/epoberezkin/ajv-keywords.svg?branch=master)](https://travis-ci.org/epoberezkin/ajv-keywords)
 [![npm version](https://badge.fury.io/js/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
@@ -16,7 +16,6 @@ Custom JSON-Schema keywords for [ajv](https://github.com/epoberezkin/ajv) valida
   - [typeof](#typeof)
   - [instanceof](#instanceof)
   - [range and exclusiveRange](#range-and-exclusiverange)
-  - [propertyNames](#propertynames)
   - [if/then/else](#ifthenelse)
   - [deepProperties](#deepproperties)
   - [deepRequired](#deeprequired)
@@ -132,40 +131,9 @@ ajv.validate(schema, 3); // false
 ```
 
 
-### `propertyNames`
-
-This keyword allows to define the schema for the property names of the object. The value of this keyword should be a valid JSON schema (v5 schemas are supported with Ajv option `{v5: true}`).
-
-```javascript
-var schema = {
-  type: 'object'
-  propertyNames: {
-    anyOf: [
-      { format: ipv4 },
-      { format: hostname }
-    ]
-  }
-};
-
-var validData = {
-  '192.128.0.1': {},
-  'test.example.com': {}
-};
-
-var invalidData = {
-  '1.2.3': {}
-};
-
-ajv.validate(schema, validData); // true
-ajv.validate(schema, invalidData); // false
-```
-
-__Please note__: This keyword will be added to the next version of the JSON-Schema standard (draft-6), after it is published the keyword will be included in Ajv as standard validation keyword.
-
-
 ### `if`/`then`/`else`
 
-These keywords allow to implement conditional validation. Their values should be valid JSON-schemas. At the moment it requires using Ajv with v5 option.
+These keywords allow to implement conditional validation. Their values should be valid JSON-schemas.
 
 If the data is valid according to the sub-schema in `if` keyword, then the result is equal to the result of data validation against the sub-schema in `then` keyword, otherwise - in `else` keyword (if `else` is absent, the validation succeeds).
 

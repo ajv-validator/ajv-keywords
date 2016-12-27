@@ -12,9 +12,6 @@ var COMPARE_FORMATS = {
 module.exports = function (minMax) {
   var keyword = 'format' + minMax;
   return function defFunc(ajv) {
-    if (ajv.RULES.keywords[keyword])
-      return console.warn('Keyword', keyword, 'is already defined');
-
     defFunc.definition = {
       type: 'string',
       inline: require('./dotjs/_formatLimit'),

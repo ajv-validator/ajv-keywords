@@ -1,7 +1,7 @@
 'use strict';
 
 var Ajv = require('ajv');
-// var defFunc = require('../keywords/formatMaximum');
+var defFunc = require('../keywords/formatMaximum');
 var defineKeywords = require('..');
 var should = require('chai').should();
 
@@ -26,13 +26,13 @@ describe('keywords "formatMinimum" and "formatMaximum"', function() {
   });
 
   function getAjv(format) {
-    return new Ajv({ v5: true, allErrors: true, format: format });
+    return new Ajv({ allErrors: true, format: format });
   }
 
   function getAjvs(format) {
     return [
-      // defFunc(getAjv(format)),
-      // defineKeywords(getAjv(format), 'formatMaximum'),
+      defFunc(getAjv(format)),
+      defineKeywords(getAjv(format), 'formatMaximum'),
       defineKeywords(getAjv(format))
     ];
   }

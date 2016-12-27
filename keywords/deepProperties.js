@@ -12,9 +12,7 @@ module.exports = function defFunc(ajv) {
     metaSchema: {
       patternProperties: {
         '^(\\/([^~\\/]|~0|~1)*)*(\\/)?$': {
-          $ref: ajv._opts.v5
-                ? 'https://raw.githubusercontent.com/epoberezkin/ajv/master/lib/refs/json-schema-v5.json#'
-                : 'http://json-schema.org/draft-04/schema#'
+          $ref: 'http://json-schema.org/draft-06/schema#'
         }
       },
       additionalProperties: false

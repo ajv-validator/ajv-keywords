@@ -5,7 +5,7 @@ var jsonSchemaTest = require('json-schema-test');
 var defineKeywords = require('..');
 
 var ajvs = [
-  // defineKeywords(getAjv(), 'switch'),
+  defineKeywords(getAjv(), 'switch'),
   defineKeywords(getAjv()),
   defineKeywords(getAjv(true))
 ];
@@ -17,6 +17,7 @@ jsonSchemaTest(ajvs, {
     'tests': './async-tests/{**/,}*.json'
   },
   async: true,
+  asyncValid: 'data',
   // afterError: after.error,
   // afterEach: after.each,
   cwd: __dirname,
@@ -25,7 +26,7 @@ jsonSchemaTest(ajvs, {
 
 
 function getAjv(extras) {
-  var ajv = new Ajv({ v5: true, allErrors: extras, verbose: extras });
+  var ajv = new Ajv({ allErrors: extras, verbose: extras });
   ajv.addKeyword('idExists', {
     async: true,
     type: 'number',
