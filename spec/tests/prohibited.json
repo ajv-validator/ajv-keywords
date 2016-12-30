@@ -1,0 +1,71 @@
+[
+  {
+    "description": "prohibited requires that no property in the list is present",
+    "schema": {
+      "prohibited": ["foo"]
+    },
+    "tests": [
+      {
+        "description": "no property present is valid",
+        "data": { "baz": 1 },
+        "valid": true
+      },
+      {
+        "description": "empty object is valid",
+        "data": {},
+        "valid": true
+      },
+      {
+        "description": "property is present is invalid",
+        "data": { "foo": 1 },
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "multiple properties in prohibited",
+    "schema": {
+      "prohibited": ["foo", "bar"]
+    },
+    "tests": [
+      {
+        "description": "no property present is valid",
+        "data": { "baz": 1 },
+        "valid": true
+      },
+      {
+        "description": "empty object is valid",
+        "data": {},
+        "valid": true
+      },
+      {
+        "description": "one of properties present is invalid",
+        "data": { "foo": 1 },
+        "valid": false
+      },
+      {
+        "description": "both properties present is invalid",
+        "data": { "foo": 1, "bar": 2 },
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "prohibited with the empty list of properties",
+    "schema": {
+      "prohibited": []
+    },
+    "tests": [
+      {
+        "description": "any object is valid",
+        "data": { "foo": 1 },
+        "valid": true
+      },
+      {
+        "description": "empty object is valid",
+        "data": {},
+        "valid": true
+      }
+    ]
+  }
+]

@@ -10,6 +10,7 @@ module.exports = function defFunc(ajv) {
       return { 'allOf': schemas };
     },
     metaSchema: {
+      type: 'object',
       patternProperties: {
         '^(\\/([^~\\/]|~0|~1)*)*(\\/)?$': {
           $ref: 'http://json-schema.org/draft-06/schema#'

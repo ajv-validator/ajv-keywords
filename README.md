@@ -19,6 +19,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
   - [if/then/else](#ifthenelse)
   - [switch](#switch)
   - [patternRequired](#patternrequired)
+  - [prohibited](#prohibited)
   - [deepProperties](#deepproperties)
   - [deepRequired](#deeprequired)
   - [regexp](#regexp)
@@ -189,7 +190,6 @@ The validation process is dynamic; all clauses are executed sequentially in the 
     1.  `continue` property is `true` => go to the NEXT clause, if this was the last clause the validation of `switch` SUCCEEDS.
     2.  `continue` property is `false` or absent => validation of `switch` SUCCEEDS.
 
-
 ```javascript
 var schema = {
   type: 'array',
@@ -250,6 +250,28 @@ var validData = { foo: 1, bar: 2 };
 var alsoValidData = { foobar: 3 };
 
 var invalidDataList = [ {}, { foo: 1 }, { bar: 2 } ];
+```
+
+
+### `prohibited`
+
+This keyword allows to prohibit that any of the properties in the list is present in the object.
+
+This keyword applies only to objects. If the data is not an object, the validation succeeds.
+
+The value of this keyword should be an array of strings, each string being a property name. For data object to be valid none of the properties in this array should be present in the object.
+
+```
+var schema = { prohibited: ['foo', 'bar']};
+
+var validData = { baz: 1 };
+var alsoValidData = {};
+
+var invalidDataList = [
+  { foo: 1 },
+  { bar: 2 },
+  { foo: 1, bar: 2}
+];
 ```
 
 
