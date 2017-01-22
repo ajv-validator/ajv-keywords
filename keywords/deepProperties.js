@@ -1,5 +1,7 @@
 'use strict';
 
+var util = require('./_util');
+
 module.exports = function defFunc(ajv) {
   defFunc.definition = {
     type: 'object',
@@ -12,9 +14,7 @@ module.exports = function defFunc(ajv) {
     metaSchema: {
       type: 'object',
       patternProperties: {
-        '^(\\/([^~\\/]|~0|~1)*)*(\\/)?$': {
-          $ref: 'http://json-schema.org/draft-06/schema#'
-        }
+        '^(\\/([^~\\/]|~0|~1)*)*(\\/)?$': util.metaSchemaRef(ajv)
       },
       additionalProperties: false
     }

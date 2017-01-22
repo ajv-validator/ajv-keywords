@@ -1,9 +1,11 @@
 'use strict';
 
+var util = require('./_util');
+
 module.exports = function defFunc(ajv) {
   if (ajv.RULES.keywords.switch && ajv.RULES.keywords.if) return;
 
-  var metaSchemaUri = 'http://json-schema.org/draft-06/schema#';
+  var metaSchemaRef = util.metaSchemaRef(ajv);
 
   defFunc.definition = {
     inline: require('./dotjs/switch'),
@@ -14,11 +16,11 @@ module.exports = function defFunc(ajv) {
       items: {
         required: [ 'then' ],
         properties: {
-          'if': { $ref: metaSchemaUri },
+          'if': metaSchemaRef,
           'then': {
             anyOf: [
               { type: 'boolean' },
-              { $ref: metaSchemaUri }
+              metaSchemaRef
             ]
           },
           'continue': { type: 'boolean' }
