@@ -1,0 +1,378 @@
+[
+  {
+    "description": "select keyword",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" }
+      },
+      "select": { "$data": "0/type" },
+      "selectCases": {
+        "foo": {
+          "properties": {
+            "type": {},
+            "foo": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "bar": {
+          "properties": {
+            "type": {},
+            "bar": { "type": "number" }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "tests": [
+      {
+        "description": "valid object, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": "anything"
+        },
+        "valid": true
+      },
+      {
+        "description": "valid object, type=bar",
+        "data": {
+          "type": "bar",
+          "bar": 123
+        },
+        "valid": true
+      },
+      {
+        "description": "invalid object, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": 123
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object, type=bar",
+        "data": {
+          "type": "bar",
+          "bar": "anything"
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object with additional property, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": "anything",
+          "another": 1
+        },
+        "valid": false
+      },
+      {
+        "description": "valid object with unknown type",
+        "data": {
+          "type": "another",
+          "foo": 123
+        },
+        "valid": true
+      },
+      {
+        "description": "valid object without type",
+        "data": {
+          "foo": 123
+        },
+        "valid": true
+      }
+    ]
+  },
+  {
+    "description": "select keyword with selectDefault",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" }
+      },
+      "select": { "$data": "0/type" },
+      "selectCases": {
+        "foo": {
+          "properties": {
+            "type": {},
+            "foo": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "bar": {
+          "properties": {
+            "type": {},
+            "bar": { "type": "number" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "selectDefault": {
+        "propertyNames": {
+          "not": { "enum": ["foo", "bar"] }
+        }
+      }
+    },
+    "tests": [
+      {
+        "description": "valid object, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": "anything"
+        },
+        "valid": true
+      },
+      {
+        "description": "valid object, type=bar",
+        "data": {
+          "type": "bar",
+          "bar": 123
+        },
+        "valid": true
+      },
+      {
+        "description": "invalid object, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": 123
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object, type=bar",
+        "data": {
+          "type": "bar",
+          "bar": "anything"
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object with additional property, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": "anything",
+          "another": 1
+        },
+        "valid": false
+      },
+      {
+        "description": "valid object with unknown type",
+        "data": {
+          "type": "another",
+          "another": 123
+        },
+        "valid": true
+      },
+      {
+        "description": "invalid object with unknown type",
+        "data": {
+          "type": "another",
+          "foo": "anything"
+        },
+        "valid": false
+      },
+      {
+        "description": "valid object without type",
+        "data": {
+          "foo": 123
+        },
+        "valid": true
+      }
+    ]
+  },
+  {
+    "description": "select keyword with fixed selector value",
+    "schema": {
+      "type": "object",
+      "select": "foo",
+      "selectCases": {
+        "foo": {
+          "properties": {
+            "type": { "const": "foo"},
+            "foo": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "bar": {
+          "properties": {
+            "type": { "const": "bar"},
+            "bar": { "type": "number" }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "tests": [
+      {
+        "description": "valid object, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": "anything"
+        },
+        "valid": true
+      },
+      {
+        "description": "invalid object, type=bar",
+        "data": {
+          "type": "bar",
+          "bar": 123
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": 123
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object, type=bar",
+        "data": {
+          "type": "bar",
+          "bar": "anything"
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object with additional property, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": "anything",
+          "another": 1
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object with unknown type",
+        "data": {
+          "type": "another",
+          "foo": 123
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object without type",
+        "data": {
+          "foo": 123
+        },
+        "valid": false
+      }
+    ]
+  },
+  {
+    "skip": true,
+    "description": "select keyword with relative URIs in $ref (not supported)",
+    "schema": {
+      "type": "object",
+      "definitions": {
+        "num": { "type": "number" },
+        "str": { "type": "string" }
+      },
+      "properties": {
+        "type": { "type": "string" }
+      },
+      "select": { "$data": "0/type" },
+      "selectCases": {
+        "foo": {
+          "properties": {
+            "type": {},
+            "foo": { "$ref": "#/definitions/str" }
+          },
+          "additionalProperties": false
+        },
+        "bar": {
+          "properties": {
+            "type": {},
+            "bar": { "$ref": "#/definitions/num" }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "tests": [
+      {
+        "description": "valid object, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": "anything"
+        },
+        "valid": true
+      },
+      {
+        "description": "invalid object, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": 123
+        },
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "select keyword with absolute URIs in $ref (supported)",
+    "schema": {
+      "id": "select_test.json",
+      "type": "object",
+      "definitions": {
+        "num": { "type": "number" },
+        "str": { "type": "string" }
+      },
+      "properties": {
+        "type": { "type": "string" }
+      },
+      "select": { "$data": "0/type" },
+      "selectCases": {
+        "foo": {
+          "properties": {
+            "type": {},
+            "foo": { "$ref": "select_test.json#/definitions/str" }
+          },
+          "additionalProperties": false
+        },
+        "bar": {
+          "properties": {
+            "type": {},
+            "bar": { "$ref": "select_test.json#/definitions/num" }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "tests": [
+      {
+        "description": "valid object, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": "anything"
+        },
+        "valid": true
+      },
+      {
+        "description": "valid object, type=bar",
+        "data": {
+          "type": "bar",
+          "bar": 123
+        },
+        "valid": true
+      },
+      {
+        "description": "invalid object, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": 123
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object, type=bar",
+        "data": {
+          "type": "bar",
+          "bar": "anything"
+        },
+        "valid": false
+      }
+    ]
+  }
+]

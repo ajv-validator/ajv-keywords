@@ -13,10 +13,11 @@ module.exports = function defFunc(ajv) {
     },
     metaSchema: {
       type: 'object',
-      patternProperties: {
-        '^(\\/([^~\\/]|~0|~1)*)*(\\/)?$': util.metaSchemaRef(ajv)
+      propertyNames: {
+        type: 'string',
+        format: 'json-pointer'
       },
-      additionalProperties: false
+      additionalProperties: util.metaSchemaRef(ajv)
     }
   };
 

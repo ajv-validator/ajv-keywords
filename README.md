@@ -18,6 +18,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
   - [range and exclusiveRange](#range-and-exclusiverange)
   - [if/then/else](#ifthenelse)
   - [switch](#switch)
+  - [select/selectCases/selectDefault](#selectselectcasesselectdefault) (BETA)
   - [patternRequired](#patternrequired)
   - [prohibited](#prohibited)
   - [deepProperties](#deepproperties)
@@ -191,6 +192,8 @@ The validation process is dynamic; all clauses are executed sequentially in the 
     2.  `continue` property is `false` or absent => validation of `switch` SUCCEEDS.
 
 ```javascript
+require('ajv-keywords')(ajv, 'switch');
+
 var schema = {
   type: 'array',
   items: {
@@ -233,7 +236,83 @@ __Please note__: this keyword is moved here from Ajv, mainly to preserve beckwar
 ```
 
 
-## `patternRequired`
+### `select`/`selectCases`/`selectDefault`
+
+These keywords allow to choose the schema to validate the data based on the value of some property in the validated data.
+
+These keywords must be present in the same schema object (`selectDefault` is optional).
+
+The value of `select` keyword should be a [$data reference](https://github.com/epoberezkin/ajv/tree/5.0.2-beta.0#data-reference) that points to any primitive JSON type (string, number, boolean or null) in the data that is validated. You can also use a constant of primitive type as the value of this keyword (e.g., for debugging purposes).
+
+The value of `selectCases` keyword must be an object where each property name is a possible string representation of the value of `select` keyword and each property value is a corresponding schema (from draft-06 it can be boolean) that must be used to validate the data.
+
+The value of `selectDefault` keyword is a schema (from draft-06 it can be boolean) that must be used to validate the data in case `selectCases` has no key equal to the stringified value of `select` keyword.
+
+The validation succeeds in one of the following cases:
+- the validation of data using selected schema succeeds,
+- none of the schemas is selected for validation,
+- the value of select is undefined (no property in the data that the data reference points to).
+
+If `select` value (in data) is not a primitive type the validation fails.
+
+__Please note__: these keywords require Ajv `$data` option to support [$data reference](https://github.com/epoberezkin/ajv/tree/5.0.2-beta.0#data-reference).
+
+
+```javascript
+require('ajv-keywords')(ajv, 'select');
+
+var schema = {
+  type: object,
+  required: ['kind'],
+  properties: {
+    kind: { type: 'string' }
+  },
+  select: { $data: '0/kind' },
+  selectCases: {
+    foo: {
+      required: ['foo'],
+      properties: {
+        kind: {},
+        foo: { type: 'string' }
+      },
+      additionalProperties: false
+    },
+    bar: {
+      required: ['bar'],
+      properties: {
+        kind: {},
+        bar: { type: 'number' }
+      },
+      additionalProperties: false
+    }
+  },
+  selectDefault: {
+    propertyNames: {
+      not: { enum: ['foo', 'bar'] }
+    }
+  }
+};
+
+var validDataList = [
+  { kind: 'foo', foo: 'any' },
+  { kind: 'bar', bar: 1 },
+  { kind: 'anything_else', not_bar_or_foo: 'any value' }
+];
+
+var invalidDataList = [
+  { kind: 'foo' }, // no propery foo
+  { kind: 'bar' }, // no propery bar
+  { kind: 'foo', foo: 'any', another: 'any value' }, // additional property
+  { kind: 'bar', bar: 1, another: 'any value' }, // additional property
+  { kind: 'anything_else', foo: 'any' } // property foo not allowed
+  { kind: 'anything_else', bar: 1 } // property bar not allowed
+];
+```
+
+__Please note__: the current implementation is BETA. It does not allow using relative URIs in $ref keywords in schemas in `selectCases` and `selectDefault` that point ouside of these schemas. The workaround is to use absolute URIs (that can point to any (sub-)schema added to Ajv, including those inside the current root schema where `select` is used). See [tests](https://github.com/epoberezkin/ajv-keywords/blob/v2.0.0/spec/tests/select.json#L314).
+
+
+### `patternRequired`
 
 This keyword allows to require the presense of properties that match some pattern(s).
 
@@ -275,7 +354,7 @@ var invalidDataList = [
 ```
 
 
-## `deepProperties`
+### `deepProperties`
 
 This keyword allows to validate deep properties (identified by JSON pointers).
 

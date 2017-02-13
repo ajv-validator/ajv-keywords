@@ -7,7 +7,7 @@ var defineKeywords = require('..');
 var ajvs = [
   defineKeywords(getAjv(),
     ['switch', 'patternRequired', 'formatMinimum', 'formatMaximum',
-     'if', 'prohibited', 'deepRequired', 'deepProperties']),
+     'if', 'prohibited', 'deepRequired', 'deepProperties', 'select']),
   defineKeywords(getAjv()),
   defineKeywords(getAjv(true)),
   defineKeywords(getAjvNoMeta()),
@@ -60,6 +60,5 @@ function getAjvV5() {
   ajv.addMetaSchema(metaSchema);
   ajv._opts.defaultMeta = metaSchema.id;
 
-  ajv.removeKeyword('propertyNames');
   return ajv;
 }
