@@ -5,11 +5,13 @@ var jsonSchemaTest = require('json-schema-test');
 var defineKeywords = require('..');
 
 var ajvs = [
-  // defineKeywords(getAjv(),
-  //   ['switch', 'patternRequired', 'formatMinimum', 'formatMaximum']),
-  defineKeywords(getAjv(), ['if', 'prohibited', 'deepRequired', 'deepProperties']),
+  defineKeywords(getAjv(),
+    ['switch', 'patternRequired', 'formatMinimum', 'formatMaximum',
+     'if', 'prohibited', 'deepRequired', 'deepProperties', 'select']),
   defineKeywords(getAjv()),
-  defineKeywords(getAjv(true))
+  defineKeywords(getAjv(true)),
+  defineKeywords(getAjvNoMeta()),
+  defineKeywords(getAjvV5())
 ];
 
 
@@ -27,9 +29,36 @@ jsonSchemaTest(ajvs, {
 
 function getAjv(extras) {
   return new Ajv({
-    v5: true,
+    $data: true,
     allErrors: extras,
     verbose: extras,
     unknownFormats: ['allowedUnknown']
   });
+}
+
+
+function getAjvNoMeta() {
+  return new Ajv({
+    $data: true,
+    unknownFormats: ['allowedUnknown'],
+    meta: false,
+    validateSchema: false
+  });
+}
+
+
+function getAjvV5() {
+  var ajv = new Ajv({
+    $data: true,
+    meta: false,
+    unknownFormats: 'ignore'
+  });
+
+  ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
+
+  var metaSchema = require('ajv/lib/refs/json-schema-v5.json');
+  ajv.addMetaSchema(metaSchema);
+  ajv._opts.defaultMeta = metaSchema.id;
+
+  return ajv;
 }

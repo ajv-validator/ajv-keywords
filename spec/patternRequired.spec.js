@@ -1,7 +1,7 @@
 'use strict';
 
 var Ajv = require('ajv');
-// var defFunc = require('../keywords/patternRequired');
+var defFunc = require('../keywords/patternRequired');
 var defineKeywords = require('..');
 var should = require('chai').should();
 
@@ -27,13 +27,13 @@ describe('keywords "patternRequired"', function() {
   });
 
   function getAjv(ownProperties) {
-    return new Ajv({ v5: true, allErrors: true, ownProperties: ownProperties });
+    return new Ajv({ allErrors: true, ownProperties: ownProperties });
   }
 
   function getAjvs(ownProperties) {
     return [
-      // defFunc(getAjv(ownProperties)),
-      // defineKeywords(getAjv(ownProperties), 'patternRequired'),
+      defFunc(getAjv(ownProperties)),
+      defineKeywords(getAjv(ownProperties), 'patternRequired'),
       defineKeywords(getAjv(ownProperties))
     ];
   }
