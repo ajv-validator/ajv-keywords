@@ -96,7 +96,7 @@ To pass validation the result of `data instanceof ...` operation on the value sh
 ```
 ajv.validate({ instanceof: 'Array' }, []); // true
 ajv.validate({ instanceof: 'Array' }, {}); // false
-ajv.validate({ instanceof: ['Array', 'Function'] }, funciton(){}); // true
+ajv.validate({ instanceof: ['Array', 'Function'] }, function(){}); // true
 ```
 
 You can add your own constructor function to be recognised by this keyword:
