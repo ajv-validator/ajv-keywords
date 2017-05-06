@@ -1,5 +1,7 @@
 # ajv-keywords
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/epoberezkin/ajv-keywords.svg)](https://greenkeeper.io/)
+
 Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) validator
 
 [![Build Status](https://travis-ci.org/epoberezkin/ajv-keywords.svg?branch=master)](https://travis-ci.org/epoberezkin/ajv-keywords)
