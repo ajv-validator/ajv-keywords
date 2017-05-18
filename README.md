@@ -7,6 +7,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
 [![npm downloads](https://img.shields.io/npm/dm/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
 [![Coverage Status](https://coveralls.io/repos/github/epoberezkin/ajv-keywords/badge.svg?branch=master)](https://coveralls.io/github/epoberezkin/ajv-keywords?branch=master)
 [![Greenkeeper badge](https://badges.greenkeeper.io/epoberezkin/ajv-keywords.svg)](https://greenkeeper.io/)
+[![Gitter](https://img.shields.io/gitter/room/ajv-validator/ajv.svg)](https://gitter.im/ajv-validator/ajv)
 
 
 ## Contents
@@ -618,4 +619,4 @@ var schema = {
 
 ## License
 
-[MIT](https://github.com/JSONScript/ajv-keywords/blob/master/LICENSE)
+[MIT](https://github.com/epoberezkin/ajv-keywords/blob/master/LICENSE)
