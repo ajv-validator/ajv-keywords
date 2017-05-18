@@ -6,6 +6,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
 [![npm version](https://badge.fury.io/js/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
 [![npm downloads](https://img.shields.io/npm/dm/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
 [![Coverage Status](https://coveralls.io/repos/github/epoberezkin/ajv-keywords/badge.svg?branch=master)](https://coveralls.io/github/epoberezkin/ajv-keywords?branch=master)
+[![Greenkeeper badge](https://badges.greenkeeper.io/epoberezkin/ajv-keywords.svg)](https://greenkeeper.io/)
 
 
 ## Contents
@@ -96,7 +97,7 @@ To pass validation the result of `data instanceof ...` operation on the value sh
 ```
 ajv.validate({ instanceof: 'Array' }, []); // true
 ajv.validate({ instanceof: 'Array' }, {}); // false
-ajv.validate({ instanceof: ['Array', 'Function'] }, funciton(){}); // true
+ajv.validate({ instanceof: ['Array', 'Function'] }, function(){}); // true
 ```
 
 You can add your own constructor function to be recognised by this keyword:
