@@ -28,6 +28,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
   - [regexp](#regexp)
   - [formatMaximum / formatMinimum and formatExclusiveMaximum / formatExclusiveMinimum](#formatmaximum--formatminimum-and-formatexclusivemaximum--formatexclusiveminimum)
   - [dynamicDefaults](#dynamicdefaults)
+  - [uniqueItemProperties](#uniqueitemproperties)
 - [License](#license)
 
 
@@ -616,6 +617,30 @@ var schema = {
 };
 ```
 
+### `uniqueItemProperties`
+
+For an array, require that fields within the array have a unique value.
+
+To pass validation the result of `uniqueItemProperties` the fields listed will
+need to be unique.
+
+```javascript
+ajv.validate({ uniqueItemProperties: [ "id" ] }, [
+  { id: 1 },
+  { id: 2 },
+  { id: 3 }
+]); // true
+ajv.validate({ uniqueItemProperties: [ "id" ] }, [
+  { id: 1 },
+  { id: 1 },
+  { id: 3 }
+]); // false
+ajv.validate({ uniqueItemProperties: [ "id", "name" ] }, [
+  { id: 1, name: "taco" },
+  { id: 2, name: "taco" }, // duplicate "name"
+  { id: 3, name: "salsa" }
+]); // false
+```
 
 ## License
 

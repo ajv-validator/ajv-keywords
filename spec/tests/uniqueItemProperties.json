@@ -1,0 +1,88 @@
+[
+  {
+    "description": "uniqueItemProperties keyword validation with single property",
+    "schema": {
+      "type": "array",
+      "uniqueItemProperties": ["id"]
+    },
+    "tests": [
+      {
+        "description": "with all unique ids",
+        "data": [
+          { "id": 1 },
+          { "id": 2 }, { "id": 3 } ], "valid": true
+      },
+      {
+        "description": "without unique ids",
+        "data": [
+          { "id": 1 },
+          { "id": 1 },
+          { "id": 3 }
+        ],
+        "valid": false
+      },
+      {
+        "description": "with all unique object-ids",
+        "data": [
+          { "id": { "_id": 1, "date": 1495213151726 } },
+          { "id": { "_id": 2, "date": 1495213151727 } },
+          { "id": { "_id": 3, "date": 1495213151728 } }
+        ],
+        "valid": true
+      },
+      {
+        "description": "without unique object-ids",
+        "data": [
+          { "id": { "_id": 1, "date": 1495213151726 } },
+          { "id": { "_id": 1, "date": 1495213151726 } },
+          { "id": { "_id": 3, "date": 1495213151728 } }
+        ],
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "uniqueItemProperties keyword validation with multiple properties",
+    "schema": {
+      "type": "array",
+      "uniqueItemProperties": ["id", "name"]
+    },
+    "tests": [
+      {
+        "description": "with all unique ids and names",
+        "data": [
+          { "id": 1, "name": "taco" },
+          { "id": 2, "name": "burrito" },
+          { "id": 3, "name": "salsa" }
+        ],
+        "valid": true
+      },
+      {
+        "description": "with unique ids but not unique names",
+        "data": [
+          { "id": 1, "name": "taco" },
+          { "id": 2, "name": "taco" },
+          { "id": 3, "name": "salsa" }
+        ],
+        "valid": false
+      }
+    ]
+  },
+  { "description": "uniqueItemProperties keyword validation with no properties",
+    "schema": {
+      "type": "array",
+      "uniqueItemProperties": []
+    },
+    "tests": [
+      {
+        "description": "with deepEqual like objects",
+        "data": [
+          { "id": 1 },
+          { "id": 1 },
+          { "id": 1 }
+        ],
+        "valid": true
+      }
+    ]
+  }
+]
