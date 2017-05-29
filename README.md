@@ -25,10 +25,10 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
   - [prohibited](#prohibited)
   - [deepProperties](#deepproperties)
   - [deepRequired](#deeprequired)
+  - [uniqueItemProperties](#uniqueitemproperties)
   - [regexp](#regexp)
   - [formatMaximum / formatMinimum and formatExclusiveMaximum / formatExclusiveMinimum](#formatmaximum--formatminimum-and-formatexclusivemaximum--formatexclusiveminimum)
   - [dynamicDefaults](#dynamicdefaults)
-  - [uniqueItemProperties](#uniqueitemproperties)
 - [License](#license)
 
 
@@ -450,6 +450,39 @@ var invalidData = {
 See [json-schema-org/json-schema-spec#203](https://github.com/json-schema-org/json-schema-spec/issues/203#issue-197211916) for an example of the equivalent schema without `deepRequired` keyword.
 
 
+### `uniqueItemProperties`
+
+The keyword allows to check that some properties in array items are unique.
+
+This keyword applies only to arrays. If the data is not an array, the validation succeeds.
+
+The value of this keyword must be an array of strings - property names that should have unique values accross all items.
+
+```javascript
+var schema = { uniqueItemProperties: [ "id", "name" ] };
+
+var validData = [
+  { id: 1 },
+  { id: 2 },
+  { id: 3 }
+];
+
+var invalidData1 = [
+  { id: 1 },
+  { id: 1 },
+  { id: 3 }
+];
+
+var invalidData2 = [
+  { id: 1, name: "taco" },
+  { id: 2, name: "taco" }, // duplicate "name"
+  { id: 3, name: "salsa" }
+];
+```
+
+This keyword is contributed by @blainesch.
+
+
 ### `regexp`
 
 This keyword allows to use regular expressions with flags in schemas (the standard `pattern` keyword does not support flags).
@@ -617,30 +650,6 @@ var schema = {
 };
 ```
 
-### `uniqueItemProperties`
-
-For an array, require that fields within the array have a unique value.
-
-To pass validation the result of `uniqueItemProperties` the fields listed will
-need to be unique.
-
-```javascript
-ajv.validate({ uniqueItemProperties: [ "id" ] }, [
-  { id: 1 },
-  { id: 2 },
-  { id: 3 }
-]); // true
-ajv.validate({ uniqueItemProperties: [ "id" ] }, [
-  { id: 1 },
-  { id: 1 },
-  { id: 3 }
-]); // false
-ajv.validate({ uniqueItemProperties: [ "id", "name" ] }, [
-  { id: 1, name: "taco" },
-  { id: 2, name: "taco" }, // duplicate "name"
-  { id: 3, name: "salsa" }
-]); // false
-```
 
 ## License
 
