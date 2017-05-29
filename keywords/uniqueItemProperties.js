@@ -2,6 +2,7 @@
 
 module.exports = function defFunc(ajv) {
   defFunc.definition = {
+    type: 'array',
     compile: function(keys, parentSchema, it) {
       var equal = it.util.equal;
       return function(data) {
