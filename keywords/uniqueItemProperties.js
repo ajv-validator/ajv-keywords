@@ -6,30 +6,24 @@ module.exports = function defFunc(ajv) {
     compile: function(keys, parentSchema, it) {
       var equal = it.util.equal;
       return function(data) {
-        var keyData = keys.reduce(function (props, key) {
-          props[key] = [];
-          return props;
-        }, {});
-
-        var foundCollision = !!data.find(function (item) {
-          return !!keys.find(function (key) {
-            var value = item[key];
-            var foundValue = keyData[key].find(function (storedValue) {
-              return equal(value, storedValue);
-            });
-            if (!foundValue) {
-              keyData[key].push(value);
-              return false;
+        if (data.length > 1) {
+          for (var k=0; k < keys.length; k++) {
+            var key = keys[k];
+            for (var i = data.length; i--;) {
+              if (typeof data[i] != 'object') continue;
+              for (var j = i; j--;) {
+                if (typeof data[j] == 'object' && equal(data[i][key], data[j][key]))
+                  return false;
+              }
             }
-            return true;
-          });
-        });
-
-        return !foundCollision;
+          }
+        }
+        return true;
       };
     },
     metaSchema: {
-      type: 'array'
+      type: 'array',
+      items: {type: 'string'}
     }
   };
 
