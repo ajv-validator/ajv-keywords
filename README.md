@@ -480,7 +480,7 @@ var invalidData2 = [
 ];
 ```
 
-This keyword is contributed by @blainesch.
+This keyword is contributed by [@blainesch](https://github.com/blainesch).
 
 
 ### `regexp`
