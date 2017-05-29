@@ -54,6 +54,23 @@
           "length": 2
         },
         "valid": true
+      },
+      {
+        "description": "array with one item is valid",
+        "data": [
+          { "id": 1 }
+        ],
+        "valid": true
+      },
+      {
+        "description": "empty array is valid",
+        "data": [],
+        "valid": true
+      },
+      {
+        "description": "array with non-objects is valid",
+        "data": [1, 1],
+        "valid": true
       }
     ]
   },
