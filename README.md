@@ -456,7 +456,7 @@ The keyword allows to check that some properties in array items are unique.
 
 This keyword applies only to arrays. If the data is not an array, the validation succeeds.
 
-The value of this keyword must be an array of strings - property names that should have unique values accross all items.
+The value of this keyword must be an array of strings - property names that should have unique values across all items.
 
 ```javascript
 var schema = { uniqueItemProperties: [ "id", "name" ] };
