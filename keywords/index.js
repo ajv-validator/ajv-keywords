@@ -9,6 +9,7 @@ module.exports = {
   'if': require('./if'),
   prohibited: require('./prohibited'),
   uniqueItemProperties: require('./uniqueItemProperties'),
+  seqItemProperties: require('./seqItemProperties'),
   deepProperties: require('./deepProperties'),
   deepRequired: require('./deepRequired'),
   formatMinimum: require('./formatMinimum'),

@@ -1,0 +1,138 @@
+[
+  {
+    "description": "seqItemProperties keyword validation with single property",
+    "schema": {
+      "seqItemProperties": {"id": 1}
+    },
+    "tests": [
+      {
+        "description": "with all sequential ids starting from 1 is valid",
+        "data": [
+          { "id": 1 },
+          { "id": 2 },
+          { "id": 3 }
+        ],
+        "valid": true
+      },
+      {
+        "description": "with all sequential ids starting from anything but 1 is invalid",
+        "data": [
+          { "id": 0 },
+          { "id": 1 },
+          { "id": 2 }
+        ],
+        "valid": false
+      },
+      {
+        "description": "with non-sequential ids is invalid",
+        "data": [
+          { "id": 1 },
+          { "id": 3 },
+          { "id": 4 }
+        ],
+        "valid": false
+      },
+      {
+        "description": "without unique ids",
+        "data": [
+          { "id": 1 },
+          { "id": 1 },
+          { "id": 3 }
+        ],
+        "valid": false
+      },
+      {
+        "description": "string id is invalid",
+        "data": [
+          { "id": "1" },
+          { "id": 2 },
+          { "id": 3 }
+        ],
+        "valid": false
+      },
+      {
+        "description": "non-array is valid",
+        "data": 1,
+        "valid": true
+      },
+      {
+        "description": "non-array is valid even for pseudo-arrays",
+        "data": {
+          "0": { "id": 1 },
+          "1": { "id": 1 },
+          "length": 2
+        },
+        "valid": true
+      },
+      {
+        "description": "array with one item is valid",
+        "data": [
+          { "id": 1 }
+        ],
+        "valid": true
+      },
+      {
+        "description": "empty array is valid",
+        "data": [],
+        "valid": true
+      },
+      {
+        "description": "array with non-objects is invalid",
+        "data": [1, 2],
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "seqItemProperties keyword validation with multiple properties",
+    "schema": {
+      "type": "array",
+      "seqItemProperties": {
+        "id0": 0,
+        "id1": 1
+      }
+    },
+    "tests": [
+      {
+        "description": "with all sequential id0 starting from 0 and id1 starting from 1 is valid",
+        "data": [
+          { "id0": 0, "id1": 1 },
+          { "id0": 1, "id1": 2 },
+          { "id0": 2, "id1": 3 }
+        ],
+        "valid": true
+      },
+      {
+        "description": "with all sequential id0 starting from 0 but id1 not sequential is invalid",
+        "data": [
+          { "id0": 0, "id1": 1 },
+          { "id0": 1, "id1": 1 },
+          { "id0": 2, "id1": 3 }
+        ],
+        "valid": false
+      }
+    ]
+  },
+  { "description": "seqItemProperties keyword validation with no properties",
+    "schema": {
+      "type": "array",
+      "seqItemProperties": {}
+    },
+    "tests": [
+      {
+        "description": "all equal objects are valid",
+        "data": [
+          { "id": 1 },
+          { "id": 1 },
+          { "id": 1 }
+        ],
+        "valid": true
+      },
+      {
+        "description": "array with non-objects is valid",
+        "data": [1, 2],
+        "valid": true
+      }
+    ]
+  }
+]
