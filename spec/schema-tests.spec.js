@@ -7,7 +7,7 @@ var defineKeywords = require('..');
 var ajvs = [
   defineKeywords(getAjv(),
     ['switch', 'patternRequired', 'formatMinimum', 'formatMaximum',
-      'uniqueItemProperties', 'if', 'prohibited', 'deepRequired', 'deepProperties', 'select']),
+      'uniqueItemProperties', 'prohibited', 'deepRequired', 'deepProperties', 'select']),
   defineKeywords(getAjv()),
   defineKeywords(getAjv(true)),
   defineKeywords(getAjvNoMeta()),
