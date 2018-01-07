@@ -34,7 +34,7 @@
     "ajv": "^5.0.0"
   },
   "devDependencies": {
-    "ajv": "^5.0.0",
+    "ajv": "^6.0.0",
     "ajv-pack": "^0.3.0",
     "chai": "^4.0.2",
     "coveralls": "^3.0.0",
