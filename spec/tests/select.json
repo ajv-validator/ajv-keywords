@@ -313,7 +313,7 @@
   {
     "description": "select keyword with absolute URIs in $ref (supported)",
     "schema": {
-      "id": "select_test.json",
+      "$id": "select_test.json",
       "type": "object",
       "definitions": {
         "num": { "type": "number" },

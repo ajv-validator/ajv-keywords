@@ -10,8 +10,7 @@ var ajvs = [
       'uniqueItemProperties', 'prohibited', 'deepRequired', 'deepProperties', 'select']),
   defineKeywords(getAjv()),
   defineKeywords(getAjv(true)),
-  defineKeywords(getAjvNoMeta()),
-  defineKeywords(getAjvV5())
+  defineKeywords(getAjvNoMeta())
 ];
 
 
@@ -44,21 +43,4 @@ function getAjvNoMeta() {
     meta: false,
     validateSchema: false
   });
-}
-
-
-function getAjvV5() {
-  var ajv = new Ajv({
-    $data: true,
-    meta: false,
-    unknownFormats: 'ignore'
-  });
-
-  ajv.addMetaSchema(require('ajv/lib/refs/json-schema-draft-04.json'));
-
-  var metaSchema = require('ajv/lib/refs/json-schema-v5.json');
-  ajv.addMetaSchema(metaSchema);
-  ajv._opts.defaultMeta = metaSchema.id;
-
-  return ajv;
 }
