@@ -1,6 +1,6 @@
 {
   "name": "ajv-keywords",
-  "version": "2.1.1",
+  "version": "3.0.0-beta.0",
   "description": "Custom JSON-Schema keywords for Ajv validator",
   "main": "index.js",
   "scripts": {
@@ -31,10 +31,10 @@
   },
   "homepage": "https://github.com/epoberezkin/ajv-keywords#readme",
   "peerDependencies": {
-    "ajv": "^5.0.0"
+    "ajv": "^6.0.0"
   },
   "devDependencies": {
-    "ajv": "^5.0.0",
+    "ajv": "^6.0.0",
     "ajv-pack": "^0.3.0",
     "chai": "^4.0.2",
     "coveralls": "^3.0.0",
