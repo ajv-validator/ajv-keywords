@@ -91,7 +91,7 @@ ajv.validate({ typeof: ['undefined', 'object'] }, null); // true
 
 Based on JavaScript `instanceof` operation.
 
-The value of the keyword should be a string (`"Object"`, `"Array"`, `"Function"`, `"Number"`, `"String"`, `"Date"`, `"RegExp"` or `"Buffer"`) or array of strings.
+The value of the keyword should be a string (`"Object"`, `"Array"`, `"Function"`, `"Number"`, `"String"`, `"Date"`, `"RegExp"`, `"Promise"` or `"Buffer"`) or array of strings.
 
 To pass validation the result of `data instanceof ...` operation on the value should be true:
 

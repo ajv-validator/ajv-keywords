@@ -36,6 +36,10 @@ describe('keyword "instanceof"', function() {
       ajv.validate({ instanceof: 'Buffer' }, new Buffer('foo')) .should.equal(true);
       ajv.validate({ instanceof: 'Buffer' }, 'foo') .should.equal(false);
       ajv.validate({ instanceof: 'Buffer' }, {}) .should.equal(false);
+      ajv.validate({ instanceof: 'Buffer' }, {}) .should.equal(false);
+      ajv.validate({ instanceof: 'Promise' }, new Promise(function(resolve, reject){ return resolve(); }))
+        .should.equal(true);
+      ajv.validate({ instanceof: 'Promise' }, function(){}) .should.equal(false);
     });
 
     it('should validate multiple classes #' + i, function() {
