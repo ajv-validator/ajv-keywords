@@ -19,10 +19,12 @@ module.exports = function defFunc(ajv) {
       if (validate === undefined) validate = compiled.default;
       if (typeof validate == 'boolean') return validate;
       var valid = validate(data);
-      if (!valid) v.errors = validate.errors.map(function(e){
-        e.dataPath = path + e.dataPath;
-        return e;
-      });
+      if (!valid) {
+        v.errors = validate.errors.map(function(e){
+          e.dataPath = path + e.dataPath;
+          return e;
+        });
+      }
       return valid;
     },
     $data: true,
