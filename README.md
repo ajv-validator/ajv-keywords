@@ -17,6 +17,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
 - [Keywords](#keywords)
   - [typeof](#typeof)
   - [instanceof](#instanceof)
+  - [subclassof](#subclassof)
   - [range and exclusiveRange](#range-and-exclusiverange)
   - [switch](#switch)
   - [select/selectCases/selectDefault](#selectselectcasesselectdefault) (BETA)
@@ -95,13 +96,13 @@ The value of the keyword should be a string (`"Object"`, `"Array"`, `"Function"`
 
 To pass validation the result of `data instanceof ...` operation on the value should be true:
 
-```
+```javascript
 ajv.validate({ instanceof: 'Array' }, []); // true
 ajv.validate({ instanceof: 'Array' }, {}); // false
 ajv.validate({ instanceof: ['Array', 'Function'] }, function(){}); // true
 ```
 
-You can add your own constructor function to be recognised by this keyword:
+You can add your own constructor function to be recognized by this keyword:
 
 ```javascript
 function MyClass() {}
@@ -110,6 +111,38 @@ var instanceofDefinition = require('ajv-keywords').get('instanceof').definition;
 instanceofDefinition.CONSTRUCTORS.MyClass = MyClass;
 
 ajv.validate({ instanceof: 'MyClass' }, new MyClass); // true
+```
+
+### `instanceof`
+
+A specific case of `instanceof`. Returns true if passed an object or constructor of
+a class extending the passed schema parameter.
+
+The value of the keyword should be a string (`"Object"`, `"Array"`, `"Function"`, `"Number"`, `"String"`, `"Date"`, `"RegExp"`, `"Promise"` or `"Buffer"`) or array of strings.
+
+To pass validation the result of `data subclassof ...` operation on the value should be true:
+
+```javascript
+class ChildArray extends Array {}
+class ChildFunction extends Function {}
+ajv.validate({ subclassof: 'Array' }, ChildArray); // true
+ajv.validate({ subclassof: 'Array' }, new ChildArray); // true
+ajv.validate({ subclassof: 'Array' }, []); // false
+ajv.validate({ subclassof: ['Array', 'Function'] }, new ChildArray); // true
+ajv.validate({ subclassof: ['Array', 'Function'] }, new ChildFunction); // true
+```
+
+You can add your own constructor function to be recognized by this keyword:
+
+```javascript
+class MyClass {}
+class MyChildClass extends MyClass {}
+var subclassofDefiniton = require('ajv-keywords').get('subclassof');
+// or require('ajv-keywords/keywords/subclassof');
+var ajv = defFunc(new Ajv(), { MyClass: MyClass });
+
+ajv.validate({ subclassof: 'MyClass' }, new MyClass); // false
+ajv.validate({ subclassof: 'MyClass' }, new MyChildClass); // true
 ```
 
 
