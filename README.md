@@ -28,6 +28,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
   - [regexp](#regexp)
   - [formatMaximum / formatMinimum and formatExclusiveMaximum / formatExclusiveMinimum](#formatmaximum--formatminimum-and-formatexclusivemaximum--formatexclusiveminimum)
   - [dynamicDefaults](#dynamicdefaults)
+  - [coerce](#coerce)
 - [License](#license)
 
 
@@ -616,6 +617,62 @@ var schema = {
     id3: { func: 'uuid', v: 1 } // v1
   }
 };
+```
+
+### `coerce`
+
+This keyword allows a string to be modified before validation. 
+
+These keywords apply only to strings. If the data is not a string, the validation succeeds.
+
+There is one limitation, due to how ajv is written, a stand alone string cannot be coerced. ie `data = 'a'; ajv.validate(schema, data);`
+
+**Supported options:**
+- `trim`: remove whitespace from start and end
+- `trimleft`: remove whitespace from start
+- `trimright`: remove whitespace from end
+- `lowercase`: case string to all lower case
+- `uppercase`: case string to all upper case
+- `enumcase`: case string to match case in schema
+
+Options are applied in the order they are listed.
+
+Note: `enumcase` requires that all allowed values are unique when case insensitive.
+
+**Example: multiple options**
+```javascript
+require('ajv-keywords')(ajv, ['coerce']);
+
+var schema = {
+  type: 'array',
+  items: {
+    type:'string',
+    coerce:['trim','lowercase']
+  }
+};
+
+var data = ['  MixCase  '];
+avj.validate(schema, data);
+console.log(data); // ['mixcase']
+
+```
+
+**Example: `enumcase`**
+```javascript
+require('ajv-keywords')(ajv, ['coerce']);
+
+var schema = {
+  type: 'array',
+  items: {
+    type:'string',
+    coerce:['trim','enumcase'],
+    enum:['pH']
+  }
+};
+
+var data = ['ph',' Ph','PH','pH '];
+avj.validate(schema, data);
+console.log(data); // ['pH','pH','pH','pH']
 ```
 
 

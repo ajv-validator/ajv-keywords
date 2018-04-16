@@ -27,10 +27,10 @@ module.exports = function defFunc (ajv) {
       }
 
       var coerce = {
-        trimLeft: function (value) {
+        trimleft: function (value) {
           return value.replace(/^[\s]+/, '');
         },
-        trimRight: function (value) {
+        trimright: function (value) {
           return value.replace(/[\s]+$/, '');
         },
         trim: function (value) {
@@ -61,7 +61,7 @@ module.exports = function defFunc (ajv) {
       items: {
         type: 'string',
         enum: [
-          'trimLeft', 'trimRight', 'trim',
+          'trimleft', 'trimright', 'trim',
           'lowercase', 'uppercase', 'enumcase'
         ]
       }

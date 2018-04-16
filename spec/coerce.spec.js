@@ -10,8 +10,7 @@ describe('keyword "coerce"', function () {
   var ajvs = [
     defFunc(new Ajv),
     defineKeywords(new Ajv, 'coerce'),
-    defineKeywords(new Ajv),
-    //defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
+    defineKeywords(new Ajv)
   ]
 
 
@@ -43,17 +42,17 @@ describe('keyword "coerce"', function () {
       var schema, data
 
       data = ['  trimObject  '];
-      schema = {type: 'array', items: {type: 'string', coerce: ['trimLeft']}};
+      schema = {type: 'array', items: {type: 'string', coerce: ['trimleft']}};
       ajv.validate(schema, data) .should.equal(true);
       data.should.deep.equal(['trimObject  ']);
 
       data = ['  trimObject  '];
-      schema = {type: 'array', items: {type: 'string', coerce: ['trimRight']}};
+      schema = {type: 'array', items: {type: 'string', coerce: ['trimright']}};
       ajv.validate(schema, data) .should.equal(true);
       data.should.deep.equal(['  trimObject']);
 
       data = ['  trimObject  '];
-      schema = {type: 'array', items: {type: 'string', coerce: ['trimLeft','trimRight']}};
+      schema = {type: 'array', items: {type: 'string', coerce: ['trimleft','trimright']}};
       ajv.validate(schema, data) .should.equal(true);
       data.should.deep.equal(['trimObject']);
 
