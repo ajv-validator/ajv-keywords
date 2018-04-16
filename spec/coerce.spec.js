@@ -34,7 +34,7 @@ describe('keyword "coerce"', function () {
       schema = {type: 'string', coerce: ['trim', 'lowercase']};
       ajv.validate(schema, data) .should.equal(true);
       // Note: Doesn't work on plain strings due to object being undefined
-      // data.should.deep.equal('string');
+      data.should.equal('  String  ');
     })
   })
 
@@ -82,6 +82,22 @@ describe('keyword "coerce"', function () {
       schema = {type: 'array', items: {type: 'string', coerce: ['enumcase'], enum:['pH']}};
       ajv.validate(schema, data) .should.equal(true);
       data.should.deep.equal(['pH','pH','pH','pH']);
+
+      data = ['ph'];
+      schema = {type: 'array', items: {type: 'string', coerce: ['enumcase']}};
+      try {
+        ajv.validate(schema, data).should.equal(false);
+      } catch (e) {
+        e.message.should.equal('Missing enum. To use `coerce:["enumcase"]`, `enum:[...]` is required.');
+      }
+
+      data = ['ph'];
+      schema = {type: 'array', items: {type: 'string', coerce: ['enumcase'], enum:['pH','PH']}};
+      try {
+        ajv.validate(schema, data).should.equal(false);
+      } catch (e) {
+        e.message.should.equal('Invalid enum uniqueness. To use `coerce:["enumcase"]`, all values must be unique when case insensitive.');
+      }
 
       data = ['ab'];
       schema = {type: 'array', items: {type: 'string', coerce: ['enumcase'], enum:['pH']}};
