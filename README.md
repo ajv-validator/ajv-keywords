@@ -28,7 +28,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
   - [regexp](#regexp)
   - [formatMaximum / formatMinimum and formatExclusiveMaximum / formatExclusiveMinimum](#formatmaximum--formatminimum-and-formatexclusivemaximum--formatexclusiveminimum)
   - [dynamicDefaults](#dynamicdefaults)
-  - [coerce](#coerce)
+  - [transform](#transform)
 - [License](#license)
 
 
@@ -619,35 +619,35 @@ var schema = {
 };
 ```
 
-### `coerce`
+### `transform`
 
 This keyword allows a string to be modified before validation. 
 
-These keywords apply only to strings. If the data is not a string, the validation succeeds.
+These keywords apply only to strings. If the data is not a string, the transform is skipped.
 
-There is one limitation, due to how ajv is written, a stand alone string cannot be coerced. ie `data = 'a'; ajv.validate(schema, data);`
+There is one limitation, due to how ajv is written, a stand alone string cannot be transformed. ie `data = 'a'; ajv.validate(schema, data);`
 
 **Supported options:**
 - `trim`: remove whitespace from start and end
-- `trimleft`: remove whitespace from start
-- `trimright`: remove whitespace from end
-- `lowercase`: case string to all lower case
-- `uppercase`: case string to all upper case
-- `enumcase`: case string to match case in schema
+- `trimLeft`: remove whitespace from start
+- `trimRight`: remove whitespace from end
+- `toLowerCase`: case string to all lower case
+- `toUpperCase`: case string to all upper case
+- `toEnumCase`: case string to match case in schema
 
 Options are applied in the order they are listed.
 
-Note: `enumcase` requires that all allowed values are unique when case insensitive.
+Note: `toEnumCase` requires that all allowed values are unique when case insensitive.
 
 **Example: multiple options**
 ```javascript
-require('ajv-keywords')(ajv, ['coerce']);
+require('ajv-keywords')(ajv, ['transform']);
 
 var schema = {
   type: 'array',
   items: {
     type:'string',
-    coerce:['trim','lowercase']
+    transform:['trim','lowercase']
   }
 };
 
@@ -659,13 +659,13 @@ console.log(data); // ['mixcase']
 
 **Example: `enumcase`**
 ```javascript
-require('ajv-keywords')(ajv, ['coerce']);
+require('ajv-keywords')(ajv, ['transform']);
 
 var schema = {
   type: 'array',
   items: {
     type:'string',
-    coerce:['trim','enumcase'],
+    transform:['trim','enumcase'],
     enum:['pH']
   }
 };

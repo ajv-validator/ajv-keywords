@@ -15,5 +15,5 @@ module.exports = {
   patternRequired: require('./patternRequired'),
   'switch': require('./switch'),
   select: require('./select'),
-  coerce: require('./coerce')
+  transform: require('./transform')
 };

@@ -12,37 +12,38 @@ module.exports = function defFunc (ajv) {
       // build hash table to enum values
       var hashtable = {};
 
-      if (schema.indexOf('enumcase') !== -1) {
+      if (schema.indexOf('toEnumCase') !== -1) {
         // requires `enum` in schema
         if (!parentSchema.enum)
-          throw new Error('Missing enum. To use `coerce:["enumcase"]`, `enum:[...]` is required.');
+          throw new Error('Missing enum. To use `transform:["toEnumCase"]`, `enum:[...]` is required.');
         for (var i = parentSchema.enum.length; i--; i) {
           var v = parentSchema.enum[i];
+          if (typeof v !== 'string') continue;
           var k = makeHashTableKey(v);
           // requires all `enum` values have unique keys
           if (hashtable[k])
-            throw new Error('Invalid enum uniqueness. To use `coerce:["enumcase"]`, all values must be unique when case insensitive.');
+            throw new Error('Invalid enum uniqueness. To use `transform:["toEnumCase"]`, all values must be unique when case insensitive.');
           hashtable[k] = v;
         }
       }
 
-      var coerce = {
-        trimleft: function (value) {
+      var transform = {
+        trimLeft: function (value) {
           return value.replace(/^[\s]+/, '');
         },
-        trimright: function (value) {
+        trimRight: function (value) {
           return value.replace(/[\s]+$/, '');
         },
         trim: function (value) {
           return value.trim();
         },
-        lowercase: function (value) {
+        toLowerCase: function (value) {
           return value.toLowerCase();
         },
-        uppercase: function (value) {
+        toUpperCase: function (value) {
           return value.toUpperCase();
         },
-        enumcase: function (value) {
+        toEnumCase: function (value) {
           return hashtable[makeHashTableKey(value)] || value;
         }
       };
@@ -51,9 +52,11 @@ module.exports = function defFunc (ajv) {
         // skip if value only
         if (!object) return;
 
-        // apply coerce in order provided
-        for (var j = 0, l = schema.length; j < l; j++)
-          object[key] = coerce[schema[j]](object[key]);
+        // apply transform in order provided
+        for (var j = 0, l = schema.length; j < l; j++) {
+          if (typeof object[key] !== 'string') continue;
+          object[key] = transform[schema[j]](object[key]);
+        }
       };
     },
     metaSchema: {
@@ -61,14 +64,14 @@ module.exports = function defFunc (ajv) {
       items: {
         type: 'string',
         enum: [
-          'trimleft', 'trimright', 'trim',
-          'lowercase', 'uppercase', 'enumcase'
+          'trimLeft', 'trimRight', 'trim',
+          'toLowerCase', 'toUpperCase', 'toEnumCase'
         ]
       }
     }
   };
 
-  ajv.addKeyword('coerce', defFunc.definition);
+  ajv.addKeyword('transform', defFunc.definition);
   return ajv;
 
   function makeHashTableKey (value) {
