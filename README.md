@@ -625,7 +625,9 @@ This keyword allows a string to be modified before validation.
 
 These keywords apply only to strings. If the data is not a string, the transform is skipped.
 
-There is one limitation, due to how ajv is written, a stand alone string cannot be transformed. ie `data = 'a'; ajv.validate(schema, data);`
+There are limitation due to how ajv is written:
+- a stand alone string cannot be transformed. ie `data = 'a'; ajv.validate(schema, data);`
+- currently cannot work with `ajv-pack`
 
 **Supported options:**
 - `trim`: remove whitespace from start and end
