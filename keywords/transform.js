@@ -5,7 +5,6 @@ module.exports = function defFunc (ajv) {
     type: 'string',
     errors: false,
     modifying: true,
-    schema: false,
     valid: true,
     compile: function (schema, parentSchema) {
 
