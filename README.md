@@ -649,7 +649,7 @@ var schema = {
   type: 'array',
   items: {
     type:'string',
-    transform:['trim','lowercase']
+    transform:['trim','toLowerCase']
   }
 };
 
@@ -667,7 +667,7 @@ var schema = {
   type: 'array',
   items: {
     type:'string',
-    transform:['trim','enumcase'],
+    transform:['trim','toEnumCase'],
     enum:['pH']
   }
 };
