@@ -1,5 +1,6 @@
 env:
   node: true
+  mocha: true
 extends: 'eslint:recommended'
 globals:
   Promise: false
