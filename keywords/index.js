@@ -15,5 +15,9 @@ module.exports = {
   patternRequired: require('./patternRequired'),
   'switch': require('./switch'),
   select: require('./select'),
-  transform: require('./transform')
+  transform: require('./transform'),
+  validateAsync: require('./validateAsync'),
+  validateSync: require('./validateSync'),
+  valueAsync: require('./valueAsync'),
+  valueSync: require('./valueSync')
 };
