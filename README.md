@@ -654,7 +654,7 @@ var schema = {
 };
 
 var data = ['  MixCase  '];
-avj.validate(schema, data);
+ajv.validate(schema, data);
 console.log(data); // ['mixcase']
 
 ```
@@ -673,7 +673,7 @@ var schema = {
 };
 
 var data = ['ph',' Ph','PH','pH '];
-avj.validate(schema, data);
+ajv.validate(schema, data);
 console.log(data); // ['pH','pH','pH','pH']
 ```
 
