@@ -125,7 +125,7 @@ ajv.validate({ instanceof: 'MyClass' }, new MyClass); // true
 ```
 
 
-###Keywords for numbers
+### Keywords for numbers
 
 #### `range` and `exclusiveRange`
 
