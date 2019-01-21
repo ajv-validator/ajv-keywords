@@ -33,22 +33,22 @@ describe('keyword "dynamicDefaults"', function() {
       };
 
       var validate = ajv.compile(schema);
-      var data0 = {};
-      validate(data0) .should.equal(true);
-      test(data0);
-      data0.s .should.equal(2*i);
-      data0.sN .should.equal(2*i);
+      var data = {};
+      validate(data) .should.equal(true);
+      test(data);
+      data.s .should.equal(2*i);
+      data.sN .should.equal(2*i);
 
       setTimeout(function() {
         var data1 = {};
         validate(data1) .should.equal(true);
         test(data1);
-        assert(data0.ts < data1.ts);
-        assert.notEqual(data0.dt, data1.dt);
-        assert.equal(data0.d, data1.d);
-        assert.notEqual(data0.t, data1.t);
-        assert.notEqual(data0.r, data1.r);
-        assert.notEqual(data0.riN, data1.riN);
+        assert(data.ts < data1.ts);
+        assert.notEqual(data.dt, data1.dt);
+        assert.equal(data.d, data1.d);
+        assert.notEqual(data.t, data1.t);
+        assert.notEqual(data.r, data1.r);
+        assert.notEqual(data.riN, data1.riN);
 
         data1.s .should.equal(2*i + 1);
         data1.sN .should.equal(2*i + 1);
@@ -139,8 +139,8 @@ describe('keyword "dynamicDefaults"', function() {
 
       defFunc.definition.DEFAULTS.uuid = uuidV4;
 
-      var data0 = {};
-      test(data0);
+      var data = {};
+      test(data);
 
       should.throw(function() {
         ajv.compile(schema);
@@ -150,7 +150,7 @@ describe('keyword "dynamicDefaults"', function() {
 
       var data1 = {};
       test(data1);
-      assert.notEqual(data0.id, data1.id);
+      assert.notEqual(data.id, data1.id);
 
       function test(data) {
         ajv.validate(schema, data) .should.equal(true);

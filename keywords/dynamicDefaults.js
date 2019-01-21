@@ -37,8 +37,8 @@ module.exports = function defFunc(ajv) {
       function assignDefaults(data) {
         for (var prop in schema){
           if (data[prop] === undefined
-            || it.opts.useDefaults == 'empty'
-            && (data[prop] === null || data[prop] === ''))
+            || (it.opts.useDefaults == 'empty'
+            && (data[prop] === null || data[prop] === '')))
             data[prop] = funcs[prop]();
         }
         return true;
