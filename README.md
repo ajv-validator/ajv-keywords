@@ -595,7 +595,7 @@ __Please note__: the current implementation is BETA. It does not allow using rel
 
 This keyword allows to assign dynamic defaults to properties, such as timestamps, unique IDs etc.
 
-This keyword only works if `useDefaults` options is used and not inside `anyOf` keywrods etc., in the same way as [default keyword treated by Ajv](https://github.com/epoberezkin/ajv#assigning-defaults).
+This keyword only works if `useDefaults` options is used and not inside `anyOf` keywords etc., in the same way as [default keyword treated by Ajv](https://github.com/epoberezkin/ajv#assigning-defaults).
 
 The keyword should be added on the object level. Its value should be an object with each property corresponding to a property name, in the same way as in standard `properties` keyword. The value of each property can be:
 
@@ -611,27 +611,26 @@ There are several predefined dynamic default functions:
 - `"date"` - current date as string (ISO, valid according to `date` format)
 - `"time"` - current time as string (ISO, valid according to `time` format)
 - `"random"` - pseudo-random number in [0, 1) interval
-- `"randomint"` - pseudo-random integer number. If string is used as a property value, the function will randomly return 0 or 1. If object `{func: 'randomint', max: N}` is used then the default will be an integer number in [0, N) interval.
-- `"seq"` - sequential integer number starting from 0. If string is used as a property value, the default sequence will be used. If object `{func: 'seq', name: 'foo'}` is used then the sequence with name `"foo"` will be used. Sequences are global, even if different ajv instances are used.
+- `"randomint"` - pseudo-random integer number. If string is used as a property value, the function will randomly return 0 or 1. If object `{ func: 'randomint', args: { max: N } }` is used then the default will be an integer number in [0, N) interval.
+- `"seq"` - sequential integer number starting from 0. If string is used as a property value, the default sequence will be used. If object `{ func: 'seq', args: { name: 'foo'} }` is used then the sequence with name `"foo"` will be used. Sequences are global, even if different ajv instances are used.
 
 ```javascript
 var schema = {
   type: 'object',
   dynamicDefaults: {
     ts: 'datetime',
-    r: { func: 'randomint', max: 100 },
-    id: { func: 'seq', name: 'id' }
+    r: { func: 'randomint', args: { max: 100 } },
+    id: { func: 'seq', args: { name: 'id' } }
   },
   properties: {
     ts: {
       type: 'string',
-      format: 'datetime'
+      format: 'date-time'
     },
     r: {
       type: 'integer',
       minimum: 0,
-      maximum: 100,
-      exclusiveMaximum: true
+      exclusiveMaximum: 100
     },
     id: {
       type: 'integer',
@@ -650,6 +649,43 @@ data1; // { ts: '2016-12-01T22:07:29.832Z', r: 68, id: 1 }
 
 ajv.validate(data1); // true
 data1; // didn't change, as all properties were defined
+```
+
+When using the `useDefaults` option value `"empty"`, properties and items equal to `null` or `""` (empty string) will be considered missing and assigned defaults.  Use the `allOf` [compound keyword](https://github.com/epoberezkin/ajv/blob/master/KEYWORDS.md#compound-keywords) to execute `dynamicDefaults` before validation.
+
+```javascript
+var schema = {
+  allOf: [
+    {
+      dynamicDefaults: {
+        ts: 'datetime',
+        r: { func: 'randomint', args: { min: 5, max: 100 } },
+        id: { func: 'seq', args: { name: 'id' } }
+      }
+    },
+    {
+      type: 'object',
+      properties: {
+        ts: {
+          type: 'string'
+        },
+        r: {
+          type: 'number',
+          minimum: 5,
+          exclusiveMaximum: 100
+        },
+        id: {
+          type: 'integer',
+          minimum: 0
+        }
+      }
+    }
+  ]
+};
+
+var data = { ts: '', r: null };
+ajv.validate(data); // true
+data; // { ts: '2016-12-01T22:07:28.829Z', r: 25, id: 0 }
 ```
 
 You can add your own dynamic default function to be recognised by this keyword:

@@ -7,7 +7,6 @@ var should = require('chai').should();
 var assert = require('assert');
 var uuid = require('uuid');
 
-
 describe('keyword "dynamicDefaults"', function() {
   function getAjv() { return new Ajv({useDefaults: true, unknownFormats: true}); }
 
@@ -163,5 +162,115 @@ describe('keyword "dynamicDefaults"', function() {
 
       function uuidV4() { return uuid.v4(); }
     });
+  });
+
+  it('should NOT assign defaults when useDefaults is true/"shared and properties are null, empty or contain a value"', function() {
+
+    var schema = {
+      allOf: [
+        {
+          dynamicDefaults: {
+            ts: 'datetime',
+            r: { func: 'randomint', args: { min: 5, max: 100000 } },
+            id: { func: 'seq', args: { name: 'id' } }
+          }
+        },
+        {
+          type: 'object',
+          properties: {
+            ts: {
+              type: 'string'
+            },
+            r: {
+              type: 'number',
+              minimum: 5,
+              exclusiveMaximum: 100000
+            },
+            id: {
+              type: 'integer',
+              minimum: 0
+            }
+          }
+        }
+      ]
+    };
+
+    var data = {
+      ts: '',
+      r: null,
+      id: 3
+    };
+
+    test(new Ajv({useDefaults: true}));
+    test(new Ajv({useDefaults: 'shared'}));
+
+    function test(testAjv) {
+      var validate = defFunc(testAjv).compile(schema);
+      validate(data).should.equal(false);
+
+      data.ts.should.equal('');
+      should.equal(data.r, null);
+      data.id.should.equal(3);
+    }
+  });
+
+  it('should assign defaults when useDefaults = "empty" for properties that are undefined, null or empty strings', function(done) {
+
+    var schema = {
+      allOf: [
+        {
+          dynamicDefaults: {
+            ts: 'datetime',
+            r: { func: 'randomint', args: { min: 5, max: 100000 } },
+            id: { func: 'seq', args: { name: 'id' } }
+          }
+        },
+        {
+          type: 'object',
+          properties: {
+            ts: {
+              type: 'string'
+            },
+            r: {
+              type: 'number',
+              minimum: 5,
+              exclusiveMaximum: 100000
+            },
+            id: {
+              type: 'integer',
+              minimum: 0
+            }
+          }
+        }
+      ]
+    };
+
+    var data = {
+      ts: '',
+      r: null
+    };
+
+    var data1 = Object.assign({}, data);
+
+    test(new Ajv({useDefaults: 'empty'}));
+
+    function test(testAjv) {
+      var validate = defFunc(testAjv).compile(schema);
+      validate(data).should.equal(true);
+
+      var tsRegex = /\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z/;
+      data.ts.should.match(tsRegex);
+      data.r.should.be.a('number');
+      data.id.should.be.a('number');
+
+      setTimeout(function(){
+        validate(data1).should.equal(true);
+        data.ts.should.not.equal(data1.ts);
+        data1.r.should.be.a('number');
+        //data.r and data1.r could match, but unlikely
+        data.id.should.not.equal(data1.id);
+        done();
+      }, 1000);
+    }
   });
 });
