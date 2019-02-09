@@ -27,6 +27,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
   - [Keywords for arrays](#keywords-for-arrays)
     - [uniqueItemProperties](#uniqueitemproperties)
   - [Keywords for objects](#keywords-for-objects)
+    - [allRequired](allrequired)
     - [patternRequired](#patternrequired)
     - [prohibited](#prohibited)
     - [deepProperties](#deepproperties)
@@ -306,6 +307,36 @@ This keyword is contributed by [@blainesch](https://github.com/blainesch).
 
 
 ### Keywords for objects
+
+#### `allRequired`
+
+This keyword allows to require the presence of all properties used in `properties` keyword in the same schema object.
+
+This keyword applies only to objects. If the data is not an object, the validation succeeds.
+
+The value of this keyword must be boolean.
+
+If the value of the keyword is `false`, the validation succeeds.
+
+If the properties keyword is not used in the same schema object, the validation succeeds.
+
+If the value of the keyword is `true`, the validation succeeds if the data contains all properties defined in `properties` keyword (in the same schema object).
+
+```javascript
+var schema = {
+  properties: {
+    foo: {type: 'number'},
+    bar: {type: 'number'}
+  }
+  allRequired: true
+};
+
+var validData = { foo: 1, bar: 2 };
+var alsoValidData = { foo: 1, bar: 2, baz: 3 };
+
+var invalidDataList = [ {}, { foo: 1 }, { bar: 2 } ];
+```
+
 
 #### `patternRequired`
 

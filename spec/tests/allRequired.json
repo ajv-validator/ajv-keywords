@@ -1,0 +1,104 @@
+[
+  {
+    "description": "allRequired: true requires the presense of all defined properties",
+    "schema": {
+      "properties": {
+        "foo": true,
+        "bar": true
+      },
+      "allRequired": true
+    },
+    "tests": [
+      {
+        "description": "all defined properties present is valid",
+        "data": {"foo": 1, "bar": 2},
+        "valid": true
+      },
+      {
+        "description": "all defined properties present with an additional property is valid",
+        "data": {"foo": 1, "bar": 2, "baz": 3},
+        "valid": true
+      },
+      {
+        "description": "some of defined properties present is invalid",
+        "data": {"foo": 1},
+        "valid": false
+      },
+      {
+        "description": "some of defined properties present with an additional property is invalid",
+        "data": {"foo": 1, "baz": 3},
+        "valid": false
+      },
+      {
+        "description": "none of defined properties present is invalid",
+        "data": {"baz": 3},
+        "valid": false
+      },
+      {
+        "description": "empty object is invalid",
+        "data": {},
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "allRequired: false is always ignored",
+    "schema": {
+      "properties": {
+        "foo": true,
+        "bar": true
+      },
+      "allRequired": false
+    },
+    "tests": [
+      {
+        "description": "all defined properties present is valid",
+        "data": {"foo": 1, "bar": 2},
+        "valid": true
+      },
+      {
+        "description": "all defined properties present with an additional property is valid",
+        "data": {"foo": 1, "bar": 2, "baz": 3},
+        "valid": true
+      },
+      {
+        "description": "some of defined properties present is valid",
+        "data": {"foo": 1},
+        "valid": true
+      },
+      {
+        "description": "some of defined properties present with an additional property is valid",
+        "data": {"foo": 1, "baz": 3},
+        "valid": true
+      },
+      {
+        "description": "none of defined properties present is valid",
+        "data": {"baz": 3},
+        "valid": true
+      },
+      {
+        "description": "empty object is valid",
+        "data": {},
+        "valid": true
+      }
+    ]
+  },
+  {
+    "description": "allRequired passed validation if properties keyword is absent",
+    "schema": {
+      "allRequired": true
+    },
+    "tests": [
+      {
+        "description": "any object is valid",
+        "data": {"foo": 1, "bar": 2},
+        "valid": true
+      },
+      {
+        "description": "empty object is valid",
+        "data": {},
+        "valid": true
+      }
+    ]
+  }
+]

@@ -22,4 +22,3 @@ module.exports = function defFunc(ajv) {
   ajv.addKeyword('prohibited', defFunc.definition);
   return ajv;
 };
-

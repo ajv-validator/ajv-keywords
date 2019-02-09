@@ -5,9 +5,18 @@ var jsonSchemaTest = require('json-schema-test');
 var defineKeywords = require('..');
 
 var ajvs = [
-  defineKeywords(getAjv(),
-    ['switch', 'patternRequired', 'formatMinimum', 'formatMaximum',
-      'uniqueItemProperties', 'prohibited', 'deepRequired', 'deepProperties', 'select']),
+  defineKeywords(getAjv(), [
+    'allRequired',
+    'deepProperties',
+    'deepRequired',
+    'formatMaximum',
+    'formatMinimum',
+    'patternRequired',
+    'prohibited',
+    'select',
+    'switch',
+    'uniqueItemProperties'
+  ]),
   defineKeywords(getAjv()),
   defineKeywords(getAjv(true)),
   defineKeywords(getAjvNoMeta())
