@@ -3,7 +3,7 @@
 var Ajv = require('ajv');
 var defFunc = require('../keywords/patternRequired');
 var defineKeywords = require('..');
-var should = require('chai').should();
+require('chai').should();
 
 
 describe('keywords "patternRequired"', function() {

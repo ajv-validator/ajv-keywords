@@ -1,22 +1,21 @@
-'use strict'
+'use strict';
 
-var Ajv = require('ajv')
-var ajvPack = require('ajv-pack')
-var defFunc = require('../keywords/transform')
-var defineKeywords = require('..')
-var should = require('chai').should()
+var Ajv = require('ajv');
+var defFunc = require('../keywords/transform');
+var defineKeywords = require('..');
+require('chai').should();
 
 describe('keyword "transform"', function () {
   var ajvs = [
     defFunc(new Ajv),
     defineKeywords(new Ajv, 'transform'),
     defineKeywords(new Ajv)
-  ]
+  ];
 
 
   ajvs.forEach(function (ajv, i) {
     it('should transform by wrapper #' + i, function () {
-      var schema, data
+      var schema, data;
 
       data = {o: '  Object  '};
       schema = {type: 'object', properties: {o: {type: 'string', transform: ['trim', 'toLowerCase']}}};
@@ -34,24 +33,24 @@ describe('keyword "transform"', function () {
       ajv.validate(schema, data) .should.equal(true);
       // Note: Doesn't work on plain strings due to object being undefined
       data.should.equal('  String  ');
-    })
-  })
+    });
+  });
 
   ajvs.forEach(function (ajv, i) {
     it('should not transform non-strings #' + i, function () {
-      var schema, data
+      var schema, data;
 
       data = ['a', 1, null, [], {}];
       schema = {type: 'array', items: {type: 'string', transform: ['toUpperCase']}};
       ajv.validate(schema, data) .should.equal(false);
       data.should.deep.equal(['A', 1, null, [], {}]);
 
-    })
-  })
+    });
+  });
 
   ajvs.forEach(function (ajv, i) {
     it('should transform trim #' + i, function () {
-      var schema, data
+      var schema, data;
 
       data = ['  trimObject  '];
       schema = {type: 'array', items: {type: 'string', transform: ['trimLeft']}};
@@ -72,12 +71,12 @@ describe('keyword "transform"', function () {
       schema = {type: 'array', items: {type: 'string', transform: ['trim']}};
       ajv.validate(schema, data) .should.equal(true);
       data.should.deep.equal(['trimObject']);
-    })
-  })
+    });
+  });
 
   ajvs.forEach(function (ajv, i) {
     it('should transform text case #' + i, function () {
-      var schema, data
+      var schema, data;
 
       data = ['MixCase'];
       schema = {type: 'array', items: {type: 'string', transform: ['toLowerCase']}};
@@ -124,7 +123,7 @@ describe('keyword "transform"', function () {
       schema = {type: 'array', items: {type: 'string', transform: ['toEnumCase'], enum:['pH']}};
       ajv.validate(schema, data) .should.equal(false);
       data.should.deep.equal(['ab']);
-    })
-  })
+    });
+  });
 
-})
+});

@@ -3,7 +3,7 @@
 var Ajv = require('ajv');
 var defFunc = require('../keywords/formatMaximum');
 var defineKeywords = require('..');
-var should = require('chai').should();
+require('chai').should();
 
 
 describe('keywords "formatMinimum" and "formatMaximum"', function() {

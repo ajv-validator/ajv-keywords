@@ -55,32 +55,32 @@ describe('keyword "dynamicDefaults"', function() {
         done();
       }, 1000);
 
-      function test(data) {
-        data.ts .should.be.a('number');
-        assert(data.ts <= Date.now());
+      function test(_data) {
+        _data.ts .should.be.a('number');
+        assert(_data.ts <= Date.now());
 
-        ajv.validate({type: 'string', format: 'date-time'}, data.dt) .should.equal(true);
-        new Date(data.dt) .should.be.a('Date');
+        ajv.validate({type: 'string', format: 'date-time'}, _data.dt) .should.equal(true);
+        new Date(_data.dt) .should.be.a('Date');
 
-        ajv.validate({type: 'string', format: 'date'}, data.d) .should.equal(true);
-        (new Date).toISOString().indexOf(data.d) .should.equal(0);
+        ajv.validate({type: 'string', format: 'date'}, _data.d) .should.equal(true);
+        (new Date).toISOString().indexOf(_data.d) .should.equal(0);
 
-        ajv.validate({type: 'string', format: 'time'}, data.t) .should.equal(true);
+        ajv.validate({type: 'string', format: 'time'}, _data.t) .should.equal(true);
 
-        data.r .should.be.a('number');
-        assert(data.r < 1);
-        assert(data.r >= 0);
+        _data.r .should.be.a('number');
+        assert(_data.r < 1);
+        assert(_data.r >= 0);
 
-        assert(data.ri === 0 || data.ri === 1);
+        assert(_data.ri === 0 || _data.ri === 1);
 
-        data.riN .should.be.a('number');
-        assert.equal(Math.floor(data.riN), data.riN);
-        assert(data.riN < 1000000);
-        assert(data.riN >= 0);
+        _data.riN .should.be.a('number');
+        assert.equal(Math.floor(_data.riN), _data.riN);
+        assert(_data.riN < 1000000);
+        assert(_data.riN >= 0);
 
-        data.s .should.be.a('number');
+        _data.s .should.be.a('number');
 
-        data.sN .should.be.a('number');
+        _data.sN .should.be.a('number');
       }
     });
 
@@ -152,9 +152,9 @@ describe('keyword "dynamicDefaults"', function() {
       test(data1);
       assert.notEqual(data.id, data1.id);
 
-      function test(data) {
-        ajv.validate(schema, data) .should.equal(true);
-        ajv.validate({ format: 'uuid', type: 'string' }, data.id) .should.equal(true);
+      function test(_data) {
+        ajv.validate(schema, _data) .should.equal(true);
+        ajv.validate({ format: 'uuid', type: 'string' }, _data.id) .should.equal(true);
 
         delete defFunc.definition.DEFAULTS.uuid;
         ajv.removeSchema();

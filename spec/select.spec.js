@@ -19,7 +19,7 @@ describe('keyword "select"', function() {
         var validate = ajv.compile({
           select: { $data: '0/type' }
         });
-        
+
         should.throw(function() {
           validate({type: 'foo'});
         });
