@@ -33,6 +33,22 @@ describe('keywords "formatMinimum" and "formatMaximum"', function() {
     });
   });
 
+  ajvs.forEach(function (ajv, i) {
+    it('formatExclusiveMaximum should throw if not boolean #' + i, function() {
+      should.throw(function() {
+        ajv.compile({ formatMaximum: '2015-08-01', formatExclusiveMaximum: 1 });
+      });
+    });
+  });
+
+  ajvs.forEach(function (ajv, i) {
+    it('formatExclusiveMaximum should throw when "formatMaximum" is absent #' + i, function() {
+      should.throw(function() {
+        ajv.compile({ formatExclusiveMaximum: true });
+      });
+    });
+  });
+
   function getAjv(format) {
     return new Ajv({ allErrors: true, format: format });
   }
