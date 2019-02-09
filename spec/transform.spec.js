@@ -115,6 +115,11 @@ describe('keyword "transform"', function () {
         e.message.should.equal('Invalid enum uniqueness. To use `transform:["toEnumCase"]`, all values must be unique when case insensitive.');
       }
 
+      data = ['  ph  '];
+      schema = {type: 'array', items: {type: 'string', transform: ['trim', 'toEnumCase'], enum:['pH']}};
+      ajv.validate(schema, data) .should.equal(true);
+      data.should.deep.equal(['pH']);
+
       data = ['ab'];
       schema = {type: 'array', items: {type: 'string', transform: ['toEnumCase'], enum:['pH']}};
       ajv.validate(schema, data) .should.equal(false);
