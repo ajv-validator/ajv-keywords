@@ -3,7 +3,7 @@
 var Ajv = require('ajv');
 var defFunc = require('../keywords/formatMaximum');
 var defineKeywords = require('..');
-require('chai').should();
+var should = require('chai').should();
 
 
 describe('keywords "formatMinimum" and "formatMaximum"', function() {
@@ -22,6 +22,14 @@ describe('keywords "formatMinimum" and "formatMaximum"', function() {
       var date = '2015-09-01';
       ajv.validate(schema, date) .should.equal(false);
       ajvFF.validate(schema, date) .should.equal(true);
+    });
+  });
+
+  ajvs.forEach(function (ajv, i) {
+    it('should throw when "format" is absent #' + i, function() {
+      should.throw(function() {
+        ajv.compile({ formatMaximum: '2015-08-01' });
+      });
     });
   });
 

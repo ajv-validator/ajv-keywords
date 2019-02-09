@@ -191,7 +191,7 @@ These keywords allow to define minimum/maximum constraints when the format keywo
 
 These keywords apply only to strings. If the data is not a string, the validation succeeds.
 
-The value of keyword `formatMaximum` (`formatMinimum`) should be a string. This value is the maximum (minimum) allowed value for the data to be valid as determined by `format` keyword.
+The value of keyword `formatMaximum` (`formatMinimum`) should be a string. This value is the maximum (minimum) allowed value for the data to be valid as determined by `format` keyword. If `format` is not present schema compilation will throw exception.
 
 When this keyword is added, it defines comparison rules for formats `"date"`, `"time"` and `"date-time"`. Custom formats also can have comparison rules. See [addFormat](https://github.com/epoberezkin/ajv#api-addformat) method.
 

@@ -17,6 +17,7 @@ module.exports = function (minMax) {
       inline: require('./dotjs/_formatLimit'),
       statements: true,
       errors: 'full',
+      dependencies: ['format'],
       metaSchema: {
         anyOf: [
           { type: 'string' },
