@@ -7,6 +7,7 @@ var defineKeywords = require('..');
 var ajvs = [
   defineKeywords(getAjv(), [
     'allRequired',
+    'anyRequired',
     'deepProperties',
     'deepRequired',
     'formatMaximum',

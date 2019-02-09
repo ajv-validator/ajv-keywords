@@ -28,6 +28,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
     - [uniqueItemProperties](#uniqueitemproperties)
   - [Keywords for objects](#keywords-for-objects)
     - [allRequired](allrequired)
+    - [anyRequired](anyrequired)
     - [patternRequired](#patternrequired)
     - [prohibited](#prohibited)
     - [deepProperties](#deepproperties)
@@ -338,6 +339,28 @@ var invalidDataList = [ {}, { foo: 1 }, { bar: 2 } ];
 ```
 
 
+#### `anyRequired`
+
+This keyword allows to require the presence of any (at least one) property from the list.
+
+This keyword applies only to objects. If the data is not an object, the validation succeeds.
+
+The value of this keyword must be an array of strings, each string being a property name. For data object to be valid at least one of the properties in this array should be present in the object.
+
+```javascript
+var schema = {
+  anyRequired: ['foo', 'bar']
+};
+
+var validData = { foo: 1 };
+var alsoValidData = { foo: 1, bar: 2 };
+
+var invalidDataList = [ {}, { baz: 3 } ];
+```
+
+__Please note__: By combining `anyRequired` with `maxProperties: 1` you can achieve that exactly one property from the list is required to be present for the data object to pass validation.
+
+
 #### `patternRequired`
 
 This keyword allows to require the presence of properties that match some pattern(s).
@@ -378,6 +401,8 @@ var invalidDataList = [
   { foo: 1, bar: 2}
 ];
 ```
+
+__Please note__: `{prohibited: ['foo', 'bar']}` is equivalent to `{not: {anyRequired: ['foo', 'bar']}}` (i.e. it has the same validation result for any data).
 
 
 #### `deepProperties`

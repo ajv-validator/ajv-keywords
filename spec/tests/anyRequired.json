@@ -1,0 +1,86 @@
+[
+  {
+    "description": "anyRequired requires that at least on property in the list is present",
+    "schema": {
+      "anyRequired": ["foo"]
+    },
+    "tests": [
+      {
+        "description": "property present is valid",
+        "data": {"foo": 1},
+        "valid": true
+      },
+      {
+        "description": "property present with an additional property is valid",
+        "data": {"foo": 1, "baz": 3},
+        "valid": true
+      },
+      {
+        "description": "no property present is invalid",
+        "data": { "baz": 1 },
+        "valid": false
+      },
+      {
+        "description": "empty object is invalid",
+        "data": {},
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "multiple properties in prohibited",
+    "schema": {
+      "anyRequired": ["foo", "bar"]
+    },
+    "tests": [
+      {
+        "description": "property present is valid",
+        "data": {"foo": 1},
+        "valid": true
+      },
+      {
+        "description": "property present with an additional property is valid",
+        "data": {"foo": 1, "baz": 3},
+        "valid": true
+      },
+      {
+        "description": "all properties present is valid",
+        "data": {"foo": 1, "bar": 2},
+        "valid": true
+      },
+      {
+        "description": "all properties present with an additional property is valid",
+        "data": {"foo": 1, "bar": 2, "baz": 3},
+        "valid": true
+      },
+      {
+        "description": "no property present is invalid",
+        "data": {"baz": 3},
+        "valid": false
+      },
+      {
+        "description": "empty object is invalid",
+        "data": {},
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "anyRequired: [] is always valid",
+    "schema": {
+      "anyRequired": []
+    },
+    "tests": [
+      {
+        "description": "any object is valid",
+        "data": {"foo": 1},
+        "valid": true
+      },
+      {
+        "description": "empty object is valid",
+        "data": {},
+        "valid": true
+      }
+    ]
+  }
+]
