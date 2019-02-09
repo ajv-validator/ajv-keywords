@@ -34,7 +34,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
     - [deepProperties](#deepproperties)
     - [deepRequired](#deeprequired)
   - [Compound keywords](#compound-keywords)
-    - [switch](#switch)
+    - [switch](#switch) (deprecated)
     - [select/selectCases/selectDefault](#selectselectcasesselectdefault) (BETA)
   - [Keywords for all types](#keywords-for-all-types)
     - [dynamicDefaults](#dynamicdefaults)<sup>\*</sup>
@@ -500,7 +500,9 @@ See [json-schema-org/json-schema-spec#203](https://github.com/json-schema-org/js
 
 ### Compound keywords
 
-#### `switch`
+#### `switch` (deprecated)
+
+__Please note__: this keyword is provided to preserve backward compatibility with previous versions of Ajv. It is strongly recommended to use `if`/`then`/`else` keywords instead, as they have been added to the draft-07 of JSON Schema specification.
 
 This keyword allows to perform advanced conditional validation.
 
@@ -546,7 +548,7 @@ var validItems = [1, 5, 10, 20, 50, 100, 200, 500, 1000];
 var invalidItems = [1, 0, 2000, 11, 57, 123, 'foo'];
 ```
 
-__Please note__: this keyword is moved here from Ajv, mainly to preserve backward compatibility. It is unlikely to become a standard. It's preferable to use `if`/`then`/`else` keywords if possible, as they are likely to be added to the standard. The above schema is equivalent to (for example):
+The above schema is equivalent to (for example):
 
 ```javascript
 {
