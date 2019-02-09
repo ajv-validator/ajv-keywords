@@ -319,9 +319,9 @@ The value of this keyword must be boolean.
 
 If the value of the keyword is `false`, the validation succeeds.
 
-If the properties keyword is not used in the same schema object, the validation succeeds.
-
 If the value of the keyword is `true`, the validation succeeds if the data contains all properties defined in `properties` keyword (in the same schema object).
+
+If the `properties` keyword is not present in the same schema object, schema compilation will throw exception.
 
 ```javascript
 var schema = {

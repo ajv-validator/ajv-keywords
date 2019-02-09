@@ -82,23 +82,5 @@
         "valid": true
       }
     ]
-  },
-  {
-    "description": "allRequired passed validation if properties keyword is absent",
-    "schema": {
-      "allRequired": true
-    },
-    "tests": [
-      {
-        "description": "any object is valid",
-        "data": {"foo": 1, "bar": 2},
-        "valid": true
-      },
-      {
-        "description": "empty object is valid",
-        "data": {},
-        "valid": true
-      }
-    ]
   }
 ]
