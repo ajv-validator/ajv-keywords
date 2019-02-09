@@ -30,7 +30,7 @@ module.exports = function defFunc (ajv) {
     compile: function (schema, parentSchema) {
       var cfg;
 
-      if (schema == 'toEnumCase') {
+      if (schema.indexOf('toEnumCase') !== -1) {
         // build hash table to enum values
         cfg = {hash: {}};
 
