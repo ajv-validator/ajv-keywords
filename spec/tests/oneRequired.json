@@ -1,0 +1,81 @@
+[
+  {
+    "description": "oneRequired requires that at least on property in the list is present",
+    "schema": {
+      "oneRequired": ["foo"]
+    },
+    "tests": [
+      {
+        "description": "property present is valid",
+        "data": {"foo": 1},
+        "valid": true
+      },
+      {
+        "description": "property present with an additional property is valid",
+        "data": {"foo": 1, "baz": 3},
+        "valid": true
+      },
+      {
+        "description": "no property present is invalid",
+        "data": { "baz": 1 },
+        "valid": false
+      },
+      {
+        "description": "empty object is invalid",
+        "data": {},
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "multiple properties in prohibited",
+    "schema": {
+      "oneRequired": ["foo", "bar"]
+    },
+    "tests": [
+      {
+        "description": "property present is valid",
+        "data": {"foo": 1},
+        "valid": true
+      },
+      {
+        "description": "property present with an additional property is valid",
+        "data": {"foo": 1, "baz": 3},
+        "valid": true
+      },
+      {
+        "description": "multiple properties present is invalid",
+        "data": {"foo": 1, "bar": 2},
+        "valid": false
+      },
+      {
+        "description": "no property present is invalid",
+        "data": {"baz": 3},
+        "valid": false
+      },
+      {
+        "description": "empty object is invalid",
+        "data": {},
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "oneRequired: [] is always valid",
+    "schema": {
+      "oneRequired": []
+    },
+    "tests": [
+      {
+        "description": "any object is valid",
+        "data": {"foo": 1},
+        "valid": true
+      },
+      {
+        "description": "empty object is valid",
+        "data": {},
+        "valid": true
+      }
+    ]
+  }
+]
