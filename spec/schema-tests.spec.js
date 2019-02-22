@@ -8,6 +8,7 @@ var ajvs = [
   defineKeywords(getAjv(), [
     'allRequired',
     'anyRequired',
+    'oneRequired',
     'deepProperties',
     'deepRequired',
     'formatMaximum',
