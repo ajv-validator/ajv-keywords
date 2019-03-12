@@ -294,7 +294,7 @@ var validData = [
 
 var invalidData1 = [
   { id: 1 },
-  { id: 1 },
+  { id: 1 }, // duplicate "id"
   { id: 3 }
 ];
 
@@ -377,6 +377,7 @@ var validData = { foo: 1 };
 var alsoValidData = { bar: 2, baz: 3 };
 
 var invalidDataList = [ {}, { baz: 3 }, { foo: 1, bar: 2 } ];
+```
 
 
 #### `patternRequired`
