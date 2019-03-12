@@ -294,7 +294,7 @@ var validData = [
 
 var invalidData1 = [
   { id: 1 },
-  { id: 1 },
+  { id: 1 }, // duplicate "id"
   { id: 3 }
 ];
 
