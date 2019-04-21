@@ -21,7 +21,7 @@ module.exports = function defFunc (ajv) {
       return cfg.hash[makeHashTableKey(value)] || value;
     },
     toCapitalize: function (value) {
-      return value.toLowerCase().replace(/\b\w/g, (words) => words.toUpperCase());
+      return value.toLowerCase().replace(/(^|[^a-zA-Z\u00C0-\u017F'])([a-zA-Z\u00C0-\u017F])/g, (l) => l.toUpperCase());
     },
     trimSpaces: function (value) {
       return value.replace(/  +/g, ' ');
