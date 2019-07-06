@@ -395,5 +395,73 @@
         "valid": false
       }
     ]
+  },
+  {
+    "description": "uniqueItemProperties keyword with null item(s)",
+    "schema": {
+      "type": "array",
+      "uniqueItemProperties": ["id"],
+      "items": {
+        "properties": {
+          "id": {"type": "integer"}
+        }
+      }
+    },
+    "tests": [
+      {
+        "description": "with all unique ids and null items is valid",
+        "data": [
+          { "id": 1 },
+          { "id": 2 },
+          null,
+          null
+        ],
+        "valid": true
+      },
+      {
+        "description": "with non-unique ids and null item is invalid",
+        "data": [
+          { "id": 1 },
+          { "id": 1 },
+          null,
+          null
+        ],
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "uniqueItemProperties keyword with null item(s) and object keys",
+    "schema": {
+      "type": "array",
+      "uniqueItemProperties": ["id"],
+      "items": {
+        "properties": {
+          "id": {"type": "object"}
+        }
+      }
+    },
+    "tests": [
+      {
+        "description": "with all unique ids and null items is valid",
+        "data": [
+          { "id": {"_id": 1} },
+          { "id": {"_id": 2} },
+          null,
+          null
+        ],
+        "valid": true
+      },
+      {
+        "description": "with non-unique ids and null item is invalid",
+        "data": [
+          { "id": {"_id": 1} },
+          { "id": {"_id": 1} },
+          null,
+          null
+        ],
+        "valid": false
+      }
+    ]
   }
 ]
