@@ -16,7 +16,7 @@ module.exports = function defFunc(ajv) {
             if (scalar[k]) {
               var hash = {};
               for (i = data.length; i--;) {
-                if (typeof data[i] != 'object') continue;
+                if (!data[i] || typeof data[i] != 'object') continue;
                 var prop = data[i][key];
                 if (prop && typeof prop == 'object') continue;
                 if (typeof prop == 'string') prop = '"' + prop;
@@ -25,9 +25,9 @@ module.exports = function defFunc(ajv) {
               }
             } else {
               for (i = data.length; i--;) {
-                if (typeof data[i] != 'object') continue;
+                if (!data[i] || typeof data[i] != 'object') continue;
                 for (var j = i; j--;) {
-                  if (typeof data[j] == 'object' && equal(data[i][key], data[j][key]))
+                  if (data[j] && typeof data[j] == 'object' && equal(data[i][key], data[j][key]))
                     return false;
                 }
               }
