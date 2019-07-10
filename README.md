@@ -39,6 +39,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
     - [select/selectCases/selectDefault](#selectselectcasesselectdefault) (BETA)
   - [Keywords for all types](#keywords-for-all-types)
     - [dynamicDefaults](#dynamicdefaults)<sup>\*</sup>
+- [Security contact](#security-contact)
 - [License](#license)
 
 <sup>\*</sup> - keywords that modify data
@@ -813,6 +814,15 @@ var schema = {
   }
 };
 ```
+
+
+## Security contact
+
+To report a security vulnerability, please use the
+[Tidelift security contact](https://tidelift.com/security).
+Tidelift will coordinate the fix and disclosure.
+
+Please do NOT report security vulnerabilities via GitHub issues.
 
 
 ## License
