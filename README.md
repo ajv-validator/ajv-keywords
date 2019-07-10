@@ -40,6 +40,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
   - [Keywords for all types](#keywords-for-all-types)
     - [dynamicDefaults](#dynamicdefaults)<sup>\*</sup>
 - [Security contact](#security-contact)
+- [Open-source software support](#open-source-software-support)
 - [License](#license)
 
 <sup>\*</sup> - keywords that modify data
@@ -823,6 +824,11 @@ To report a security vulnerability, please use the
 Tidelift will coordinate the fix and disclosure.
 
 Please do NOT report security vulnerabilities via GitHub issues.
+
+
+## Open-source software support
+
+Ajv-keywords is a part of [Tidelift subscription](https://tidelift.com/subscription/pkg/npm-ajv-keywords?utm_source=npm-ajv-keywords&utm_medium=referral&utm_campaign=readme) - it provides a centralised support to open-source software users, in addition to the support provided by software maintainers.
 
 
 ## License
