@@ -33,7 +33,7 @@ var {{=$valid}} = undefined;
 
 {{
   var $schemaFormat = it.schema.format
-    , $isDataFormat = it.opts.$data && $schemaFormat.$data
+    , $isDataFormat = it.opts.$data && typeof $schemaFormat === "object" && $schemaFormat.$data
     , $closingBraces = '';
 }}
 
