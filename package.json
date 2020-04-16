@@ -3,6 +3,7 @@
   "version": "3.4.1",
   "description": "Custom JSON-Schema keywords for Ajv validator",
   "main": "index.js",
+  "typings": "ajv-keywords.d.ts",
   "scripts": {
     "build": "node node_modules/ajv/scripts/compile-dots.js node_modules/ajv/lib keywords",
     "prepublish": "npm run build",
