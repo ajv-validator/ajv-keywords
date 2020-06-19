@@ -2,11 +2,11 @@
 
 Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) validator
 
-[![Build Status](https://travis-ci.org/epoberezkin/ajv-keywords.svg?branch=master)](https://travis-ci.org/epoberezkin/ajv-keywords)
+[![Build Status](https://travis-ci.org/ajv-validator/ajv-keywords.svg?branch=master)](https://travis-ci.org/ajv-validator/ajv-keywords)
 [![npm](https://img.shields.io/npm/v/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
 [![npm downloads](https://img.shields.io/npm/dm/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
-[![Coverage Status](https://coveralls.io/repos/github/epoberezkin/ajv-keywords/badge.svg?branch=master)](https://coveralls.io/github/epoberezkin/ajv-keywords?branch=master)
-[![Greenkeeper badge](https://badges.greenkeeper.io/epoberezkin/ajv-keywords.svg)](https://greenkeeper.io/)
+[![Coverage Status](https://coveralls.io/repos/github/ajv-validator/ajv-keywords/badge.svg?branch=master)](https://coveralls.io/github/ajv-validator/ajv-keywords?branch=master)
+[![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=ajv-validator/ajv-keywords)](https://app.dependabot.com/accounts/ajv-validator/repos/60477053)
 [![Gitter](https://img.shields.io/gitter/room/ajv-validator/ajv.svg)](https://gitter.im/ajv-validator/ajv)
 
 
