@@ -1,6 +1,6 @@
 {
   "name": "ajv-keywords",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "description": "Custom JSON-Schema keywords for Ajv validator",
   "main": "index.js",
   "typings": "ajv-keywords.d.ts",
