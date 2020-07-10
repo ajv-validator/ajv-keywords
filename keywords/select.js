@@ -18,7 +18,7 @@ module.exports = function defFunc(ajv) {
       var validate = compiled.cases[schema];
       if (validate === undefined) validate = compiled.default;
       if (typeof validate == 'boolean') return validate;
-      var valid = validate(data);
+      var valid = validate.call(this, data);
       if (!valid) v.errors = validate.errors;
       return valid;
     },
