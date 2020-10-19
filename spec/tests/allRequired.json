@@ -2,6 +2,7 @@
   {
     "description": "allRequired: true requires the presense of all defined properties",
     "schema": {
+      "type": "object",
       "properties": {
         "foo": true,
         "bar": true
@@ -44,6 +45,7 @@
   {
     "description": "allRequired: false is always ignored",
     "schema": {
+      "type": "object",
       "properties": {
         "foo": true,
         "bar": true
