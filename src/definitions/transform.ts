@@ -1,6 +1,8 @@
 import {FuncKeywordDefinition, AnySchemaObject} from "ajv"
 
 type TransformName =
+  | "trimStart"
+  | "trimEnd"
   | "trimLeft"
   | "trimRight"
   | "trim"
@@ -15,8 +17,10 @@ interface TransformConfig {
 type Transform = (s: string, cfg?: TransformConfig) => string
 
 const transform: {[key in TransformName]: Transform} = {
-  trimLeft: (s) => s.replace(/^[\s]+/, ""),
-  trimRight: (s) => s.replace(/[\s]+$/, ""),
+  trimStart: (s) => s.trimStart(),
+  trimEnd: (s) => s.trimEnd(),
+  trimLeft: (s) => s.trimStart(),
+  trimRight: (s) => s.trimEnd(),
   trim: (s) => s.trim(),
   toLowerCase: (s) => s.toLowerCase(),
   toUpperCase: (s) => s.toUpperCase(),

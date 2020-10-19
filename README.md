@@ -209,34 +209,31 @@ var invalidDataList = ["2016-02-05", "2016-12-27", "abc"]
 
 #### `transform`
 
-This keyword allows a string to be modified before validation.
+This keyword allows a string to be modified during validation.
 
-These keywords apply only to strings. If the data is not a string, the transform is skipped.
+This keyword applies only to strings. If the data is not a string, the `transform` keyword is ignored.
 
-There are limitation due to how ajv is written:
+A standalone string cannot be modified, i.e. `data = 'a'; ajv.validate(schema, data);`, because strings are passed by value
 
-- a stand alone string cannot be transformed. ie `data = 'a'; ajv.validate(schema, data);`
-- currently cannot work with `ajv-pack`
-
-**Supported options:**
+**Supported transformations:**
 
 - `trim`: remove whitespace from start and end
-- `trimLeft`: remove whitespace from start
-- `trimRight`: remove whitespace from end
-- `toLowerCase`: case string to all lower case
-- `toUpperCase`: case string to all upper case
-- `toEnumCase`: case string to match case in schema
+- `trimStart`/`trimLeft`: remove whitespace from start
+- `trimEnd`/`trimRight`: remove whitespace from end
+- `toLowerCase`: convert to lower case
+- `toUpperCase`: convert to upper case
+- `toEnumCase`: change string case to be equal to one of `enum` values in the schema
 
-Options are applied in the order they are listed.
+Transformations are applied in the order they are listed.
 
 Note: `toEnumCase` requires that all allowed values are unique when case insensitive.
 
-**Example: multiple options**
+**Example: multiple transformations**
 
 ```javascript
 require("ajv-keywords")(ajv, ["transform"])
 
-var schema = {
+const schema = {
   type: "array",
   items: {
     type: "string",
@@ -244,7 +241,7 @@ var schema = {
   },
 }
 
-var data = ["  MixCase  "]
+const data = ["  MixCase  "]
 ajv.validate(schema, data)
 console.log(data) // ['mixcase']
 ```
@@ -254,7 +251,7 @@ console.log(data) // ['mixcase']
 ```javascript
 require("ajv-keywords")(ajv, ["transform"])
 
-var schema = {
+const schema = {
   type: "array",
   items: {
     type: "string",
@@ -263,7 +260,7 @@ var schema = {
   },
 }
 
-var data = ["ph", " Ph", "PH", "pH "]
+const data = ["ph", " Ph", "PH", "pH "]
 ajv.validate(schema, data)
 console.log(data) // ['pH','pH','pH','pH']
 ```

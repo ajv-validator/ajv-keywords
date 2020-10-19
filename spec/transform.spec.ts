@@ -66,7 +66,7 @@ describe('keyword "transform"', () => {
       data.should.deep.equal(["  trimObject"])
 
       data = ["  trimObject  "]
-      schema = {type: "array", items: {type: "string", transform: ["trimLeft", "trimRight"]}}
+      schema = {type: "array", items: {type: "string", transform: ["trimStart", "trimEnd"]}}
       ajv.validate(schema, data).should.equal(true)
       data.should.deep.equal(["trimObject"])
 
