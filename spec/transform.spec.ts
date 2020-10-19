@@ -1,19 +1,24 @@
-"use strict"
+import Ajv from "ajv"
+import transformPlugin from "../dist/keywords/transform"
+import transformDef from "../dist/definitions/transform"
+import ajvKeywordsPlugin from "../dist"
+import ajvKeywords from "../dist/definitions"
+import chai from "chai"
 
-const Ajv = require("ajv")
-const defFunc = require("../dist/keywords/transform")
-const defineKeywords = require("../dist")
-require("chai").should()
+chai.should()
 
 describe('keyword "transform"', () => {
   const ajvs = [
-    defFunc(new Ajv()),
-    defineKeywords(new Ajv(), "transform"),
-    defineKeywords(new Ajv()),
+    transformPlugin(new Ajv({allowUnionTypes: true})),
+    new Ajv({keywords: [transformDef], allowUnionTypes: true}),
+    ajvKeywordsPlugin(new Ajv({allowUnionTypes: true}), "transform"),
+    new Ajv({keywords: ajvKeywords, allowUnionTypes: true}),
+    new Ajv({allowUnionTypes: true}).addVocabulary(ajvKeywords),
+    // ajvKeywordsPlugin(new Ajv()),
   ]
 
   ajvs.forEach((ajv, i) => {
-    it("should transform by wrapper #" + i, () => {
+    it(`should transform by wrapper #${i}`, () => {
       let schema, data
 
       data = {o: "  Object  "}
@@ -38,7 +43,7 @@ describe('keyword "transform"', () => {
   })
 
   ajvs.forEach((ajv, i) => {
-    it("should not transform non-strings #" + i, () => {
+    it(`should not transform non-strings #${i}`, () => {
       const data = ["a", 1, null, [], {}]
       const schema = {type: "array", items: {type: "string", transform: ["toUpperCase"]}}
       ajv.validate(schema, data).should.equal(false)
@@ -47,7 +52,7 @@ describe('keyword "transform"', () => {
   })
 
   ajvs.forEach((ajv, i) => {
-    it("should transform trim #" + i, () => {
+    it(`should transform trim #${i}`, () => {
       let schema, data
 
       data = ["  trimObject  "]
@@ -73,7 +78,7 @@ describe('keyword "transform"', () => {
   })
 
   ajvs.forEach((ajv, i) => {
-    it("should transform text case #" + i, () => {
+    it(`should transform text case #${i}`, () => {
       let schema, data
 
       data = ["MixCase"]
