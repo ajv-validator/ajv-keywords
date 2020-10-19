@@ -1,31 +1,31 @@
 "use strict"
 
-var Ajv = require("ajv")
-var defFunc = require("../dist/keywords/select")
-var defineKeywords = require("../dist")
-var should = require("chai").should()
+const Ajv = require("ajv")
+const defFunc = require("../dist/keywords/select")
+const defineKeywords = require("../dist")
+const should = require("chai").should()
 
-describe('keyword "select"', function () {
-  describe("invalid schema", function () {
-    var ajvs = [
+describe('keyword "select"', () => {
+  describe("invalid schema", () => {
+    const ajvs = [
       defFunc(new Ajv({$data: true})),
       defineKeywords(new Ajv({$data: true}), "select"),
       defineKeywords(new Ajv({$data: true, allErrors: true})),
     ]
 
-    ajvs.forEach(function (ajv, i) {
-      it("should throw during validation #" + i, function () {
-        var validate = ajv.compile({
+    ajvs.forEach((ajv, i) => {
+      it("should throw during validation #" + i, () => {
+        const validate = ajv.compile({
           select: {$data: "0/type"},
         })
 
-        should.throw(function () {
+        should.throw(() => {
           validate({type: "foo"})
         })
       })
 
-      it("should NOT throw during validation #" + i, function () {
-        var validate = ajv.compile({
+      it("should NOT throw during validation #" + i, () => {
+        const validate = ajv.compile({
           select: {$data: "0/type"},
           selectCases: {
             foo: true,

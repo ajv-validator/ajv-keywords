@@ -1,23 +1,23 @@
 "use strict"
 
-var util = require("./_util")
+const util = require("./_util")
 
 module.exports = function defFunc(ajv) {
   if (!ajv.opts.$data) {
-    console.warn("keyword select requires $data option")
+    ajv.logger.warn("keyword select requires $data option")
     return ajv
   }
-  var metaSchemaRef = util.metaSchemaRef(ajv)
-  var compiledCaseSchemas = []
+  const metaSchemaRef = util.metaSchemaRef(ajv)
+  const compiledCaseSchemas = []
 
   defFunc.definition = {
     validate: function v(schema, data, parentSchema) {
       if (parentSchema.selectCases === undefined) throw new Error('keyword "selectCases" is absent')
-      var compiled = getCompiledSchemas(parentSchema, false)
-      var validate = compiled.cases[schema]
+      const compiled = getCompiledSchemas(parentSchema, false)
+      let validate = compiled.cases[schema]
       if (validate === undefined) validate = compiled.default
       if (typeof validate == "boolean") return validate
-      var valid = validate(data)
+      const valid = validate(data)
       if (!valid) v.errors = validate.errors
       return valid
     },
@@ -28,8 +28,8 @@ module.exports = function defFunc(ajv) {
   ajv.addKeyword("select", defFunc.definition)
   ajv.addKeyword("selectCases", {
     compile: function (schemas, parentSchema) {
-      var compiled = getCompiledSchemas(parentSchema)
-      for (var value in schemas) compiled.cases[value] = compileOrBoolean(schemas[value])
+      const compiled = getCompiledSchemas(parentSchema)
+      for (const value in schemas) compiled.cases[value] = compileOrBoolean(schemas[value])
       return function () {
         return true
       }
@@ -42,7 +42,7 @@ module.exports = function defFunc(ajv) {
   })
   ajv.addKeyword("selectDefault", {
     compile: function (schema, parentSchema) {
-      var compiled = getCompiledSchemas(parentSchema)
+      const compiled = getCompiledSchemas(parentSchema)
       compiled.default = compileOrBoolean(schema)
       return function () {
         return true
@@ -54,8 +54,8 @@ module.exports = function defFunc(ajv) {
   return ajv
 
   function getCompiledSchemas(parentSchema, create) {
-    var compiled
-    compiledCaseSchemas.some(function (c) {
+    let compiled
+    compiledCaseSchemas.some((c) => {
       if (c.parentSchema === parentSchema) {
         compiled = c
         return true

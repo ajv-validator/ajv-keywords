@@ -1,25 +1,25 @@
 "use strict"
 
-var Ajv = require("ajv")
+const Ajv = require("ajv")
 // var ajvPack = require('ajv-pack');
-var defFunc = require("../dist/keywords/typeof")
-var defineKeywords = require("../dist")
-var should = require("chai").should()
+const defFunc = require("../dist/keywords/typeof")
+const defineKeywords = require("../dist")
+const should = require("chai").should()
 
-describe('keyword "typeof"', function () {
-  var ajvs = [
+describe('keyword "typeof"', () => {
+  const ajvs = [
     defFunc(new Ajv()),
     defineKeywords(new Ajv(), "typeof"),
     defineKeywords(new Ajv()),
     // defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
   ]
 
-  ajvs.forEach(function (ajv, i) {
-    it("should validate value types #" + i, function () {
+  ajvs.forEach((ajv, i) => {
+    it("should validate value types #" + i, () => {
       ajv.validate({typeof: "undefined"}, undefined).should.equal(true)
       ajv.validate({typeof: "undefined"}, null).should.equal(false)
       ajv.validate({typeof: "undefined"}, "foo").should.equal(false)
-      ajv.validate({typeof: "function"}, function () {}).should.equal(true)
+      ajv.validate({typeof: "function"}, () => {}).should.equal(true)
       ajv.validate({typeof: "function"}, {}).should.equal(false)
       ajv.validate({typeof: "object"}, {}).should.equal(true)
       ajv.validate({typeof: "object"}, null).should.equal(true)
@@ -28,24 +28,24 @@ describe('keyword "typeof"', function () {
       ajv.validate({typeof: "symbol"}, {}).should.equal(false)
     })
 
-    it("should validate multiple types #" + i, function () {
+    it("should validate multiple types #" + i, () => {
       ajv.validate({typeof: ["string", "function"]}, "foo").should.equal(true)
-      ajv.validate({typeof: ["string", "function"]}, function () {}).should.equal(true)
+      ajv.validate({typeof: ["string", "function"]}, () => {}).should.equal(true)
       ajv.validate({typeof: ["string", "function"]}, {}).should.equal(false)
     })
 
-    it("should throw when unknown type is passed #" + i, function () {
-      should.throw(function () {
+    it("should throw when unknown type is passed #" + i, () => {
+      should.throw(() => {
         ajv.compile({typeof: "unknownType"})
       })
 
-      should.throw(function () {
+      should.throw(() => {
         ajv.compile({typeof: ["string", "unknownType"]})
       })
     })
 
-    it("should throw when not string or array is passed #" + i, function () {
-      should.throw(function () {
+    it("should throw when not string or array is passed #" + i, () => {
+      should.throw(() => {
         ajv.compile({typeof: 1})
       })
     })

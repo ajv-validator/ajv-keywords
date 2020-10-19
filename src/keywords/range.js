@@ -4,7 +4,7 @@ module.exports = function defFunc(ajv) {
   defFunc.definition = {
     type: "number",
     macro: function (schema, parentSchema) {
-      var min = schema[0],
+      const min = schema[0],
         max = schema[1],
         exclusive = parentSchema.exclusiveRange
 
@@ -27,9 +27,10 @@ module.exports = function defFunc(ajv) {
   return ajv
 
   function validateRangeSchema(min, max, exclusive) {
-    if (exclusive !== undefined && typeof exclusive != "boolean")
+    if (exclusive !== undefined && typeof exclusive != "boolean") {
       throw new Error("Invalid schema for exclusiveRange keyword, should be boolean")
+    }
 
-    if (min > max || (exclusive && min == max)) throw new Error("There are no numbers in range")
+    if (min > max || (exclusive && min === max)) throw new Error("There are no numbers in range")
   }
 }

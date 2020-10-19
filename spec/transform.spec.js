@@ -1,16 +1,20 @@
 "use strict"
 
-var Ajv = require("ajv")
-var defFunc = require("../dist/keywords/transform")
-var defineKeywords = require("../dist")
+const Ajv = require("ajv")
+const defFunc = require("../dist/keywords/transform")
+const defineKeywords = require("../dist")
 require("chai").should()
 
-describe('keyword "transform"', function () {
-  var ajvs = [defFunc(new Ajv()), defineKeywords(new Ajv(), "transform"), defineKeywords(new Ajv())]
+describe('keyword "transform"', () => {
+  const ajvs = [
+    defFunc(new Ajv()),
+    defineKeywords(new Ajv(), "transform"),
+    defineKeywords(new Ajv()),
+  ]
 
-  ajvs.forEach(function (ajv, i) {
-    it("should transform by wrapper #" + i, function () {
-      var schema, data
+  ajvs.forEach((ajv, i) => {
+    it("should transform by wrapper #" + i, () => {
+      let schema, data
 
       data = {o: "  Object  "}
       schema = {
@@ -33,20 +37,18 @@ describe('keyword "transform"', function () {
     })
   })
 
-  ajvs.forEach(function (ajv, i) {
-    it("should not transform non-strings #" + i, function () {
-      var schema, data
-
-      data = ["a", 1, null, [], {}]
-      schema = {type: "array", items: {type: "string", transform: ["toUpperCase"]}}
+  ajvs.forEach((ajv, i) => {
+    it("should not transform non-strings #" + i, () => {
+      const data = ["a", 1, null, [], {}]
+      const schema = {type: "array", items: {type: "string", transform: ["toUpperCase"]}}
       ajv.validate(schema, data).should.equal(false)
       data.should.deep.equal(["A", 1, null, [], {}])
     })
   })
 
-  ajvs.forEach(function (ajv, i) {
-    it("should transform trim #" + i, function () {
-      var schema, data
+  ajvs.forEach((ajv, i) => {
+    it("should transform trim #" + i, () => {
+      let schema, data
 
       data = ["  trimObject  "]
       schema = {type: "array", items: {type: "string", transform: ["trimLeft"]}}
@@ -70,9 +72,9 @@ describe('keyword "transform"', function () {
     })
   })
 
-  ajvs.forEach(function (ajv, i) {
-    it("should transform text case #" + i, function () {
-      var schema, data
+  ajvs.forEach((ajv, i) => {
+    it("should transform text case #" + i, () => {
+      let schema, data
 
       data = ["MixCase"]
       schema = {type: "array", items: {type: "string", transform: ["toLowerCase"]}}

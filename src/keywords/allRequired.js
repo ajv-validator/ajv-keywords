@@ -5,8 +5,8 @@ module.exports = function defFunc(ajv) {
     type: "object",
     macro: function (schema, parentSchema) {
       if (!schema) return true
-      var properties = Object.keys(parentSchema.properties)
-      if (properties.length == 0) return true
+      const properties = Object.keys(parentSchema.properties)
+      if (properties.length === 0) return true
       return {required: properties}
     },
     metaSchema: {type: "boolean"},

@@ -1,6 +1,6 @@
 "use strict"
 
-var CONSTRUCTORS = {
+const CONSTRUCTORS = {
   Object: Object,
   Array: Array,
   Function: Function,
@@ -20,16 +20,17 @@ module.exports = function defFunc(ajv) {
   defFunc.definition = {
     compile: function (schema) {
       if (typeof schema == "string") {
-        var Constructor = getConstructor(schema)
+        const Constructor = getConstructor(schema)
         return function (data) {
           return data instanceof Constructor
         }
       }
 
-      var constructors = schema.map(getConstructor)
+      const constructors = schema.map(getConstructor)
       return function (data) {
-        for (var i = 0; i < constructors.length; i++)
+        for (let i = 0; i < constructors.length; i++) {
           if (data instanceof constructors[i]) return true
+        }
         return false
       }
     },
@@ -49,7 +50,7 @@ module.exports = function defFunc(ajv) {
   return ajv
 
   function getConstructor(c) {
-    var Constructor = CONSTRUCTORS[c]
+    const Constructor = CONSTRUCTORS[c]
     if (Constructor) return Constructor
     throw new Error('invalid "instanceof" keyword value ' + c)
   }

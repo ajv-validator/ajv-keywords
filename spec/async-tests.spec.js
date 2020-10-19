@@ -1,10 +1,10 @@
 "use strict"
 
-var Ajv = require("ajv")
-var jsonSchemaTest = require("json-schema-test")
-var defineKeywords = require("../dist")
+const Ajv = require("ajv")
+const jsonSchemaTest = require("json-schema-test")
+const defineKeywords = require("../dist")
 
-var ajvs = [
+const ajvs = [
   defineKeywords(getAjv(), "switch"),
   defineKeywords(getAjv()),
   defineKeywords(getAjv(true)),
@@ -24,7 +24,7 @@ jsonSchemaTest(ajvs, {
 })
 
 function getAjv(extras) {
-  var ajv = new Ajv({allErrors: extras, verbose: extras})
+  const ajv = new Ajv({allErrors: extras, verbose: extras})
   ajv.addKeyword("idExists", {
     async: true,
     type: "number",

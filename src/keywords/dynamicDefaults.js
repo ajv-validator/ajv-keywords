@@ -1,8 +1,8 @@
 "use strict"
 
-var sequences = {}
+const sequences = {}
 
-var DEFAULTS = {
+const DEFAULTS = {
   timestamp: function () {
     return Date.now()
   },
@@ -19,13 +19,13 @@ var DEFAULTS = {
     return Math.random()
   },
   randomint: function (args) {
-    var limit = (args && args.max) || 2
+    const limit = (args && args.max) || 2
     return function () {
       return Math.floor(Math.random() * limit)
     }
   },
   seq: function (args) {
-    var name = (args && args.name) || ""
+    const name = (args && args.name) || ""
     sequences[name] = sequences[name] || 0
     return function () {
       return sequences[name]++
@@ -36,23 +36,24 @@ var DEFAULTS = {
 module.exports = function defFunc(ajv) {
   defFunc.definition = {
     compile: function (schema, parentSchema, it) {
-      var funcs = {}
+      const funcs = {}
 
-      for (var key in schema) {
-        var d = schema[key]
-        var func = getDefault(typeof d == "string" ? d : d.func)
+      for (const key in schema) {
+        const d = schema[key]
+        const func = getDefault(typeof d == "string" ? d : d.func)
         funcs[key] = func.length ? func(d.args) : func
       }
 
       return it.opts.useDefaults && !it.compositeRule ? assignDefaults : noop
 
       function assignDefaults(data) {
-        for (var prop in schema) {
+        for (const prop in schema) {
           if (
             data[prop] === undefined ||
-            (it.opts.useDefaults == "empty" && (data[prop] === null || data[prop] === ""))
-          )
+            (it.opts.useDefaults === "empty" && (data[prop] === null || data[prop] === ""))
+          ) {
             data[prop] = funcs[prop]()
+          }
         }
         return true
       }
@@ -80,7 +81,7 @@ module.exports = function defFunc(ajv) {
   return ajv
 
   function getDefault(d) {
-    var def = DEFAULTS[d]
+    const def = DEFAULTS[d]
     if (def) return def
     throw new Error('invalid "dynamicDefaults" keyword property value: ' + d)
   }

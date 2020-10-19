@@ -1,21 +1,21 @@
 "use strict"
 module.exports = function generate__formatLimit(it, $keyword, $ruleType) {
-  var out = " "
-  var $lvl = it.level
-  var $dataLvl = it.dataLevel
-  var $schema = it.schema[$keyword]
-  var $schemaPath = it.schemaPath + it.util.getProperty($keyword)
-  var $errSchemaPath = it.errSchemaPath + "/" + $keyword
-  var $breakOnError = !it.opts.allErrors
+  let out = " "
+  const $lvl = it.level
+  const $dataLvl = it.dataLevel
+  const $schema = it.schema[$keyword]
+  const $schemaPath = it.schemaPath + it.util.getProperty($keyword)
+  const $errSchemaPath = it.errSchemaPath + "/" + $keyword
+  const $breakOnError = !it.opts.allErrors
   var $errorKeyword
-  var $data = "data" + ($dataLvl || "")
-  var $valid = "valid" + $lvl
+  const $data = "data" + ($dataLvl || "")
+  const $valid = "valid" + $lvl
   out += "var " + $valid + " = undefined;"
   if (it.opts.format === false) {
     out += " " + $valid + " = true; "
     return out
   }
-  var $schemaFormat = it.schema.format,
+  let $schemaFormat = it.schema.format,
     $isDataFormat = it.opts.$data && $schemaFormat.$data,
     $closingBraces = ""
   if ($isDataFormat) {
@@ -42,13 +42,13 @@ module.exports = function generate__formatLimit(it, $keyword, $ruleType) {
     }
     var $compare = "formats" + it.util.getProperty($schemaFormat) + ".compare"
   }
-  var $isMax = $keyword == "formatMaximum",
+  const $isMax = $keyword == "formatMaximum",
     $exclusiveKeyword = "formatExclusive" + ($isMax ? "Maximum" : "Minimum"),
     $schemaExcl = it.schema[$exclusiveKeyword],
     $isDataExcl = it.opts.$data && $schemaExcl && $schemaExcl.$data,
     $op = $isMax ? "<" : ">",
     $result = "result" + $lvl
-  var $isData = it.opts.$data && $schema && $schema.$data,
+  let $isData = it.opts.$data && $schema && $schema.$data,
     $schemaValue
   if ($isData) {
     out +=

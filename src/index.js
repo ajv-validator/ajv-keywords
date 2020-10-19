@@ -1,6 +1,6 @@
 "use strict"
 
-var KEYWORDS = require("./keywords")
+const KEYWORDS = require("./keywords")
 
 module.exports = defineKeywords
 
@@ -12,7 +12,7 @@ module.exports = defineKeywords
  */
 function defineKeywords(ajv, keyword) {
   if (Array.isArray(keyword)) {
-    for (var i = 0; i < keyword.length; i++) get(keyword[i])(ajv)
+    for (let i = 0; i < keyword.length; i++) get(keyword[i])(ajv)
     return ajv
   }
   if (keyword) {
@@ -26,7 +26,7 @@ function defineKeywords(ajv, keyword) {
 defineKeywords.get = get
 
 function get(keyword) {
-  var defFunc = KEYWORDS[keyword]
+  const defFunc = KEYWORDS[keyword]
   if (!defFunc) throw new Error("Unknown keyword " + keyword)
   return defFunc
 }

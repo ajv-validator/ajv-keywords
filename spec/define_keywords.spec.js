@@ -1,13 +1,13 @@
 "use strict"
 
-var Ajv = require("ajv")
-var defineKeywords = require("../dist")
-var should = require("chai").should()
+const Ajv = require("ajv")
+const defineKeywords = require("../dist")
+const should = require("chai").should()
 
-describe("defineKeywords", function () {
-  var ajv = new Ajv()
+describe("defineKeywords", () => {
+  const ajv = new Ajv()
 
-  it("should allow defining multiple keywords", function () {
+  it("should allow defining multiple keywords", () => {
     defineKeywords(ajv, ["typeof", "instanceof"])
     ajv.validate({typeof: "undefined"}, undefined).should.equal(true)
     ajv.validate({typeof: "undefined"}, {}).should.equal(false)
@@ -15,12 +15,12 @@ describe("defineKeywords", function () {
     ajv.validate({instanceof: "Array"}, {}).should.equal(false)
   })
 
-  it("should throw when unknown keyword is passed", function () {
-    should.throw(function () {
+  it("should throw when unknown keyword is passed", () => {
+    should.throw(() => {
       defineKeywords(ajv, "unknownKeyword")
     })
 
-    should.throw(function () {
+    should.throw(() => {
       defineKeywords(ajv, ["typeof", "unknownKeyword"])
     })
   })

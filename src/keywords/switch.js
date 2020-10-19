@@ -1,11 +1,11 @@
 "use strict"
 
-var util = require("./_util")
+const util = require("./_util")
 
 module.exports = function defFunc(ajv) {
   if (ajv.RULES.keywords.switch && ajv.RULES.keywords.if) return
 
-  var metaSchemaRef = util.metaSchemaRef(ajv)
+  const metaSchemaRef = util.metaSchemaRef(ajv)
 
   defFunc.definition = {
     inline: require("./dotjs/switch"),

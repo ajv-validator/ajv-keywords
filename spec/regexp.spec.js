@@ -1,22 +1,22 @@
 "use strict"
 
-var Ajv = require("ajv")
+const Ajv = require("ajv")
 // var ajvPack = require('ajv-pack');
-var defFunc = require("../dist/keywords/regexp")
-var defineKeywords = require("../dist")
-var should = require("chai").should()
+const defFunc = require("../dist/keywords/regexp")
+const defineKeywords = require("../dist")
+const should = require("chai").should()
 
-describe('keyword "regexp"', function () {
-  var ajvs = [
+describe('keyword "regexp"', () => {
+  const ajvs = [
     defFunc(new Ajv()),
     defineKeywords(new Ajv({allErrors: true}, "regexp")),
     defineKeywords(new Ajv()),
     // defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
   ]
 
-  ajvs.forEach(function (ajv, i) {
-    it("should validate that values match regular expressions with flags #" + i, function () {
-      var schema = {
+  ajvs.forEach((ajv, i) => {
+    it("should validate that values match regular expressions with flags #" + i, () => {
+      const schema = {
         type: "object",
         properties: {
           foo: {regexp: "/foo/i"},
@@ -24,17 +24,17 @@ describe('keyword "regexp"', function () {
         },
       }
 
-      var validData = {
+      const validData = {
         foo: "Food",
         bar: "Barmen",
       }
 
-      var alsoValidData = {
+      const alsoValidData = {
         foo: 1,
         bar: 2,
       }
 
-      var invalidData = {
+      const invalidData = {
         foo: "fog",
         bar: "bad",
       }
@@ -46,8 +46,8 @@ describe('keyword "regexp"', function () {
     })
   })
 
-  ajvs.forEach(function (ajv, i) {
-    it("should throw when regexp schema is invalid #" + i, function () {
+  ajvs.forEach((ajv, i) => {
+    it("should throw when regexp schema is invalid #" + i, () => {
       ;[
         {regexp: "/foo"}, // invalid regexp
         {regexp: "/foo/a"}, // invalid regexp 2
@@ -57,8 +57,8 @@ describe('keyword "regexp"', function () {
         {regexp: {pattern: "[a-z]", flag: "i", foo: 1}}, // extra property
         {regexp: 1}, // incorrect type
         {regexp: {pattern: 1, flags: "i"}}, // incorrect type
-      ].forEach(function (schema) {
-        should.throw(function () {
+      ].forEach((schema) => {
+        should.throw(() => {
           ajv.compile(schema)
         })
       })

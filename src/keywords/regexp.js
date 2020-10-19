@@ -10,11 +10,11 @@ module.exports = function defFunc(ajv) {
         try {
           if (typeof schema == "object") return new RegExp(schema.pattern, schema.flags)
 
-          var rx = schema.match(/^\/(.*)\/([gimuy]*)$/)
+          const rx = schema.match(/^\/(.*)\/([gimuy]*)$/)
           if (rx) return new RegExp(rx[1], rx[2])
           throw new Error("cannot parse string into RegExp")
         } catch (e) {
-          console.error("regular expression", schema, "is invalid")
+          ajv.logger.error("regular expression", schema, "is invalid")
           throw e
         }
       }

@@ -1,15 +1,15 @@
 "use strict"
 
-var TIME = /^(\d\d):(\d\d):(\d\d)(\.\d+)?(z|[+-]\d\d:\d\d)?$/i
-var DATE_TIME_SEPARATOR = /t|\s/i
+const TIME = /^(\d\d):(\d\d):(\d\d)(\.\d+)?(z|[+-]\d\d:\d\d)?$/i
+const DATE_TIME_SEPARATOR = /t|\s/i
 
-var COMPARE_FORMATS = {
+const COMPARE_FORMATS = {
   date: compareDate,
   time: compareTime,
   "date-time": compareDateTime,
 }
 
-var $dataMetaSchema = {
+const $dataMetaSchema = {
   type: "object",
   required: ["$data"],
   properties: {
@@ -22,7 +22,7 @@ var $dataMetaSchema = {
 }
 
 module.exports = function (minMax) {
-  var keyword = "format" + minMax
+  const keyword = "format" + minMax
   return function defFunc(ajv) {
     defFunc.definition = {
       type: "string",
@@ -48,12 +48,13 @@ module.exports = function (minMax) {
 }
 
 function extendFormats(ajv) {
-  var formats = ajv.formats
-  for (var name in COMPARE_FORMATS) {
-    var format = formats[name]
+  const {formats} = ajv
+  for (const name in COMPARE_FORMATS) {
+    let format = formats[name]
     // the last condition is needed if it's RegExp from another window
-    if (typeof format != "object" || format instanceof RegExp || !format.validate)
+    if (typeof format != "object" || format instanceof RegExp || !format.validate) {
       format = formats[name] = {validate: format}
+    }
     if (!format.compare) format.compare = COMPARE_FORMATS[name]
   }
 }
@@ -81,7 +82,7 @@ function compareDateTime(dt1, dt2) {
   if (!(dt1 && dt2)) return
   dt1 = dt1.split(DATE_TIME_SEPARATOR)
   dt2 = dt2.split(DATE_TIME_SEPARATOR)
-  var res = compareDate(dt1[0], dt2[0])
+  const res = compareDate(dt1[0], dt2[0])
   if (res === undefined) return
   return res || compareTime(dt1[1], dt2[1])
 }

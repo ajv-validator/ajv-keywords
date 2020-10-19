@@ -1,15 +1,15 @@
 "use strict"
 module.exports = function generate_patternRequired(it, $keyword, $ruleType) {
-  var out = " "
-  var $lvl = it.level
-  var $dataLvl = it.dataLevel
-  var $schema = it.schema[$keyword]
-  var $schemaPath = it.schemaPath + it.util.getProperty($keyword)
-  var $errSchemaPath = it.errSchemaPath + "/" + $keyword
-  var $breakOnError = !it.opts.allErrors
-  var $data = "data" + ($dataLvl || "")
-  var $valid = "valid" + $lvl
-  var $key = "key" + $lvl,
+  let out = " "
+  const $lvl = it.level
+  const $dataLvl = it.dataLevel
+  const $schema = it.schema[$keyword]
+  const $schemaPath = it.schemaPath + it.util.getProperty($keyword)
+  const $errSchemaPath = it.errSchemaPath + "/" + $keyword
+  const $breakOnError = !it.opts.allErrors
+  const $data = "data" + ($dataLvl || "")
+  const $valid = "valid" + $lvl
+  let $key = "key" + $lvl,
     $idx = "idx" + $lvl,
     $matched = "patternMatched" + $lvl,
     $dataProperties = "dataProperties" + $lvl,
@@ -19,9 +19,9 @@ module.exports = function generate_patternRequired(it, $keyword, $ruleType) {
   if ($ownProperties) {
     out += " var " + $dataProperties + " = undefined;"
   }
-  var arr1 = $schema
+  const arr1 = $schema
   if (arr1) {
-    var $pProperty,
+    let $pProperty,
       i1 = -1,
       l1 = arr1.length - 1
     while (i1 < l1) {
@@ -63,7 +63,7 @@ module.exports = function generate_patternRequired(it, $keyword, $ruleType) {
         "); if (" +
         $matched +
         ") break; } "
-      var $missingPattern = it.util.escapeQuotes($pProperty)
+      const $missingPattern = it.util.escapeQuotes($pProperty)
       out +=
         " if (!" + $matched + ") { " + $valid + " = false;  var err =   " /* istanbul ignore else */
       if (it.createErrors !== false) {

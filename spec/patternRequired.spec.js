@@ -1,25 +1,25 @@
 "use strict"
 
-var Ajv = require("ajv")
-var defFunc = require("../dist/keywords/patternRequired")
-var defineKeywords = require("../dist")
+const Ajv = require("ajv")
+const defFunc = require("../dist/keywords/patternRequired")
+const defineKeywords = require("../dist")
 require("chai").should()
 
-describe('keywords "patternRequired"', function () {
-  var ajvs = getAjvs()
-  var ajvsOP = getAjvs(true)
+describe('keywords "patternRequired"', () => {
+  const ajvs = getAjvs()
+  const ajvsOP = getAjvs(true)
 
-  ajvs.forEach(function (ajv, i) {
-    it("should only validate against own properties when using patternRequired #" + i, function () {
-      var ajvOP = ajvsOP[i]
-      var schema = {patternRequired: ["f.*o"]}
+  ajvs.forEach((ajv, i) => {
+    it("should only validate against own properties when using patternRequired #" + i, () => {
+      const ajvOP = ajvsOP[i]
+      const schema = {patternRequired: ["f.*o"]}
 
-      var baz = {foooo: false, fooooooo: 42.31}
+      const baz = {foooo: false, fooooooo: 42.31}
       function FooThing() {
         this.bar = 123
       }
       FooThing.prototype = baz
-      var object = new FooThing()
+      const object = new FooThing()
 
       ajv.validate(schema, object).should.equal(true)
       ajvOP.validate(schema, object).should.equal(false)

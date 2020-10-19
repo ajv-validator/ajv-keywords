@@ -1,26 +1,26 @@
 "use strict"
 module.exports = function generate_switch(it, $keyword, $ruleType) {
-  var out = " "
-  var $lvl = it.level
-  var $dataLvl = it.dataLevel
-  var $schema = it.schema[$keyword]
-  var $schemaPath = it.schemaPath + it.util.getProperty($keyword)
-  var $errSchemaPath = it.errSchemaPath + "/" + $keyword
-  var $breakOnError = !it.opts.allErrors
-  var $data = "data" + ($dataLvl || "")
-  var $valid = "valid" + $lvl
-  var $errs = "errs__" + $lvl
-  var $it = it.util.copy(it)
-  var $closingBraces = ""
+  let out = " "
+  const $lvl = it.level
+  const $dataLvl = it.dataLevel
+  const $schema = it.schema[$keyword]
+  const $schemaPath = it.schemaPath + it.util.getProperty($keyword)
+  const $errSchemaPath = it.errSchemaPath + "/" + $keyword
+  const $breakOnError = !it.opts.allErrors
+  const $data = "data" + ($dataLvl || "")
+  const $valid = "valid" + $lvl
+  const $errs = "errs__" + $lvl
+  const $it = it.util.copy(it)
+  let $closingBraces = ""
   $it.level++
-  var $nextValid = "valid" + $it.level
-  var $ifPassed = "ifPassed" + it.level,
+  const $nextValid = "valid" + $it.level
+  let $ifPassed = "ifPassed" + it.level,
     $currentBaseId = $it.baseId,
     $shouldContinue
   out += "var " + $ifPassed + ";"
-  var arr1 = $schema
+  const arr1 = $schema
   if (arr1) {
-    var $sch,
+    let $sch,
       $caseIndex = -1,
       l1 = arr1.length - 1
     while ($caseIndex < l1) {
@@ -36,7 +36,7 @@ module.exports = function generate_switch(it, $keyword, $ruleType) {
           : it.util.schemaHasRules($sch.if, it.RULES.all))
       ) {
         out += " var " + $errs + " = errors;   "
-        var $wasComposite = it.compositeRule
+        const $wasComposite = it.compositeRule
         it.compositeRule = $it.compositeRule = true
         $it.createErrors = false
         $it.schema = $sch.if

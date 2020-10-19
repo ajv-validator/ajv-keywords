@@ -1,13 +1,13 @@
 "use strict"
 
-var util = require("./_util")
+const util = require("./_util")
 
 module.exports = function defFunc(ajv) {
   defFunc.definition = {
     type: "object",
     macro: function (schema) {
-      var schemas = []
-      for (var pointer in schema) schemas.push(getSchema(pointer, schema[pointer]))
+      const schemas = []
+      for (const pointer in schema) schemas.push(getSchema(pointer, schema[pointer]))
       return {allOf: schemas}
     },
     metaSchema: {
@@ -25,17 +25,17 @@ module.exports = function defFunc(ajv) {
 }
 
 function getSchema(jsonPointer, schema) {
-  var segments = jsonPointer.split("/")
-  var rootSchema = {}
-  var pointerSchema = rootSchema
-  for (var i = 1; i < segments.length; i++) {
-    var segment = segments[i]
-    var isLast = i == segments.length - 1
+  const segments = jsonPointer.split("/")
+  const rootSchema = {}
+  let pointerSchema = rootSchema
+  for (let i = 1; i < segments.length; i++) {
+    let segment = segments[i]
+    const isLast = i === segments.length - 1
     segment = unescapeJsonPointer(segment)
-    var properties = (pointerSchema.properties = {})
-    var items = undefined
+    const properties = (pointerSchema.properties = {})
+    let items
     if (/[0-9]+/.test(segment)) {
-      var count = +segment
+      let count = +segment
       items = pointerSchema.items = []
       while (count--) items.push({})
     }

@@ -1,22 +1,22 @@
 "use strict"
 
-var Ajv = require("ajv")
+const Ajv = require("ajv")
 // var ajvPack = require('ajv-pack');
-var defFunc = require("../dist/keywords/allRequired")
-var defineKeywords = require("../dist")
-var should = require("chai").should()
+const defFunc = require("../dist/keywords/allRequired")
+const defineKeywords = require("../dist")
+const should = require("chai").should()
 
-describe('keyword "allRequired"', function () {
-  var ajvs = [
+describe('keyword "allRequired"', () => {
+  const ajvs = [
     defFunc(new Ajv()),
     defineKeywords(new Ajv(), "allRequired"),
     defineKeywords(new Ajv()),
     // defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
   ]
 
-  ajvs.forEach(function (ajv, i) {
-    it("should validate that all defined properties are present #" + i, function () {
-      var schema = {
+  ajvs.forEach((ajv, i) => {
+    it("should validate that all defined properties are present #" + i, () => {
+      const schema = {
         properties: {
           foo: true,
           bar: true,
@@ -28,17 +28,17 @@ describe('keyword "allRequired"', function () {
     })
   })
 
-  ajvs.forEach(function (ajv, i) {
-    it("should throw when properties is absent #" + i, function () {
-      should.throw(function () {
+  ajvs.forEach((ajv, i) => {
+    it("should throw when properties is absent #" + i, () => {
+      should.throw(() => {
         ajv.compile({allRequired: true})
       })
     })
   })
 
-  ajvs.forEach(function (ajv, i) {
-    it("should throw when allRequired schema is invalid #" + i, function () {
-      should.throw(function () {
+  ajvs.forEach((ajv, i) => {
+    it("should throw when allRequired schema is invalid #" + i, () => {
+      should.throw(() => {
         ajv.compile({properties: {foo: true}, allRequired: 1})
       })
     })

@@ -1,7 +1,7 @@
 "use strict"
 
 module.exports = function defFunc(ajv) {
-  var transform = {
+  const transform = {
     trimLeft: function (value) {
       return value.replace(/^[\s]+/, "")
     },
@@ -28,26 +28,28 @@ module.exports = function defFunc(ajv) {
     modifying: true,
     valid: true,
     compile: function (schema, parentSchema) {
-      var cfg
+      let cfg
 
       if (schema.indexOf("toEnumCase") !== -1) {
         // build hash table to enum values
         cfg = {hash: {}}
 
         // requires `enum` in schema
-        if (!parentSchema.enum)
+        if (!parentSchema.enum) {
           throw new Error(
             'Missing enum. To use `transform:["toEnumCase"]`, `enum:[...]` is required.'
           )
-        for (var i = parentSchema.enum.length; i--; i) {
-          var v = parentSchema.enum[i]
+        }
+        for (let i = parentSchema.enum.length; i--; i) {
+          const v = parentSchema.enum[i]
           if (typeof v !== "string") continue
-          var k = makeHashTableKey(v)
+          const k = makeHashTableKey(v)
           // requires all `enum` values have unique keys
-          if (cfg.hash[k])
+          if (cfg.hash[k]) {
             throw new Error(
               'Invalid enum uniqueness. To use `transform:["toEnumCase"]`, all values must be unique when case insensitive.'
             )
+          }
           cfg.hash[k] = v
         }
       }
@@ -57,7 +59,7 @@ module.exports = function defFunc(ajv) {
         if (!object) return
 
         // apply transform in order provided
-        for (var j = 0, l = schema.length; j < l; j++) data = transform[schema[j]](data, cfg)
+        for (let j = 0, l = schema.length; j < l; j++) data = transform[schema[j]](data, cfg)
 
         object[key] = data
       }

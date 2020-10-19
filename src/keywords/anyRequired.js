@@ -4,9 +4,9 @@ module.exports = function defFunc(ajv) {
   defFunc.definition = {
     type: "object",
     macro: function (schema) {
-      if (schema.length == 0) return true
-      if (schema.length == 1) return {required: schema}
-      var schemas = schema.map(function (prop) {
+      if (schema.length === 0) return true
+      if (schema.length === 1) return {required: schema}
+      const schemas = schema.map((prop) => {
         return {required: [prop]}
       })
       return {anyOf: schemas}

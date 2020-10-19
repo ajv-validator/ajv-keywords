@@ -1,26 +1,26 @@
 "use strict"
 
-var Ajv = require("ajv")
-var defFunc = require("../dist/keywords/instanceof")
-var defineKeywords = require("../dist")
-var should = require("chai").should()
+const Ajv = require("ajv")
+const defFunc = require("../dist/keywords/instanceof")
+const defineKeywords = require("../dist")
+const should = require("chai").should()
 
-describe('keyword "instanceof"', function () {
-  var ajvs = [
+describe('keyword "instanceof"', () => {
+  const ajvs = [
     defFunc(new Ajv()),
     defineKeywords(new Ajv(), "instanceof"),
     defineKeywords(new Ajv()),
   ]
 
-  ajvs.forEach(function (ajv, i) {
-    it("should validate classes #" + i, function () {
+  ajvs.forEach((ajv, i) => {
+    it("should validate classes #" + i, () => {
       ajv.validate({instanceof: "Object"}, {}).should.equal(true)
       ajv.validate({instanceof: "Object"}, []).should.equal(true)
       ajv.validate({instanceof: "Object"}, "foo").should.equal(false)
       ajv.validate({instanceof: "Array"}, {}).should.equal(false)
       ajv.validate({instanceof: "Array"}, []).should.equal(true)
       ajv.validate({instanceof: "Array"}, "foo").should.equal(false)
-      ajv.validate({instanceof: "Function"}, function () {}).should.equal(true)
+      ajv.validate({instanceof: "Function"}, () => {}).should.equal(true)
       ajv.validate({instanceof: "Function"}, []).should.equal(false)
       ajv.validate({instanceof: "Number"}, new Number(42)).should.equal(true)
       ajv.validate({instanceof: "Number"}, 42).should.equal(false)
@@ -36,27 +36,20 @@ describe('keyword "instanceof"', function () {
       ajv.validate({instanceof: "Buffer"}, "foo").should.equal(false)
       ajv.validate({instanceof: "Buffer"}, {}).should.equal(false)
       ajv.validate({instanceof: "Buffer"}, {}).should.equal(false)
-      ajv
-        .validate(
-          {instanceof: "Promise"},
-          new Promise(function (resolve, reject) {
-            return resolve()
-          })
-        )
-        .should.equal(true)
-      ajv.validate({instanceof: "Promise"}, function () {}).should.equal(false)
+      ajv.validate({instanceof: "Promise"}, Promise.resolve()).should.equal(true)
+      ajv.validate({instanceof: "Promise"}, () => {}).should.equal(false)
     })
 
-    it("should validate multiple classes #" + i, function () {
+    it("should validate multiple classes #" + i, () => {
       ajv.validate({instanceof: ["Array", "Function"]}, []).should.equal(true)
-      ajv.validate({instanceof: ["Array", "Function"]}, function () {}).should.equal(true)
+      ajv.validate({instanceof: ["Array", "Function"]}, () => {}).should.equal(true)
       ajv.validate({instanceof: ["Array", "Function"]}, {}).should.equal(false)
     })
 
-    it("should allow adding classes #" + i, function () {
+    it("should allow adding classes #" + i, () => {
       function MyClass() {}
 
-      should.throw(function () {
+      should.throw(() => {
         ajv.compile({instanceof: "MyClass"})
       })
 
@@ -69,7 +62,7 @@ describe('keyword "instanceof"', function () {
       delete defFunc.definition.CONSTRUCTORS.MyClass
       ajv.removeSchema()
 
-      should.throw(function () {
+      should.throw(() => {
         ajv.compile({instanceof: "MyClass"})
       })
 
@@ -83,8 +76,8 @@ describe('keyword "instanceof"', function () {
       ajv.removeSchema()
     })
 
-    it("should throw when not string or array is passed #" + i, function () {
-      should.throw(function () {
+    it("should throw when not string or array is passed #" + i, () => {
+      should.throw(() => {
         ajv.compile({instanceof: 1})
       })
     })

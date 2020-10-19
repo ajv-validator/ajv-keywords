@@ -1,26 +1,26 @@
 "use strict"
 
-var Ajv = require("ajv")
-var defFunc = require("../dist/keywords/dynamicDefaults")
-var defineKeywords = require("../dist")
-var should = require("chai").should()
-var assert = require("assert")
-var uuid = require("uuid")
+const Ajv = require("ajv")
+const defFunc = require("../dist/keywords/dynamicDefaults")
+const defineKeywords = require("../dist")
+const should = require("chai").should()
+const assert = require("assert")
+const uuid = require("uuid")
 
-describe('keyword "dynamicDefaults"', function () {
+describe('keyword "dynamicDefaults"', () => {
   function getAjv() {
     return new Ajv({useDefaults: true, unknownFormats: true})
   }
 
-  var ajvs = [
+  const ajvs = [
     defFunc(getAjv()),
     defineKeywords(getAjv(), "dynamicDefaults"),
     defineKeywords(getAjv()),
   ]
 
-  ajvs.forEach(function (ajv, i) {
-    it("should assign defaults #" + i, function (done) {
-      var schema = {
+  ajvs.forEach((ajv, i) => {
+    it("should assign defaults #" + i, (done) => {
+      const schema = {
         dynamicDefaults: {
           ts: "timestamp",
           dt: "datetime",
@@ -34,15 +34,15 @@ describe('keyword "dynamicDefaults"', function () {
         },
       }
 
-      var validate = ajv.compile(schema)
-      var data = {}
+      const validate = ajv.compile(schema)
+      const data = {}
       validate(data).should.equal(true)
       test(data)
       data.s.should.equal(2 * i)
       data.sN.should.equal(2 * i)
 
-      setTimeout(function () {
-        var data1 = {}
+      setTimeout(() => {
+        const data1 = {}
         validate(data1).should.equal(true)
         test(data1)
         assert(data.ts < data1.ts)
@@ -86,21 +86,21 @@ describe('keyword "dynamicDefaults"', function () {
       }
     })
 
-    it("should NOT assign default if property is present #" + i, function () {
-      var schema = {
+    it("should NOT assign default if property is present #" + i, () => {
+      const schema = {
         dynamicDefaults: {
           ts: "timestamp",
         },
       }
 
-      var validate = ajv.compile(schema)
-      var data = {ts: 123}
+      const validate = ajv.compile(schema)
+      const data = {ts: 123}
       validate(data).should.equal(true)
       data.ts.should.equal(123)
     })
 
-    it("should NOT assign default inside anyOf etc. #" + i, function () {
-      var schema = {
+    it("should NOT assign default inside anyOf etc. #" + i, () => {
+      const schema = {
         anyOf: [
           {
             dynamicDefaults: {
@@ -110,47 +110,47 @@ describe('keyword "dynamicDefaults"', function () {
         ],
       }
 
-      var validate = ajv.compile(schema)
-      var data = {}
+      const validate = ajv.compile(schema)
+      const data = {}
       validate(data).should.equal(true)
       should.not.exist(data.ts)
     })
 
-    it("should fail schema compilation on unknown default #" + i, function () {
-      var schema = {
+    it("should fail schema compilation on unknown default #" + i, () => {
+      const schema = {
         dynamicDefaults: {
           ts: "unknown",
         },
       }
 
-      should.throw(function () {
+      should.throw(() => {
         ajv.compile(schema)
       })
     })
 
-    it("should allow adding defaults #" + i, function () {
-      var schema = {
+    it("should allow adding defaults #" + i, () => {
+      const schema = {
         dynamicDefaults: {
           id: "uuid",
         },
       }
 
-      should.throw(function () {
+      should.throw(() => {
         ajv.compile(schema)
       })
 
       defFunc.definition.DEFAULTS.uuid = uuidV4
 
-      var data = {}
+      const data = {}
       test(data)
 
-      should.throw(function () {
+      should.throw(() => {
         ajv.compile(schema)
       })
 
       defineKeywords.get("dynamicDefaults").definition.DEFAULTS.uuid = uuidV4
 
-      var data1 = {}
+      const data1 = {}
       test(data1)
       assert.notEqual(data.id, data1.id)
 
@@ -168,8 +168,8 @@ describe('keyword "dynamicDefaults"', function () {
     })
   })
 
-  it('should NOT assign defaults when useDefaults is true/"shared and properties are null, empty or contain a value"', function () {
-    var schema = {
+  it('should NOT assign defaults when useDefaults is true/"shared and properties are null, empty or contain a value"', () => {
+    const schema = {
       allOf: [
         {
           dynamicDefaults: {
@@ -198,7 +198,7 @@ describe('keyword "dynamicDefaults"', function () {
       ],
     }
 
-    var data = {
+    const data = {
       ts: "",
       r: null,
       id: 3,
@@ -208,7 +208,7 @@ describe('keyword "dynamicDefaults"', function () {
     test(new Ajv({useDefaults: "shared"}))
 
     function test(testAjv) {
-      var validate = defFunc(testAjv).compile(schema)
+      const validate = defFunc(testAjv).compile(schema)
       validate(data).should.equal(false)
 
       data.ts.should.equal("")
@@ -217,8 +217,8 @@ describe('keyword "dynamicDefaults"', function () {
     }
   })
 
-  it('should assign defaults when useDefaults = "empty" for properties that are undefined, null or empty strings', function (done) {
-    var schema = {
+  it('should assign defaults when useDefaults = "empty" for properties that are undefined, null or empty strings', (done) => {
+    const schema = {
       allOf: [
         {
           dynamicDefaults: {
@@ -247,25 +247,25 @@ describe('keyword "dynamicDefaults"', function () {
       ],
     }
 
-    var data = {
+    const data = {
       ts: "",
       r: null,
     }
 
-    var data1 = Object.assign({}, data)
+    const data1 = Object.assign({}, data)
 
     test(new Ajv({useDefaults: "empty"}))
 
     function test(testAjv) {
-      var validate = defFunc(testAjv).compile(schema)
+      const validate = defFunc(testAjv).compile(schema)
       validate(data).should.equal(true)
 
-      var tsRegex = /\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z/
+      const tsRegex = /\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z/
       data.ts.should.match(tsRegex)
       data.r.should.be.a("number")
       data.id.should.be.a("number")
 
-      setTimeout(function () {
+      setTimeout(() => {
         validate(data1).should.equal(true)
         data.ts.should.not.equal(data1.ts)
         data1.r.should.be.a("number")
