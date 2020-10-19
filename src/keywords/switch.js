@@ -1,38 +1,35 @@
-'use strict';
+"use strict"
 
-var util = require('./_util');
+var util = require("./_util")
 
 module.exports = function defFunc(ajv) {
-  if (ajv.RULES.keywords.switch && ajv.RULES.keywords.if) return;
+  if (ajv.RULES.keywords.switch && ajv.RULES.keywords.if) return
 
-  var metaSchemaRef = util.metaSchemaRef(ajv);
+  var metaSchemaRef = util.metaSchemaRef(ajv)
 
   defFunc.definition = {
-    inline: require('./dotjs/switch'),
+    inline: require("./dotjs/switch"),
     statements: true,
-    errors: 'full',
+    errors: "full",
     metaSchema: {
-      type: 'array',
+      type: "array",
       items: {
-        required: [ 'then' ],
+        required: ["then"],
         properties: {
-          'if': metaSchemaRef,
-          'then': {
-            anyOf: [
-              { type: 'boolean' },
-              metaSchemaRef
-            ]
+          if: metaSchemaRef,
+          then: {
+            anyOf: [{type: "boolean"}, metaSchemaRef],
           },
-          'continue': { type: 'boolean' }
+          continue: {type: "boolean"},
         },
         additionalProperties: false,
         dependencies: {
-          'continue': [ 'if' ]
-        }
-      }
-    }
-  };
+          continue: ["if"],
+        },
+      },
+    },
+  }
 
-  ajv.addKeyword('switch', defFunc.definition);
-  return ajv;
-};
+  ajv.addKeyword("switch", defFunc.definition)
+  return ajv
+}

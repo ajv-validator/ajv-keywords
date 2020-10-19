@@ -5,7 +5,7 @@
       "properties": {
         "finalDate": {
           "format": "date",
-          "formatMinimum": { "$data": "1/laterThan" }
+          "formatMinimum": {"$data": "1/laterThan"}
         },
         "laterThan": {}
       }
@@ -59,7 +59,7 @@
       "properties": {
         "finalDate": {
           "format": "date",
-          "formatMinimum": { "$data": "1/laterThan" },
+          "formatMinimum": {"$data": "1/laterThan"},
           "formatExclusiveMinimum": true
         },
         "laterThan": {}
@@ -98,7 +98,7 @@
     "schema": {
       "properties": {
         "when": {
-          "format": { "$data": "1/whenFormat" },
+          "format": {"$data": "1/whenFormat"},
           "formatMinimum": "2015-08-17"
         },
         "whenFormat": {}
@@ -144,7 +144,7 @@
     "schema": {
       "properties": {
         "when": {
-          "format": { "$data": "1/whenFormat" },
+          "format": {"$data": "1/whenFormat"},
           "formatMinimum": "2015-08-17",
           "formatExclusiveMinimum": true
         },
@@ -184,8 +184,8 @@
     "schema": {
       "properties": {
         "when": {
-          "format": { "$data": "1/whenFormat" },
-          "formatMinimum": { "$data": "1/laterThan" }
+          "format": {"$data": "1/whenFormat"},
+          "formatMinimum": {"$data": "1/laterThan"}
         },
         "whenFormat": {},
         "laterThan": {}
@@ -226,8 +226,8 @@
     "schema": {
       "properties": {
         "when": {
-          "format": { "$data": "1/whenFormat" },
-          "formatMinimum": { "$data": "1/laterThan" },
+          "format": {"$data": "1/whenFormat"},
+          "formatMinimum": {"$data": "1/laterThan"},
           "formatExclusiveMinimum": true
         },
         "whenFormat": {},
@@ -272,7 +272,7 @@
         "finalDate": {
           "format": "date",
           "formatMinimum": "2015-08-17",
-          "formatExclusiveMinimum": { "$data": "1/minIsExclusive" }
+          "formatExclusiveMinimum": {"$data": "1/minIsExclusive"}
         },
         "minIsExclusive": {}
       }
@@ -341,8 +341,8 @@
       "properties": {
         "finalDate": {
           "format": "date",
-          "formatMinimum": { "$data": "1/laterThan" },
-          "formatExclusiveMinimum": { "$data": "1/minIsExclusive" }
+          "formatMinimum": {"$data": "1/laterThan"},
+          "formatExclusiveMinimum": {"$data": "1/minIsExclusive"}
         },
         "laterThan": {},
         "minIsExclusive": {}
@@ -427,9 +427,9 @@
     "schema": {
       "properties": {
         "when": {
-          "format": { "$data": "1/whenFormat" },
+          "format": {"$data": "1/whenFormat"},
           "formatMinimum": "2015-08-17",
-          "formatExclusiveMinimum": { "$data": "1/minIsExclusive" }
+          "formatExclusiveMinimum": {"$data": "1/minIsExclusive"}
         },
         "whenFormat": {},
         "minIsExclusive": {}
@@ -505,9 +505,9 @@
     "schema": {
       "properties": {
         "when": {
-          "format": { "$data": "1/whenFormat" },
-          "formatMinimum": { "$data": "1/laterThan" },
-          "formatExclusiveMinimum": { "$data": "1/minIsExclusive" }
+          "format": {"$data": "1/whenFormat"},
+          "formatMinimum": {"$data": "1/laterThan"},
+          "formatExclusiveMinimum": {"$data": "1/minIsExclusive"}
         },
         "laterThan": {},
         "whenFormat": {},

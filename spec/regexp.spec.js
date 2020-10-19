@@ -1,68 +1,67 @@
-'use strict';
+"use strict"
 
-var Ajv = require('ajv');
+var Ajv = require("ajv")
 // var ajvPack = require('ajv-pack');
-var defFunc = require('../dist/keywords/regexp');
-var defineKeywords = require('../dist');
-var should = require('chai').should();
+var defFunc = require("../dist/keywords/regexp")
+var defineKeywords = require("../dist")
+var should = require("chai").should()
 
-
-describe('keyword "regexp"', function() {
+describe('keyword "regexp"', function () {
   var ajvs = [
-    defFunc(new Ajv),
-    defineKeywords(new Ajv({allErrors: true}, 'regexp')),
-    defineKeywords(new Ajv),
+    defFunc(new Ajv()),
+    defineKeywords(new Ajv({allErrors: true}, "regexp")),
+    defineKeywords(new Ajv()),
     // defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
-  ];
+  ]
 
   ajvs.forEach(function (ajv, i) {
-    it('should validate that values match regular expressions with flags #' + i, function() {
+    it("should validate that values match regular expressions with flags #" + i, function () {
       var schema = {
-        type: 'object',
+        type: "object",
         properties: {
-          foo: { regexp: '/foo/i' },
-          bar: { regexp: { pattern: 'bar', flags: 'i' } }
-        }
-      };
+          foo: {regexp: "/foo/i"},
+          bar: {regexp: {pattern: "bar", flags: "i"}},
+        },
+      }
 
       var validData = {
-        foo: 'Food',
-        bar: 'Barmen'
-      };
+        foo: "Food",
+        bar: "Barmen",
+      }
 
       var alsoValidData = {
         foo: 1,
-        bar: 2
-      };
+        bar: 2,
+      }
 
       var invalidData = {
-        foo: 'fog',
-        bar: 'bad'
-      };
+        foo: "fog",
+        bar: "bad",
+      }
 
-      ajv.validate(schema, {}) .should.equal(true);
-      ajv.validate(schema, validData) .should.equal(true);
-      ajv.validate(schema, alsoValidData) .should.equal(true);
-      ajv.validate(schema, invalidData) .should.equal(false);
-    });
-  });
+      ajv.validate(schema, {}).should.equal(true)
+      ajv.validate(schema, validData).should.equal(true)
+      ajv.validate(schema, alsoValidData).should.equal(true)
+      ajv.validate(schema, invalidData).should.equal(false)
+    })
+  })
 
   ajvs.forEach(function (ajv, i) {
-    it('should throw when regexp schema is invalid #' + i, function() {
-      [
-        { regexp: '/foo' }, // invalid regexp
-        { regexp: '/foo/a' }, // invalid regexp 2
-        { regexp: { pattern: '[a-z' } }, // invalid regexp
-        { regexp: { pattern: '[a-z]', flags: 'a' } }, // invalid flag
-        { regexp: { flag: 'i' } }, // missing pattern
-        { regexp: { pattern: '[a-z]', flag: 'i', foo: 1 } }, // extra property
-        { regexp: 1 }, // incorrect type
-        { regexp: { pattern: 1, flags: 'i' } } // incorrect type
+    it("should throw when regexp schema is invalid #" + i, function () {
+      ;[
+        {regexp: "/foo"}, // invalid regexp
+        {regexp: "/foo/a"}, // invalid regexp 2
+        {regexp: {pattern: "[a-z"}}, // invalid regexp
+        {regexp: {pattern: "[a-z]", flags: "a"}}, // invalid flag
+        {regexp: {flag: "i"}}, // missing pattern
+        {regexp: {pattern: "[a-z]", flag: "i", foo: 1}}, // extra property
+        {regexp: 1}, // incorrect type
+        {regexp: {pattern: 1, flags: "i"}}, // incorrect type
       ].forEach(function (schema) {
-        should.throw(function() {
-          ajv.compile(schema);
-        });
-      });
-    });
-  });
-});
+        should.throw(function () {
+          ajv.compile(schema)
+        })
+      })
+    })
+  })
+})

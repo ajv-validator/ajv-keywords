@@ -2,9 +2,7 @@
   {
     "description": "switch keyword validation",
     "schema": {
-      "switch": [
-        { "if": { "minimum": 10 }, "then": { "multipleOf": 2 } }
-      ]
+      "switch": [{"if": {"minimum": 10}, "then": {"multipleOf": 2}}]
     },
     "tests": [
       {
@@ -28,8 +26,8 @@
     "description": "switch keyword with then clause boolean",
     "schema": {
       "switch": [
-        { "if": { "minimum": 10 }, "then": { "multipleOf": 2 } },
-        { "if": { "maximum": 4 }, "then": false }
+        {"if": {"minimum": 10}, "then": {"multipleOf": 2}},
+        {"if": {"maximum": 4}, "then": false}
       ]
     },
     "tests": [
@@ -58,10 +56,7 @@
   {
     "description": "switch keyword with single then clause schema",
     "schema": {
-      "switch": [
-        { "if": { "maximum": 10 }, "then": { "multipleOf": 2 } },
-        { "then": { "multipleOf": 5 } }
-      ]
+      "switch": [{"if": {"maximum": 10}, "then": {"multipleOf": 2}}, {"then": {"multipleOf": 5}}]
     },
     "tests": [
       {
@@ -91,11 +86,11 @@
     "schema": {
       "description": "positive integer <=1000 with one non-zero digit",
       "switch": [
-        { "if": { "not": { "minimum": 1 } }, "then": false },
-        { "if": { "maximum": 10 }, "then": true },
-        { "if": { "maximum": 100 }, "then": { "multipleOf": 10 } },
-        { "if": { "maximum": 1000 }, "then": { "multipleOf": 100 } },
-        { "then": false }
+        {"if": {"not": {"minimum": 1}}, "then": false},
+        {"if": {"maximum": 10}, "then": true},
+        {"if": {"maximum": 100}, "then": {"multipleOf": 10}},
+        {"if": {"maximum": 1000}, "then": {"multipleOf": 100}},
+        {"then": false}
       ]
     },
     "tests": [
@@ -180,8 +175,8 @@
     "description": "switch keyword with continue clause",
     "schema": {
       "switch": [
-        { "if": { "minimum": 10 }, "then": { "multipleOf": 2 }, "continue": true },
-        { "if": { "minimum": 20 }, "then": { "multipleOf": 5 } }
+        {"if": {"minimum": 10}, "then": {"multipleOf": 2}, "continue": true},
+        {"if": {"minimum": 20}, "then": {"multipleOf": 5}}
       ]
     },
     "tests": [
@@ -227,11 +222,11 @@
             "id": "http://example.com/if",
             "minimum": 10
           },
-          "then": { "$ref": "#/definitions/def" }
+          "then": {"$ref": "#/definitions/def"}
         }
       ],
       "definitions": {
-        "def": { "multipleOf": 2 }
+        "def": {"multipleOf": 2}
       }
     },
     "tests": [

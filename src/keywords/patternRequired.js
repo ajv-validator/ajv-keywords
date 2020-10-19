@@ -1,21 +1,21 @@
-'use strict';
+"use strict"
 
 module.exports = function defFunc(ajv) {
   defFunc.definition = {
-    type: 'object',
-    inline: require('./dotjs/patternRequired'),
+    type: "object",
+    inline: require("./dotjs/patternRequired"),
     statements: true,
-    errors: 'full',
+    errors: "full",
     metaSchema: {
-      type: 'array',
+      type: "array",
       items: {
-        type: 'string',
-        format: 'regex'
+        type: "string",
+        format: "regex",
       },
-      uniqueItems: true
-    }
-  };
+      uniqueItems: true,
+    },
+  }
 
-  ajv.addKeyword('patternRequired', defFunc.definition);
-  return ajv;
-};
+  ajv.addKeyword("patternRequired", defFunc.definition)
+  return ajv
+}

@@ -7,7 +7,7 @@
     "tests": [
       {
         "description": "no property present is valid",
-        "data": { "baz": 1 },
+        "data": {"baz": 1},
         "valid": true
       },
       {
@@ -17,7 +17,7 @@
       },
       {
         "description": "property is present is invalid",
-        "data": { "foo": 1 },
+        "data": {"foo": 1},
         "valid": false
       }
     ]
@@ -30,7 +30,7 @@
     "tests": [
       {
         "description": "no property present is valid",
-        "data": { "baz": 1 },
+        "data": {"baz": 1},
         "valid": true
       },
       {
@@ -40,12 +40,12 @@
       },
       {
         "description": "one of properties present is invalid",
-        "data": { "foo": 1 },
+        "data": {"foo": 1},
         "valid": false
       },
       {
         "description": "both properties present is invalid",
-        "data": { "foo": 1, "bar": 2 },
+        "data": {"foo": 1, "bar": 2},
         "valid": false
       }
     ]
@@ -58,7 +58,7 @@
     "tests": [
       {
         "description": "any object is valid",
-        "data": { "foo": 1 },
+        "data": {"foo": 1},
         "valid": true
       },
       {

@@ -1,3 +1,3 @@
-'use strict';
+"use strict"
 
-module.exports = require('./_formatLimit')('Minimum');
+module.exports = require("./_formatLimit")("Minimum")

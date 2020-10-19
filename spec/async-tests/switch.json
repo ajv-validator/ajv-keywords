@@ -5,12 +5,12 @@
       "$async": true,
       "switch": [
         {
-          "if": { "idExists": { "table": "users" } },
-          "then": { "minimum": 6 }
+          "if": {"idExists": {"table": "users"}},
+          "then": {"minimum": 6}
         },
         {
-          "if": { "minimum": 21 },
-          "then": { "idExists": { "table": "posts" } }
+          "if": {"minimum": 21},
+          "then": {"idExists": {"table": "posts"}}
         }
       ]
     },

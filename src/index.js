@@ -1,9 +1,8 @@
-'use strict';
+"use strict"
 
-var KEYWORDS = require('./keywords');
+var KEYWORDS = require("./keywords")
 
-module.exports = defineKeywords;
-
+module.exports = defineKeywords
 
 /**
  * Defines one or several keywords in ajv instance
@@ -13,23 +12,21 @@ module.exports = defineKeywords;
  */
 function defineKeywords(ajv, keyword) {
   if (Array.isArray(keyword)) {
-    for (var i=0; i<keyword.length; i++)
-      get(keyword[i])(ajv);
-    return ajv;
+    for (var i = 0; i < keyword.length; i++) get(keyword[i])(ajv)
+    return ajv
   }
   if (keyword) {
-    get(keyword)(ajv);
-    return ajv;
+    get(keyword)(ajv)
+    return ajv
   }
-  for (keyword in KEYWORDS) get(keyword)(ajv);
-  return ajv;
+  for (keyword in KEYWORDS) get(keyword)(ajv)
+  return ajv
 }
 
-
-defineKeywords.get = get;
+defineKeywords.get = get
 
 function get(keyword) {
-  var defFunc = KEYWORDS[keyword];
-  if (!defFunc) throw new Error('Unknown keyword ' + keyword);
-  return defFunc;
+  var defFunc = KEYWORDS[keyword]
+  if (!defFunc) throw new Error("Unknown keyword " + keyword)
+  return defFunc
 }

@@ -17,7 +17,7 @@
       },
       {
         "description": "no property present is invalid",
-        "data": { "baz": 1 },
+        "data": {"baz": 1},
         "valid": false
       },
       {

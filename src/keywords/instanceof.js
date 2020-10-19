@@ -1,4 +1,4 @@
-'use strict';
+"use strict"
 
 var CONSTRUCTORS = {
   Object: Object,
@@ -7,52 +7,50 @@ var CONSTRUCTORS = {
   Number: Number,
   String: String,
   Date: Date,
-  RegExp: RegExp
-};
+  RegExp: RegExp,
+}
 
 module.exports = function defFunc(ajv) {
   /* istanbul ignore else */
-  if (typeof Buffer != 'undefined')
-    CONSTRUCTORS.Buffer = Buffer;
+  if (typeof Buffer != "undefined") CONSTRUCTORS.Buffer = Buffer
 
   /* istanbul ignore else */
-  if (typeof Promise != 'undefined')
-    CONSTRUCTORS.Promise = Promise;
+  if (typeof Promise != "undefined") CONSTRUCTORS.Promise = Promise
 
   defFunc.definition = {
     compile: function (schema) {
-      if (typeof schema == 'string') {
-        var Constructor = getConstructor(schema);
+      if (typeof schema == "string") {
+        var Constructor = getConstructor(schema)
         return function (data) {
-          return data instanceof Constructor;
-        };
+          return data instanceof Constructor
+        }
       }
 
-      var constructors = schema.map(getConstructor);
+      var constructors = schema.map(getConstructor)
       return function (data) {
-        for (var i=0; i<constructors.length; i++)
-          if (data instanceof constructors[i]) return true;
-        return false;
-      };
+        for (var i = 0; i < constructors.length; i++)
+          if (data instanceof constructors[i]) return true
+        return false
+      }
     },
     CONSTRUCTORS: CONSTRUCTORS,
     metaSchema: {
       anyOf: [
-        { type: 'string' },
+        {type: "string"},
         {
-          type: 'array',
-          items: { type: 'string' }
-        }
-      ]
-    }
-  };
+          type: "array",
+          items: {type: "string"},
+        },
+      ],
+    },
+  }
 
-  ajv.addKeyword('instanceof', defFunc.definition);
-  return ajv;
+  ajv.addKeyword("instanceof", defFunc.definition)
+  return ajv
 
   function getConstructor(c) {
-    var Constructor = CONSTRUCTORS[c];
-    if (Constructor) return Constructor;
-    throw new Error('invalid "instanceof" keyword value ' + c);
+    var Constructor = CONSTRUCTORS[c]
+    if (Constructor) return Constructor
+    throw new Error('invalid "instanceof" keyword value ' + c)
   }
-};
+}

@@ -5,7 +5,7 @@
       "properties": {
         "finalDate": {
           "format": "date",
-          "formatMaximum": { "$data": "1/beforeThan" }
+          "formatMaximum": {"$data": "1/beforeThan"}
         },
         "beforeThan": {}
       }
@@ -66,7 +66,7 @@
       "properties": {
         "finalDate": {
           "format": "date",
-          "formatMaximum": { "$data": "1/beforeThan" },
+          "formatMaximum": {"$data": "1/beforeThan"},
           "formatExclusiveMaximum": true
         },
         "beforeThan": {}
@@ -105,7 +105,7 @@
     "schema": {
       "properties": {
         "when": {
-          "format": { "$data": "1/whenFormat" },
+          "format": {"$data": "1/whenFormat"},
           "formatMaximum": "2015-08-17"
         },
         "whenFormat": {}
@@ -151,7 +151,7 @@
     "schema": {
       "properties": {
         "when": {
-          "format": { "$data": "1/whenFormat" },
+          "format": {"$data": "1/whenFormat"},
           "formatMaximum": "2015-08-17",
           "formatExclusiveMaximum": true
         },
@@ -191,8 +191,8 @@
     "schema": {
       "properties": {
         "when": {
-          "format": { "$data": "1/whenFormat" },
-          "formatMaximum": { "$data": "1/beforeThan" }
+          "format": {"$data": "1/whenFormat"},
+          "formatMaximum": {"$data": "1/beforeThan"}
         },
         "whenFormat": {},
         "beforeThan": {}
@@ -233,8 +233,8 @@
     "schema": {
       "properties": {
         "when": {
-          "format": { "$data": "1/whenFormat" },
-          "formatMaximum": { "$data": "1/beforeThan" },
+          "format": {"$data": "1/whenFormat"},
+          "formatMaximum": {"$data": "1/beforeThan"},
           "formatExclusiveMaximum": true
         },
         "whenFormat": {},
@@ -279,7 +279,7 @@
         "finalDate": {
           "format": "date",
           "formatMaximum": "2015-08-17",
-          "formatExclusiveMaximum": { "$data": "1/maxIsExclusive" }
+          "formatExclusiveMaximum": {"$data": "1/maxIsExclusive"}
         },
         "maxIsExclusive": {}
       }
@@ -348,8 +348,8 @@
       "properties": {
         "finalDate": {
           "format": "date",
-          "formatMaximum": { "$data": "1/beforeThan" },
-          "formatExclusiveMaximum": { "$data": "1/maxIsExclusive" }
+          "formatMaximum": {"$data": "1/beforeThan"},
+          "formatExclusiveMaximum": {"$data": "1/maxIsExclusive"}
         },
         "beforeThan": {},
         "maxIsExclusive": {}
@@ -434,9 +434,9 @@
     "schema": {
       "properties": {
         "when": {
-          "format": { "$data": "1/whenFormat" },
+          "format": {"$data": "1/whenFormat"},
           "formatMaximum": "2015-08-17",
-          "formatExclusiveMaximum": { "$data": "1/maxIsExclusive" }
+          "formatExclusiveMaximum": {"$data": "1/maxIsExclusive"}
         },
         "whenFormat": {},
         "maxIsExclusive": {}
@@ -512,9 +512,9 @@
     "schema": {
       "properties": {
         "when": {
-          "format": { "$data": "1/whenFormat" },
-          "formatMaximum": { "$data": "1/beforeThan" },
-          "formatExclusiveMaximum": { "$data": "1/maxIsExclusive" }
+          "format": {"$data": "1/whenFormat"},
+          "formatMaximum": {"$data": "1/beforeThan"},
+          "formatExclusiveMaximum": {"$data": "1/maxIsExclusive"}
         },
         "beforeThan": {},
         "whenFormat": {},
