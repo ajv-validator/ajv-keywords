@@ -3,6 +3,7 @@ import typeofPlugin from "./typeof"
 import instanceofPlugin from "./instanceof"
 import range from "./range"
 import exclusiveRange from "./exclusiveRange"
+import regexp from "./regexp"
 
 // TODO type
 const ajvKeywords: Record<string, Plugin<any> | undefined> = {
@@ -10,7 +11,7 @@ const ajvKeywords: Record<string, Plugin<any> | undefined> = {
   instanceof: instanceofPlugin,
   range,
   exclusiveRange,
-  regexp: require("./regexp"),
+  regexp,
   dynamicDefaults: require("./dynamicDefaults"),
   allRequired: require("./allRequired"),
   anyRequired: require("./anyRequired"),

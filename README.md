@@ -154,7 +154,7 @@ ajv.validate(schema, 3) // false
 
 #### `regexp`
 
-This keyword allows to use regular expressions with flags in schemas (the standard `pattern` keyword does not support flags).
+This keyword allows to use regular expressions with flags in schemas, and also without `"u"` flag when needed (the standard `pattern` keyword does not support flags and implies the presence of `"u"` flag).
 
 This keyword applies only to strings. If the data is not a string, the validation succeeds.
 
@@ -164,8 +164,8 @@ The value of this keyword can be either a string (the result of `regexp.toString
 var schema = {
   type: "object",
   properties: {
-    foo: {regexp: "/foo/i"},
-    bar: {regexp: {pattern: "bar", flags: "i"}},
+    foo: {type: "string", regexp: "/foo/i"},
+    bar: {type: "string", regexp: {pattern: "bar", flags: "i"}},
   },
 }
 
