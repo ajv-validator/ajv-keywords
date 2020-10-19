@@ -2,6 +2,7 @@ import Ajv from "ajv"
 import instanceofPlugin from "../dist/keywords/instanceof"
 import instanceofDef from "../dist/definitions/instanceof"
 import ajvKeywordsPlugin from "../dist"
+import ajvKeywordsDefs from "../dist/definitions"
 import chai from "chai"
 
 const should = chai.should()
@@ -9,8 +10,10 @@ const should = chai.should()
 describe('keyword "instanceof"', () => {
   const ajvs = [
     instanceofPlugin(new Ajv()),
+    new Ajv({keywords: [instanceofDef]}),
     ajvKeywordsPlugin(new Ajv(), "instanceof"),
-    // defineKeywords(new Ajv()),
+    ajvKeywordsPlugin(new Ajv()),
+    new Ajv({keywords: ajvKeywordsDefs}),
   ]
 
   ajvs.forEach((ajv, i) => {

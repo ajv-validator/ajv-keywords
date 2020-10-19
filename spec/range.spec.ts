@@ -1,6 +1,8 @@
 import Ajv from "ajv"
 import rangePlugin from "../dist/keywords/range"
+import rangeDef from "../dist/definitions/range"
 import ajvKeywordsPlugin from "../dist"
+import ajvKeywordsDefs from "../dist/definitions"
 import chai from "chai"
 
 // const ajvPack = require('ajv-pack');
@@ -10,8 +12,10 @@ const should = chai.should()
 describe('keyword "range"', () => {
   const ajvs = [
     rangePlugin(new Ajv()),
+    new Ajv({keywords: [rangeDef, "exclusiveRange"]}),
     ajvKeywordsPlugin(new Ajv(), "range"),
     ajvKeywordsPlugin(new Ajv()),
+    new Ajv({keywords: ajvKeywordsDefs}),
     // defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
   ]
 
