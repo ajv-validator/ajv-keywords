@@ -1,10 +1,9 @@
-import Ajv from "ajv"
+import type Ajv from "Ajv"
 import rangePlugin from "../dist/keywords/range"
 import rangeDef from "../dist/definitions/range"
 import exclusiveRangePlugin from "../dist/keywords/exclusiveRange"
 import exclusiveRangeDef from "../dist/definitions/exclusiveRange"
-import ajvKeywordsPlugin from "../dist"
-import ajvKeywords from "../dist/definitions"
+import getAjvInstances from "./ajv_instances"
 import chai from "chai"
 
 // const ajvPack = require('ajv-pack');
@@ -12,15 +11,12 @@ import chai from "chai"
 const should = chai.should()
 
 describe('keyword "range"', () => {
-  const ajvs = [
-    exclusiveRangePlugin(rangePlugin(new Ajv())),
-    new Ajv({keywords: [rangeDef, exclusiveRangeDef]}),
-    ajvKeywordsPlugin(new Ajv(), ["range", "exclusiveRange"]),
-    // ajvKeywordsPlugin(new Ajv()),
-    new Ajv({keywords: ajvKeywords}),
-    new Ajv().addVocabulary(ajvKeywords),
-    // defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
-  ]
+  const ajvs = getAjvInstances(
+    ["range", "exclusiveRange"],
+    [rangeDef, exclusiveRangeDef],
+    (ajv: Ajv) => exclusiveRangePlugin(rangePlugin(ajv))
+  )
+  // ajvs.push(exclusiveRangePlugin(rangePlugin(ajvPack.instance(new Ajv({sourceCode: true})))))
 
   ajvs.forEach((ajv, i) => {
     it(`should validate that value is in range #${i}`, () => {

@@ -1,21 +1,12 @@
-import Ajv from "ajv"
 import instanceofPlugin from "../dist/keywords/instanceof"
 import instanceofDef from "../dist/definitions/instanceof"
-import ajvKeywordsPlugin from "../dist"
-import ajvKeywords from "../dist/definitions"
+import getAjvInstances from "./ajv_instances"
 import chai from "chai"
 
 const should = chai.should()
 
 describe('keyword "instanceof"', () => {
-  const ajvs = [
-    instanceofPlugin(new Ajv()),
-    new Ajv({keywords: [instanceofDef]}),
-    ajvKeywordsPlugin(new Ajv(), "instanceof"),
-    // ajvKeywordsPlugin(new Ajv()),
-    new Ajv({keywords: ajvKeywords}),
-    new Ajv().addVocabulary(ajvKeywords),
-  ]
+  const ajvs = getAjvInstances("instanceof", instanceofDef, instanceofPlugin)
 
   ajvs.forEach((ajv, i) => {
     it(`should validate classes # ${i}`, () => {

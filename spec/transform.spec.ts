@@ -1,21 +1,12 @@
-import Ajv from "ajv"
 import transformPlugin from "../dist/keywords/transform"
 import transformDef from "../dist/definitions/transform"
-import ajvKeywordsPlugin from "../dist"
-import ajvKeywords from "../dist/definitions"
+import getAjvInstances from "./ajv_instances"
 import chai from "chai"
 
 chai.should()
 
 describe('keyword "transform"', () => {
-  const ajvs = [
-    transformPlugin(new Ajv({allowUnionTypes: true})),
-    new Ajv({keywords: [transformDef], allowUnionTypes: true}),
-    ajvKeywordsPlugin(new Ajv({allowUnionTypes: true}), "transform"),
-    new Ajv({keywords: ajvKeywords, allowUnionTypes: true}),
-    new Ajv({allowUnionTypes: true}).addVocabulary(ajvKeywords),
-    // ajvKeywordsPlugin(new Ajv()),
-  ]
+  const ajvs = getAjvInstances("transform", transformDef, transformPlugin, {allowUnionTypes: true})
 
   ajvs.forEach((ajv, i) => {
     it(`should transform by wrapper #${i}`, () => {

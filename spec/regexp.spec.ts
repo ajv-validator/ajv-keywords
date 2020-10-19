@@ -1,8 +1,6 @@
-import Ajv from "ajv"
 import regexpPlugin from "../dist/keywords/regexp"
 import regexpDef from "../dist/definitions/regexp"
-import ajvKeywordsPlugin from "../dist"
-import ajvKeywords from "../dist/definitions"
+import getAjvInstances from "./ajv_instances"
 import chai from "chai"
 
 // var ajvPack = require('ajv-pack');
@@ -10,15 +8,8 @@ import chai from "chai"
 const should = chai.should()
 
 describe('keyword "regexp"', () => {
-  const ajvs = [
-    regexpPlugin(new Ajv({logger: false})),
-    new Ajv({keywords: [regexpDef], logger: false}),
-    ajvKeywordsPlugin(new Ajv({allErrors: true, logger: false}), "regexp"),
-    // ajvKeywordsPlugin(new Ajv()),
-    new Ajv({keywords: ajvKeywords, logger: false}),
-    new Ajv({logger: false}).addVocabulary(ajvKeywords),
-    // defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
-  ]
+  const ajvs = getAjvInstances("regexp", regexpDef, regexpPlugin, {logger: false})
+  // ajvs.push(regexpPlugin(ajvPack.instance(new Ajv({sourceCode: true}))))
 
   ajvs.forEach((ajv, i) => {
     it(`should validate that values match regular expressions with flags #${i}`, () => {
