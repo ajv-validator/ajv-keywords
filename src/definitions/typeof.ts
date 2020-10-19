@@ -1,20 +1,23 @@
-import {CodeKeywordDefinition, KeywordCxt, _} from "ajv"
+import {CodeKeywordDefinition, KeywordCxt} from "ajv"
+import {_} from "ajv/dist/compile/codegen"
+
+const TYPES = ["undefined", "string", "number", "object", "function", "boolean", "symbol"]
 
 const def: CodeKeywordDefinition = {
   keyword: "typeof",
   schemaType: ["string", "array"],
   code(cxt: KeywordCxt) {
     const {data, schema, schemaValue} = cxt
-    if (typeof schema == "string") {
-      cxt.fail(_`typeof ${data} != ${schema}`)
-    } else {
-      cxt.fail(_`${schemaValue}.indexOf(typeof ${data}) < 0`)
-    }
+    cxt.fail(
+      typeof schema == "string"
+        ? _`typeof ${data} != ${schema}`
+        : _`${schemaValue}.indexOf(typeof ${data}) < 0`
+    )
   },
   metaSchema: {
     anyOf: [
-      {type: "string", enum: KNOWN_TYPES},
-      {type: "array", items: {type: "string", enum: KNOWN_TYPES}},
+      {type: "string", enum: TYPES},
+      {type: "array", items: {type: "string", enum: TYPES}},
     ],
   },
 }
