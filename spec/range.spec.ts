@@ -1,21 +1,22 @@
-"use strict"
+import Ajv from "ajv"
+import rangePlugin from "../dist/keywords/range"
+import ajvKeywordsPlugin from "../dist"
+import chai from "chai"
 
-const Ajv = require("ajv")
-// var ajvPack = require('ajv-pack');
-const defFunc = require("../dist/keywords/range")
-const defineKeywords = require("../dist")
-const should = require("chai").should()
+// const ajvPack = require('ajv-pack');
+
+const should = chai.should()
 
 describe('keyword "range"', () => {
   const ajvs = [
-    defFunc(new Ajv()),
-    defineKeywords(new Ajv(), "range"),
-    defineKeywords(new Ajv()),
+    rangePlugin(new Ajv()),
+    ajvKeywordsPlugin(new Ajv(), "range"),
+    ajvKeywordsPlugin(new Ajv()),
     // defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
   ]
 
   ajvs.forEach((ajv, i) => {
-    it("should validate that value is in range #" + i, () => {
+    it(`should validate that value is in range #${i}`, () => {
       const schema = {range: [1, 3]}
       ajv.validate(schema, 1).should.equal(true)
       ajv.validate(schema, 2).should.equal(true)
@@ -35,7 +36,7 @@ describe('keyword "range"', () => {
   })
 
   ajvs.forEach((ajv, i) => {
-    it("should throw when range schema is invalid #" + i, () => {
+    it(`should throw when range schema is invalid #${i}`, () => {
       ;[
         {range: [1, "3"]},
         {range: [1]},

@@ -2,7 +2,10 @@ import Ajv from "ajv"
 import {Plugin} from "ajv"
 import KEYWORDS from "./keywords"
 
-const ajvKeywordsPlugin: Plugin<string | string[]> = (ajv: Ajv, keyword?: string | string[]): Ajv => {
+const ajvKeywordsPlugin: Plugin<string | string[]> = (
+  ajv: Ajv,
+  keyword?: string | string[]
+): Ajv => {
   if (Array.isArray(keyword)) {
     for (const k of keyword) get(k)(ajv)
     return ajv
