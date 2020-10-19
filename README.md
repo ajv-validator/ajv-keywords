@@ -103,14 +103,14 @@ ajv.validate({ typeof: ['undefined', 'object'] }, null); // true
 
 Based on JavaScript `instanceof` operation.
 
-The value of the keyword should be a string (`"Object"`, `"Array"`, `"Function"`, `"Number"`, `"String"`, `"Date"`, `"RegExp"`, `"Promise"` or `"Buffer"`) or array of strings.
+The value of the keyword should be a string (`"Object"`, `"Array"`, `"Function"`, `"Number"`, `"String"`, `"Date"`, `"RegExp"` or `"Promise"`) or array of strings.
 
 To pass validation the result of `data instanceof ...` operation on the value should be true:
 
-```
-ajv.validate({ instanceof: 'Array' }, []); // true
-ajv.validate({ instanceof: 'Array' }, {}); // false
-ajv.validate({ instanceof: ['Array', 'Function'] }, function(){}); // true
+```javascript
+ajv.validate({instanceof: "Array"}, []) // true
+ajv.validate({instanceof: "Array"}, {}) // false
+ajv.validate({instanceof: ["Array", "Function"]}, function () {}) // true
 ```
 
 You can add your own constructor function to be recognised by this keyword:
@@ -128,21 +128,21 @@ ajv.validate({instanceof: "MyClass"}, new MyClass()) // true
 
 #### `range` and `exclusiveRange`
 
-Syntax sugar for the combination of minimum and maximum keywords, also fails schema compilation if there are no numbers in the range.
+Syntax sugar for the combination of minimum and maximum keywords (or exclusiveMinimum and exclusiveMaximum), also fails schema compilation if there are no numbers in the range.
 
-The value of this keyword must be the array consisting of two numbers, the second must be greater or equal than the first one.
+The value of these keywords must be an array consisting of two numbers, the second must be greater or equal than the first one.
 
-If the validated value is not a number the validation passes, otherwise to pass validation the value should be greater (or equal) than the first number and smaller (or equal) than the second number in the array. If `exclusiveRange` keyword is present in the same schema and its value is true, the validated value must not be equal to the range boundaries.
+If the validated value is not a number the validation passes, otherwise to pass validation the value should be greater (or equal) than the first number and smaller (or equal) than the second number in the array.
 
 ```javascript
-var schema = {range: [1, 3]}
+const schema = {type: "number", range: [1, 3]}
 ajv.validate(schema, 1) // true
 ajv.validate(schema, 2) // true
 ajv.validate(schema, 3) // true
 ajv.validate(schema, 0.99) // false
 ajv.validate(schema, 3.01) // false
 
-var schema = {range: [1, 3], exclusiveRange: true}
+const schema = {type: "number", exclusiveRange: [1, 3]}
 ajv.validate(schema, 1.01) // true
 ajv.validate(schema, 2) // true
 ajv.validate(schema, 2.99) // true
