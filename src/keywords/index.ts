@@ -1,12 +1,15 @@
 import {Plugin} from "ajv"
 import typeofPlugin from "./typeof"
 import instanceofPlugin from "./instanceof"
+import range from "./range"
+import exclusiveRange from "./exclusiveRange"
 
 // TODO type
 const ajvKeywords: Record<string, Plugin<any> | undefined> = {
   typeof: typeofPlugin,
   instanceof: instanceofPlugin,
-  range: require("./range"),
+  range,
+  exclusiveRange,
   regexp: require("./regexp"),
   dynamicDefaults: require("./dynamicDefaults"),
   allRequired: require("./allRequired"),

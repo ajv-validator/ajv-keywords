@@ -2,7 +2,7 @@ import Ajv from "ajv"
 import typeofPlugin from "../dist/keywords/typeof"
 import typeofDef from "../dist/definitions/typeof"
 import ajvKeywordsPlugin from "../dist"
-import ajvKeywordsDefs from "../dist/definitions"
+import ajvKeywords from "../dist/definitions"
 import chai from "chai"
 
 // const ajvPack = require('ajv-pack');
@@ -13,8 +13,9 @@ describe('keyword "typeof"', () => {
     typeofPlugin(new Ajv()),
     new Ajv({keywords: [typeofDef]}),
     ajvKeywordsPlugin(new Ajv(), "typeof"),
-    ajvKeywordsPlugin(new Ajv()),
-    new Ajv({keywords: ajvKeywordsDefs}),
+    // ajvKeywordsPlugin(new Ajv()),
+    new Ajv({keywords: ajvKeywords}),
+    new Ajv().addVocabulary(ajvKeywords),
     // defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
   ]
 
