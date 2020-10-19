@@ -7,8 +7,12 @@ module.exports = {
     {
       files: ["*.ts"],
       parserOptions: {
-        project: ["./tests/tsconfig.json"],
+        project: ["./spec/tsconfig.json"],
       },
+      rules: {
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-extraneous-class": "off",
+      }
     },
   ],
   rules: {

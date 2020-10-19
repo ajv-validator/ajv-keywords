@@ -1,10 +1,13 @@
-"use strict"
+import {Plugin} from "ajv"
+import typeofPlugin from "./typeof"
+import instanceofPlugin from "./instanceof"
 
-module.exports = {
-  instanceof: require("./instanceof"),
+// TODO type
+const ajvKeywords: Record<string, Plugin<any> | undefined> = {
+  typeof: typeofPlugin,
+  instanceof: instanceofPlugin,
   range: require("./range"),
   regexp: require("./regexp"),
-  typeof: require("./typeof"),
   dynamicDefaults: require("./dynamicDefaults"),
   allRequired: require("./allRequired"),
   anyRequired: require("./anyRequired"),
@@ -20,3 +23,6 @@ module.exports = {
   select: require("./select"),
   transform: require("./transform"),
 }
+
+export default ajvKeywords
+module.exports = ajvKeywords

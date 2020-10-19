@@ -67,5 +67,8 @@
   },
   "lint-staged": {
     "*.{md,json,yaml,js,ts}": "prettier --write"
+  },
+  "dependencies": {
+    "@types/chai": "^4.2.14"
   }
 }
