@@ -5,6 +5,7 @@ import range from "./range"
 import exclusiveRange from "./exclusiveRange"
 import regexp from "./regexp"
 import transform from "./transform"
+import allRequired from "./allRequired"
 
 // TODO type
 const ajvKeywords: Record<string, Plugin<any> | undefined> = {
@@ -14,8 +15,8 @@ const ajvKeywords: Record<string, Plugin<any> | undefined> = {
   exclusiveRange,
   regexp,
   transform,
+  allRequired,
   dynamicDefaults: require("./dynamicDefaults"),
-  allRequired: require("./allRequired"),
   anyRequired: require("./anyRequired"),
   oneRequired: require("./oneRequired"),
   prohibited: require("./prohibited"),
