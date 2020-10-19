@@ -1,8 +1,8 @@
 'use strict';
 
 var Ajv = require('ajv');
-var defFunc = require('../keywords/dynamicDefaults');
-var defineKeywords = require('..');
+var defFunc = require('../dist/keywords/dynamicDefaults');
+var defineKeywords = require('../dist');
 var should = require('chai').should();
 var assert = require('assert');
 var uuid = require('uuid');

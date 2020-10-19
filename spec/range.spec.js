@@ -2,8 +2,8 @@
 
 var Ajv = require('ajv');
 // var ajvPack = require('ajv-pack');
-var defFunc = require('../keywords/range');
-var defineKeywords = require('..');
+var defFunc = require('../dist/keywords/range');
+var defineKeywords = require('../dist');
 var should = require('chai').should();
 
 

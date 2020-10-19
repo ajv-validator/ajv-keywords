@@ -1,8 +1,8 @@
 'use strict';
 
 var Ajv = require('ajv');
-var defFunc = require('../keywords/formatMaximum');
-var defineKeywords = require('..');
+var defFunc = require('../dist/keywords/formatMaximum');
+var defineKeywords = require('../dist');
 var should = require('chai').should();
 
 

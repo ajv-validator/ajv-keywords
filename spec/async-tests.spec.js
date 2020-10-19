@@ -2,7 +2,7 @@
 
 var Ajv = require('ajv');
 var jsonSchemaTest = require('json-schema-test');
-var defineKeywords = require('..');
+var defineKeywords = require('../dist');
 
 var ajvs = [
   defineKeywords(getAjv(), 'switch'),

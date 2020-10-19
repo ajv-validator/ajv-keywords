@@ -1,7 +1,7 @@
 'use strict';
 
 var Ajv = require('ajv');
-var defineKeywords = require('..');
+var defineKeywords = require('../dist');
 var should = require('chai').should();
 
 
