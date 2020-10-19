@@ -58,7 +58,7 @@ module.exports = function (minMax) {
 
 
 function extendFormats(ajv) {
-  var formats = ajv._formats;
+  var formats = ajv.formats;
   for (var name in COMPARE_FORMATS) {
     var format = formats[name];
     // the last condition is needed if it's RegExp from another window

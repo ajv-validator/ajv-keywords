@@ -3,7 +3,7 @@
 var util = require('./_util');
 
 module.exports = function defFunc(ajv) {
-  if (!ajv._opts.$data) {
+  if (!ajv.opts.$data) {
     console.warn('keyword select requires $data option');
     return ajv;
   }

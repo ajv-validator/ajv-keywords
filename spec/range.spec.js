@@ -1,7 +1,7 @@
 'use strict';
 
 var Ajv = require('ajv');
-var ajvPack = require('ajv-pack');
+// var ajvPack = require('ajv-pack');
 var defFunc = require('../keywords/range');
 var defineKeywords = require('..');
 var should = require('chai').should();
@@ -12,7 +12,7 @@ describe('keyword "range"', function() {
     defFunc(new Ajv),
     defineKeywords(new Ajv, 'range'),
     defineKeywords(new Ajv),
-    defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
+    // defFunc(ajvPack.instance(new Ajv({sourceCode: true})))
   ];
 
   ajvs.forEach(function (ajv, i) {
