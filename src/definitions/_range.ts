@@ -1,9 +1,9 @@
-import {MacroKeywordDefinition} from "ajv"
+import {GetDefinition} from "./_types"
 
 type RangeKwd = "range" | "exclusiveRange"
 
-export function getRangeDef(keyword: RangeKwd): MacroKeywordDefinition {
-  return {
+export default function getRangeDef(keyword: RangeKwd): GetDefinition {
+  return () => ({
     keyword,
     type: "number",
     schemaType: "array",
@@ -19,7 +19,7 @@ export function getRangeDef(keyword: RangeKwd): MacroKeywordDefinition {
       maxItems: 2,
       items: {type: "number"},
     },
-  }
+  })
 
   function validateRangeSchema(min: number, max: number): void {
     if (min > max || (keyword === "exclusiveRange" && min === max)) {

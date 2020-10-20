@@ -18,31 +18,36 @@ if (typeof Buffer != "undefined") CONSTRUCTORS.Buffer = Buffer
 /* istanbul ignore else */
 if (typeof Promise != "undefined") CONSTRUCTORS.Promise = Promise
 
-const def: FuncKeywordDefinition & {CONSTRUCTORS: typeof CONSTRUCTORS} = {
-  keyword: "instanceof",
-  schemaType: ["string", "array"],
-  compile(schema: string | string[]) {
-    if (typeof schema == "string") {
-      const C = getConstructor(schema)
-      return (data) => data instanceof C
-    }
+const getDef: (() => FuncKeywordDefinition) & {
+  CONSTRUCTORS: typeof CONSTRUCTORS
+} = Object.assign(_getDef, {CONSTRUCTORS})
 
-    if (Array.isArray(schema)) {
-      const constructors = schema.map(getConstructor)
-      return (data) => {
-        for (const C of constructors) {
-          if (data instanceof C) return true
-        }
-        return false
+function _getDef(): FuncKeywordDefinition {
+  return {
+    keyword: "instanceof",
+    schemaType: ["string", "array"],
+    compile(schema: string | string[]) {
+      if (typeof schema == "string") {
+        const C = getConstructor(schema)
+        return (data) => data instanceof C
       }
-    }
 
-    throw new Error("ajv implementation error")
-  },
-  CONSTRUCTORS,
-  metaSchema: {
-    anyOf: [{type: "string"}, {type: "array", items: {type: "string"}}],
-  },
+      if (Array.isArray(schema)) {
+        const constructors = schema.map(getConstructor)
+        return (data) => {
+          for (const C of constructors) {
+            if (data instanceof C) return true
+          }
+          return false
+        }
+      }
+
+      throw new Error("ajv implementation error")
+    },
+    metaSchema: {
+      anyOf: [{type: "string"}, {type: "array", items: {type: "string"}}],
+    },
+  }
 }
 
 function getConstructor(c: string): Constructor {
@@ -51,5 +56,5 @@ function getConstructor(c: string): Constructor {
   throw new Error(`invalid "instanceof" keyword value ${c}`)
 }
 
-export default def
-module.exports = def
+export default getDef
+module.exports = getDef

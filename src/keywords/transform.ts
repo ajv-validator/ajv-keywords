@@ -1,7 +1,7 @@
 import {Plugin} from "ajv"
-import def from "../definitions/transform"
+import getDef from "../definitions/transform"
 
-const transformPlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(def)
+const transformPlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(getDef())
 
 export default transformPlugin
 module.exports = transformPlugin

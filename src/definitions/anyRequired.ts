@@ -1,19 +1,7 @@
-import {MacroKeywordDefinition} from "ajv"
+import {GetDefinition} from "./_types"
+import getRequiredDef from "./_required"
 
-const def: MacroKeywordDefinition = {
-  keyword: "anyRequired",
-  type: "object",
-  schemaType: "array",
-  macro(schema: string[]) {
-    if (schema.length === 0) return true
-    if (schema.length === 1) return {required: schema}
-    return {anyOf: schema.map((p) => ({required: [p]}))}
-  },
-  metaSchema: {
-    type: "array",
-    items: {type: "string"},
-  },
-}
+const getDef: GetDefinition = getRequiredDef("anyRequired")
 
-export default def
-module.exports = def
+export default getDef
+module.exports = getDef

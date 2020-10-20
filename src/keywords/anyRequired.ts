@@ -1,7 +1,7 @@
 import {Plugin} from "ajv"
-import def from "../definitions/anyRequired"
+import getDef from "../definitions/anyRequired"
 
-const anyRequiredPlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(def)
+const anyRequiredPlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(getDef())
 
 export default anyRequiredPlugin
 module.exports = anyRequiredPlugin

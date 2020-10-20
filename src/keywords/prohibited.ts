@@ -1,7 +1,7 @@
 import {Plugin} from "ajv"
-import def from "../definitions/prohibited"
+import getDef from "../definitions/prohibited"
 
-const prohibitedPlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(def)
+const prohibitedPlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(getDef())
 
 export default prohibitedPlugin
 module.exports = prohibitedPlugin

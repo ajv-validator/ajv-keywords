@@ -27,32 +27,34 @@ const transform: {[key in TransformName]: Transform} = {
   toEnumCase: (s, cfg) => cfg?.hash[configKey(s)] || s,
 }
 
-const def: FuncKeywordDefinition = {
-  keyword: "transform",
-  type: "string",
-  schemaType: "array",
-  errors: false,
-  modifying: true,
-  // valid: true, // TODO fix in ajv: this option does not work with code optimization
-  compile(schema: TransformName[], parentSchema) {
-    let cfg: TransformConfig
-    if (schema.includes("toEnumCase")) cfg = getEnumCaseCfg(parentSchema)
+export default function getDef(): FuncKeywordDefinition {
+  return {
+    keyword: "transform",
+    type: "string",
+    schemaType: "array",
+    errors: false,
+    modifying: true,
+    // valid: true, // TODO fix in ajv: this option does not work with code optimization
+    compile(schema: TransformName[], parentSchema) {
+      let cfg: TransformConfig
+      if (schema.includes("toEnumCase")) cfg = getEnumCaseCfg(parentSchema)
 
-    return function (data, dataCxt): boolean {
-      // skip if top level value
-      if (!dataCxt) return true
-      const {parentData, parentDataProperty: key} = dataCxt
-      if (!parentData) return true // TODO fix in ajv: either dataCxt type should be changed or undefined context should be passed when parentData is undefined
-      // apply transforms in order provided
-      for (const t of schema) data = transform[t](data, cfg)
-      parentData[key as keyof typeof parentData] = data
-      return true
-    }
-  },
-  metaSchema: {
-    type: "array",
-    items: {type: "string", enum: Object.keys(transform)},
-  },
+      return function (data, dataCxt): boolean {
+        // skip if top level value
+        if (!dataCxt) return true
+        const {parentData, parentDataProperty: key} = dataCxt
+        if (!parentData) return true // TODO fix in ajv: either dataCxt type should be changed or undefined context should be passed when parentData is undefined
+        // apply transforms in order provided
+        for (const t of schema) data = transform[t](data, cfg)
+        parentData[key as keyof typeof parentData] = data
+        return true
+      }
+    },
+    metaSchema: {
+      type: "array",
+      items: {type: "string", enum: Object.keys(transform)},
+    },
+  }
 }
 
 function getEnumCaseCfg(parentSchema: AnySchemaObject): TransformConfig {
@@ -82,5 +84,4 @@ function configKey(s: string): string {
   return s.toLowerCase()
 }
 
-export default def
-module.exports = def
+module.exports = getDef

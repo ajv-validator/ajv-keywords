@@ -1,7 +1,7 @@
 import {Plugin} from "ajv"
-import def from "../definitions/range"
+import getDef from "../definitions/range"
 
-const rangePlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(def)
+const rangePlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(getDef())
 
 export default rangePlugin
 module.exports = rangePlugin

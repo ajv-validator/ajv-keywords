@@ -21,10 +21,10 @@ const ajvs = [
   ]),
   // ajvKeywordsPlugin(getAjv()),
   // ajvKeywordsPlugin(getAjv(true)),
-  getAjv(undefined, ajvKeywords),
-  getAjv(true, ajvKeywords),
+  getAjv(undefined, ajvKeywords()),
+  getAjv(true, ajvKeywords()),
   // ajvKeywordsPlugin(getAjvNoMeta()),
-  getAjvNoMeta(ajvKeywords),
+  getAjvNoMeta(ajvKeywords()),
 ]
 
 jsonSchemaTest(ajvs, {

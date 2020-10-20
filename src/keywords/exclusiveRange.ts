@@ -1,7 +1,7 @@
 import {Plugin} from "ajv"
-import def from "../definitions/exclusiveRange"
+import getDef from "../definitions/exclusiveRange"
 
-const exclusiveRangePlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(def)
+const exclusiveRangePlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(getDef())
 
 export default exclusiveRangePlugin
 module.exports = exclusiveRangePlugin

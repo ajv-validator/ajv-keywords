@@ -1,7 +1,7 @@
-import {MacroKeywordDefinition} from "ajv"
-import {getRangeDef} from "./_range"
+import {GetDefinition} from "./_types"
+import getRangeDef from "./_range"
 
-const def: MacroKeywordDefinition = getRangeDef("range")
+const getDef: GetDefinition = getRangeDef("range")
 
-export default def
-module.exports = def
+export default getDef
+module.exports = getDef

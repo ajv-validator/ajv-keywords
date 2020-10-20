@@ -1,4 +1,5 @@
 import {Vocabulary} from "ajv"
+import {DefinitionOptions, GetDefinition} from "./_types"
 import typeofDef from "./typeof"
 import instanceofDef from "./instanceof"
 import range from "./range"
@@ -10,7 +11,7 @@ import anyRequired from "./anyRequired"
 import oneRequired from "./oneRequired"
 import prohibited from "./prohibited"
 
-const ajvKeywordsDefs: Vocabulary = [
+const definitions: GetDefinition[] = [
   typeofDef,
   instanceofDef,
   range,
@@ -23,5 +24,6 @@ const ajvKeywordsDefs: Vocabulary = [
   prohibited,
 ]
 
-export default ajvKeywordsDefs
-module.exports = ajvKeywordsDefs
+export default function ajvKeywords(opts?: DefinitionOptions): Vocabulary {
+  return definitions.map((d) => d(opts))
+}

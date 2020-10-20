@@ -1,7 +1,7 @@
 import {Plugin} from "ajv"
-import def from "../definitions/typeof"
+import getDef from "../definitions/typeof"
 
-const typeofPlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(def)
+const typeofPlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(getDef())
 
 export default typeofPlugin
 module.exports = typeofPlugin

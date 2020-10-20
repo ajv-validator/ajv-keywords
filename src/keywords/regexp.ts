@@ -1,7 +1,7 @@
 import {Plugin} from "ajv"
-import def from "../definitions/regexp"
+import getDef from "../definitions/regexp"
 
-const regexpPlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(def)
+const regexpPlugin: Plugin<undefined> = (ajv) => ajv.addKeyword(getDef())
 
 export default regexpPlugin
 module.exports = regexpPlugin
