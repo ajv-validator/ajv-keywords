@@ -2,6 +2,7 @@
   {
     "description": "prohibited requires that no property in the list is present",
     "schema": {
+      "type": "object",
       "prohibited": ["foo"]
     },
     "tests": [
@@ -25,6 +26,7 @@
   {
     "description": "multiple properties in prohibited",
     "schema": {
+      "type": "object",
       "prohibited": ["foo", "bar"]
     },
     "tests": [
@@ -53,6 +55,7 @@
   {
     "description": "prohibited with the empty list of properties",
     "schema": {
+      "type": "object",
       "prohibited": []
     },
     "tests": [
