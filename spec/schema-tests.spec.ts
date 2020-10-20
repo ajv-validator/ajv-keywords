@@ -10,7 +10,7 @@ const ajvs = [
     "anyRequired",
     "oneRequired",
     "prohibited",
-    // "deepProperties",
+    "deepProperties",
     // "deepRequired",
     // "formatMaximum",
     // "formatMinimum",
@@ -24,7 +24,7 @@ const ajvs = [
   getAjv(undefined, ajvKeywords()),
   getAjv(true, ajvKeywords()),
   // ajvKeywordsPlugin(getAjvNoMeta()),
-  getAjvNoMeta(ajvKeywords()),
+  getAjvNoMeta(ajvKeywords({defaultMeta: false})),
 ]
 
 jsonSchemaTest(ajvs, {

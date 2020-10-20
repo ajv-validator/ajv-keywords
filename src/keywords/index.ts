@@ -9,6 +9,7 @@ import allRequired from "./allRequired"
 import anyRequired from "./anyRequired"
 import oneRequired from "./oneRequired"
 import prohibited from "./prohibited"
+import deepProperties from "./deepProperties"
 
 // TODO type
 const ajvKeywords: Record<string, Plugin<any> | undefined> = {
@@ -22,9 +23,9 @@ const ajvKeywords: Record<string, Plugin<any> | undefined> = {
   anyRequired,
   oneRequired,
   prohibited,
+  deepProperties,
   dynamicDefaults: require("./dynamicDefaults"),
   uniqueItemProperties: require("./uniqueItemProperties"),
-  deepProperties: require("./deepProperties"),
   deepRequired: require("./deepRequired"),
   formatMinimum: require("./formatMinimum"),
   formatMaximum: require("./formatMaximum"),
