@@ -21,7 +21,7 @@ if (typeof Promise != "undefined") CONSTRUCTORS.Promise = Promise
 const def: FuncKeywordDefinition & {CONSTRUCTORS: typeof CONSTRUCTORS} = {
   keyword: "instanceof",
   schemaType: ["string", "array"],
-  compile(schema) {
+  compile(schema: string | string[]) {
     if (typeof schema == "string") {
       const C = getConstructor(schema)
       return (data) => data instanceof C

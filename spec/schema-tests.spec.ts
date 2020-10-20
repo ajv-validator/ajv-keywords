@@ -7,7 +7,7 @@ const jsonSchemaTest = require("json-schema-test")
 const ajvs = [
   ajvKeywordsPlugin(getAjv(), [
     "allRequired",
-    // "anyRequired",
+    "anyRequired",
     // "oneRequired",
     // "deepProperties",
     // "deepRequired",
@@ -32,7 +32,7 @@ jsonSchemaTest(ajvs, {
   suites: {
     tests: "./tests/{**/,}*.json",
   },
-  only: ["allRequired"],
+  only: ["allRequired", "anyRequired"],
   // afterError: after.error,
   // afterEach: after.each,
   cwd: __dirname,

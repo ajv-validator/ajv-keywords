@@ -6,6 +6,7 @@ import exclusiveRange from "./exclusiveRange"
 import regexp from "./regexp"
 import transform from "./transform"
 import allRequired from "./allRequired"
+import anyRequired from "./anyRequired"
 
 const ajvKeywordsDefs: Vocabulary = [
   typeofDef,
@@ -15,6 +16,7 @@ const ajvKeywordsDefs: Vocabulary = [
   regexp,
   transform,
   allRequired,
+  anyRequired,
 ]
 
 export default ajvKeywordsDefs

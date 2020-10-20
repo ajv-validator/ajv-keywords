@@ -7,7 +7,7 @@ export function getRangeDef(keyword: RangeKwd): MacroKeywordDefinition {
     keyword,
     type: "number",
     schemaType: "array",
-    macro: function ([min, max]) {
+    macro: function ([min, max]: [number, number]) {
       validateRangeSchema(min, max)
       return keyword === "range"
         ? {minimum: min, maximum: max}
