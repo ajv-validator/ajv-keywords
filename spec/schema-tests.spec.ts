@@ -6,6 +6,7 @@ const jsonSchemaTest = require("json-schema-test")
 
 const ajvs = [
   ajvKeywordsPlugin(getAjv(), [
+    "uniqueItemProperties",
     "allRequired",
     "anyRequired",
     "oneRequired",
@@ -16,7 +17,6 @@ const ajvs = [
     // "formatMinimum",
     // "patternRequired",
     // "select",
-    // "uniqueItemProperties",
   ]),
   // ajvKeywordsPlugin(getAjv()),
   // ajvKeywordsPlugin(getAjv(true)),
@@ -32,6 +32,7 @@ jsonSchemaTest(ajvs, {
     tests: "./tests/{**/,}*.json",
   },
   only: [
+    "uniqueItemProperties",
     "allRequired",
     "anyRequired",
     "oneRequired",
@@ -52,7 +53,7 @@ function getAjv(extras?: boolean, keywords?: Vocabulary): Ajv {
     verbose: extras,
     keywords,
     formats: {allowedUnknown: true},
-    allowUnionTypes: true,
+    strictTypes: false,
     strictTuples: false,
   })
 }
@@ -64,7 +65,7 @@ function getAjvNoMeta(keywords?: Vocabulary): Ajv {
     formats: {allowedUnknown: true},
     meta: false,
     validateSchema: false,
-    allowUnionTypes: true,
+    strictTypes: false,
     strictTuples: false,
   })
 }

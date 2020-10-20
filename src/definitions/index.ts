@@ -6,6 +6,7 @@ import range from "./range"
 import exclusiveRange from "./exclusiveRange"
 import regexp from "./regexp"
 import transform from "./transform"
+import uniqueItemProperties from "./uniqueItemProperties"
 import allRequired from "./allRequired"
 import anyRequired from "./anyRequired"
 import oneRequired from "./oneRequired"
@@ -20,6 +21,7 @@ const definitions: GetDefinition[] = [
   exclusiveRange,
   regexp,
   transform,
+  uniqueItemProperties,
   allRequired,
   anyRequired,
   oneRequired,

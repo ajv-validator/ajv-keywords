@@ -5,6 +5,7 @@ import range from "./range"
 import exclusiveRange from "./exclusiveRange"
 import regexp from "./regexp"
 import transform from "./transform"
+import uniqueItemProperties from "./uniqueItemProperties"
 import allRequired from "./allRequired"
 import anyRequired from "./anyRequired"
 import oneRequired from "./oneRequired"
@@ -20,6 +21,7 @@ const ajvKeywords: Record<string, Plugin<any> | undefined> = {
   exclusiveRange,
   regexp,
   transform,
+  uniqueItemProperties,
   allRequired,
   anyRequired,
   oneRequired,
@@ -27,7 +29,6 @@ const ajvKeywords: Record<string, Plugin<any> | undefined> = {
   deepProperties,
   deepRequired,
   dynamicDefaults: require("./dynamicDefaults"),
-  uniqueItemProperties: require("./uniqueItemProperties"),
   formatMinimum: require("./formatMinimum"),
   formatMaximum: require("./formatMaximum"),
   patternRequired: require("./patternRequired"),
