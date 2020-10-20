@@ -8,7 +8,7 @@ const ajvs = [
   ajvKeywordsPlugin(getAjv(), [
     "allRequired",
     "anyRequired",
-    // "oneRequired",
+    "oneRequired",
     // "deepProperties",
     // "deepRequired",
     // "formatMaximum",
@@ -32,7 +32,7 @@ jsonSchemaTest(ajvs, {
   suites: {
     tests: "./tests/{**/,}*.json",
   },
-  only: ["allRequired", "anyRequired"],
+  only: ["allRequired", "anyRequired", "oneRequired"],
   // afterError: after.error,
   // afterEach: after.each,
   cwd: __dirname,

@@ -7,6 +7,7 @@ import regexp from "./regexp"
 import transform from "./transform"
 import allRequired from "./allRequired"
 import anyRequired from "./anyRequired"
+import oneRequired from "./oneRequired"
 
 const ajvKeywordsDefs: Vocabulary = [
   typeofDef,
@@ -17,6 +18,7 @@ const ajvKeywordsDefs: Vocabulary = [
   transform,
   allRequired,
   anyRequired,
+  oneRequired,
 ]
 
 export default ajvKeywordsDefs

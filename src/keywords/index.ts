@@ -7,6 +7,7 @@ import regexp from "./regexp"
 import transform from "./transform"
 import allRequired from "./allRequired"
 import anyRequired from "./anyRequired"
+import oneRequired from "./oneRequired"
 
 // TODO type
 const ajvKeywords: Record<string, Plugin<any> | undefined> = {
@@ -18,8 +19,8 @@ const ajvKeywords: Record<string, Plugin<any> | undefined> = {
   transform,
   allRequired,
   anyRequired,
+  oneRequired,
   dynamicDefaults: require("./dynamicDefaults"),
-  oneRequired: require("./oneRequired"),
   prohibited: require("./prohibited"),
   uniqueItemProperties: require("./uniqueItemProperties"),
   deepProperties: require("./deepProperties"),
