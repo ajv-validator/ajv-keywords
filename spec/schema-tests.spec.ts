@@ -16,7 +16,6 @@ const ajvs = [
     // "formatMinimum",
     // "patternRequired",
     // "select",
-    // "switch",
     // "uniqueItemProperties",
   ]),
   // ajvKeywordsPlugin(getAjv()),

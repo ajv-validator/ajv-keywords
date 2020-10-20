@@ -33,10 +33,8 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
     - [prohibited](#prohibited)
     - [deepProperties](#deepproperties)
     - [deepRequired](#deeprequired)
-  - [Compound keywords](#compound-keywords)
-    - [switch](#switch) (deprecated)
-    - [select/selectCases/selectDefault](#selectselectcasesselectdefault) (BETA)
   - [Keywords for all types](#keywords-for-all-types)
+    - [select/selectCases/selectDefault](#selectselectcasesselectdefault) (BETA)
     - [dynamicDefaults](#dynamicdefaults)<sup>\*</sup>
 - [Security contact](#security-contact)
 - [Open-source software support](#open-source-software-support)
@@ -497,77 +495,7 @@ var invalidData = {
 
 See [json-schema-org/json-schema-spec#203](https://github.com/json-schema-org/json-schema-spec/issues/203#issue-197211916) for an example of the equivalent schema without `deepRequired` keyword.
 
-### Compound keywords
-
-#### `switch` (deprecated)
-
-**Please note**: this keyword is provided to preserve backward compatibility with previous versions of Ajv. It is strongly recommended to use `if`/`then`/`else` keywords instead, as they have been added to the draft-07 of JSON Schema specification.
-
-This keyword allows to perform advanced conditional validation.
-
-The value of the keyword is the array of if/then clauses. Each clause is the object with the following properties:
-
-- `if` (optional) - the value is JSON-schema
-- `then` (required) - the value is JSON-schema or boolean
-- `continue` (optional) - the value is boolean
-
-The validation process is dynamic; all clauses are executed sequentially in the following way:
-
-1. `if`:
-   1. `if` property is JSON-schema according to which the data is:
-      1. valid => go to step 2.
-      2. invalid => go to the NEXT clause, if this was the last clause the validation of `switch` SUCCEEDS.
-   2. `if` property is absent => go to step 2.
-2. `then`:
-   1. `then` property is `true` or it is JSON-schema according to which the data is valid => go to step 3.
-   2. `then` property is `false` or it is JSON-schema according to which the data is invalid => the validation of `switch` FAILS.
-3. `continue`:
-   1. `continue` property is `true` => go to the NEXT clause, if this was the last clause the validation of `switch` SUCCEEDS.
-   2. `continue` property is `false` or absent => validation of `switch` SUCCEEDS.
-
-```javascript
-require("ajv-keywords")(ajv, "switch")
-
-var schema = {
-  type: "array",
-  items: {
-    type: "integer",
-    switch: [
-      {if: {not: {minimum: 1}}, then: false},
-      {if: {maximum: 10}, then: true},
-      {if: {maximum: 100}, then: {multipleOf: 10}},
-      {if: {maximum: 1000}, then: {multipleOf: 100}},
-      {then: false},
-    ],
-  },
-}
-
-var validItems = [1, 5, 10, 20, 50, 100, 200, 500, 1000]
-
-var invalidItems = [1, 0, 2000, 11, 57, 123, "foo"]
-```
-
-The above schema is equivalent to (for example):
-
-```javascript
-{
-  type: 'array',
-  items: {
-    type: 'integer',
-    if: { minimum: 1, maximum: 10 },
-    then: true,
-    else: {
-      if: { maximum: 100 },
-      then: { multipleOf: 10 },
-      else: {
-        if: { maximum: 1000 },
-        then: { multipleOf: 100 },
-        else: false
-      }
-    }
-  }
-}
-```
+### Keywords for all types
 
 #### `select`/`selectCases`/`selectDefault`
 
@@ -643,8 +571,6 @@ var invalidDataList = [
 ```
 
 **Please note**: the current implementation is BETA. It does not allow using relative URIs in \$ref keywords in schemas in `selectCases` and `selectDefault` that point outside of these schemas. The workaround is to use absolute URIs (that can point to any (sub-)schema added to Ajv, including those inside the current root schema where `select` is used). See [tests](https://github.com/epoberezkin/ajv-keywords/blob/v2.0.0/spec/tests/select.json#L314).
-
-### Keywords for all types
 
 #### `dynamicDefaults`
 

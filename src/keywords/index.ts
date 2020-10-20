@@ -31,7 +31,6 @@ const ajvKeywords: Record<string, Plugin<any> | undefined> = {
   formatMinimum: require("./formatMinimum"),
   formatMaximum: require("./formatMaximum"),
   patternRequired: require("./patternRequired"),
-  switch: require("./switch"),
   select: require("./select"),
 }
 
