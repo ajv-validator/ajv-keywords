@@ -11,7 +11,7 @@ const ajvs = [
     "oneRequired",
     "prohibited",
     "deepProperties",
-    // "deepRequired",
+    "deepRequired",
     // "formatMaximum",
     // "formatMinimum",
     // "patternRequired",
@@ -32,7 +32,14 @@ jsonSchemaTest(ajvs, {
   suites: {
     tests: "./tests/{**/,}*.json",
   },
-  only: ["allRequired", "anyRequired", "oneRequired", "prohibited"],
+  only: [
+    "allRequired",
+    "anyRequired",
+    "oneRequired",
+    "prohibited",
+    "deepProperties",
+    "deepRequired",
+  ],
   // afterError: after.error,
   // afterEach: after.each,
   cwd: __dirname,
@@ -46,6 +53,8 @@ function getAjv(extras?: boolean, keywords?: Vocabulary): Ajv {
     verbose: extras,
     keywords,
     formats: {allowedUnknown: true},
+    allowUnionTypes: true,
+    strictTuples: false,
   })
 }
 
@@ -56,5 +65,7 @@ function getAjvNoMeta(keywords?: Vocabulary): Ajv {
     formats: {allowedUnknown: true},
     meta: false,
     validateSchema: false,
+    allowUnionTypes: true,
+    strictTuples: false,
   })
 }

@@ -6,6 +6,7 @@ export default function getDef(opts?: DefinitionOptions): MacroKeywordDefinition
   return {
     keyword: "deepProperties",
     type: "object",
+    schemaType: "object",
     macro: function (schema: Record<string, SchemaObject>) {
       const allOf = []
       for (const pointer in schema) allOf.push(getSchema(pointer, schema[pointer]))
@@ -32,7 +33,10 @@ function getSchema(jsonPointer: string, schema: SchemaObject): SchemaObject {
     if (/[0-9]+/.test(segment)) {
       let count = +segment
       items = pointerSchema.items = []
+      pointerSchema.type = ["object", "array"]
       while (count--) items.push({})
+    } else {
+      pointerSchema.type = "object"
     }
     pointerSchema = isLast ? schema : {}
     properties[segment] = pointerSchema

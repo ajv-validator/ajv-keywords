@@ -164,18 +164,5 @@
         "valid": false
       }
     ]
-  },
-  {
-    "description": "deepRequired keyword with non-objects",
-    "schema": {
-      "deepRequired": ["/foo/bar"]
-    },
-    "tests": [
-      {
-        "description": "non-object is valid",
-        "data": 1,
-        "valid": true
-      }
-    ]
   }
 ]

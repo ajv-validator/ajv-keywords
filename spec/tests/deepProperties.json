@@ -318,20 +318,5 @@
         "valid": false
       }
     ]
-  },
-  {
-    "description": "deepProperties keyword with non-objects",
-    "schema": {
-      "deepProperties": {
-        "/foo/bar": {"type": "number"}
-      }
-    },
-    "tests": [
-      {
-        "description": "non-object is valid",
-        "data": 1,
-        "valid": true
-      }
-    ]
   }
 ]
