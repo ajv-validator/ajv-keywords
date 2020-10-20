@@ -10,9 +10,10 @@ module.exports = {
         project: ["./spec/tsconfig.json"],
       },
       rules: {
-        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/no-extraneous-class": "off",
         "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
       },
     },
   ],
