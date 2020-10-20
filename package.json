@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "typings": "ajv-keywords.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "prepublish": "npm run build",
     "prettier:write": "prettier --write \"./**/*.{md,json,yaml,js,ts}\"",
     "prettier:check": "prettier --list-different \"./**/*.{md,json,yaml,js,ts}\"",
