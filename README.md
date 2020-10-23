@@ -35,7 +35,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
     - [deepRequired](#deeprequired)
     - [dynamicDefaults](#dynamicdefaults)<sup>\*</sup>
   - [Keywords for all types](#keywords-for-all-types)
-    - [select/selectCases/selectDefault](#selectselectcasesselectdefault) (BETA)
+    - [select/selectCases/selectDefault](#selectselectcasesselectdefault)
 - [Security contact](#security-contact)
 - [Open-source software support](#open-source-software-support)
 - [License](#license)
@@ -507,7 +507,7 @@ The value of `select` keyword should be a [\$data reference](https://github.com/
 
 The value of `selectCases` keyword must be an object where each property name is a possible string representation of the value of `select` keyword and each property value is a corresponding schema (from draft-06 it can be boolean) that must be used to validate the data.
 
-The value of `selectDefault` keyword is a schema (from draft-06 it can be boolean) that must be used to validate the data in case `selectCases` has no key equal to the stringified value of `select` keyword.
+The value of `selectDefault` keyword is a schema (also can be boolean) that must be used to validate the data in case `selectCases` has no key equal to the stringified value of `select` keyword.
 
 The validation succeeds in one of the following cases:
 
@@ -569,8 +569,6 @@ var invalidDataList = [
   { kind: 'anything_else', bar: 1 } // property bar not allowed
 ];
 ```
-
-**Please note**: the current implementation is BETA. It does not allow using relative URIs in \$ref keywords in schemas in `selectCases` and `selectDefault` that point outside of these schemas. The workaround is to use absolute URIs (that can point to any (sub-)schema added to Ajv, including those inside the current root schema where `select` is used). See [tests](https://github.com/epoberezkin/ajv-keywords/blob/v2.0.0/spec/tests/select.json#L314).
 
 #### `dynamicDefaults`
 

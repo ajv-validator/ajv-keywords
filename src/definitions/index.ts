@@ -15,6 +15,7 @@ import prohibited from "./prohibited"
 import deepProperties from "./deepProperties"
 import deepRequired from "./deepRequired"
 import dynamicDefaults from "./dynamicDefaults"
+import selectDef from "./select"
 
 const definitions: GetDefinition<KeywordDefinition>[] = [
   typeofDef,
@@ -35,5 +36,5 @@ const definitions: GetDefinition<KeywordDefinition>[] = [
 ]
 
 export default function ajvKeywords(opts?: DefinitionOptions): Vocabulary {
-  return definitions.map((d) => d(opts))
+  return definitions.map((d) => d(opts)).concat(selectDef(opts))
 }

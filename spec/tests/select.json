@@ -262,8 +262,7 @@
     ]
   },
   {
-    "skip": true,
-    "description": "select keyword with relative URIs in $ref (not supported)",
+    "description": "select keyword with relative URIs in $ref (supported from v4 / ajv v7)",
     "schema": {
       "type": "object",
       "definitions": {
