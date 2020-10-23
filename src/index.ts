@@ -1,11 +1,8 @@
 import Ajv from "ajv"
 import {Plugin} from "ajv"
-import KEYWORDS from "./keywords"
+import plugins from "./keywords"
 
-const ajvKeywordsPlugin: Plugin<string | string[]> = (
-  ajv: Ajv,
-  keyword?: string | string[]
-): Ajv => {
+const ajvKeywords: Plugin<string | string[]> = (ajv: Ajv, keyword?: string | string[]): Ajv => {
   if (Array.isArray(keyword)) {
     for (const k of keyword) get(k)(ajv)
     return ajv
@@ -14,17 +11,17 @@ const ajvKeywordsPlugin: Plugin<string | string[]> = (
     get(keyword)(ajv)
     return ajv
   }
-  for (keyword in KEYWORDS) get(keyword)(ajv)
+  for (keyword in plugins) get(keyword)(ajv)
   return ajv
 }
 
-ajvKeywordsPlugin.get = get
+ajvKeywords.get = get
 
 function get(keyword: string): Plugin<any> {
-  const defFunc = KEYWORDS[keyword]
+  const defFunc = plugins[keyword]
   if (!defFunc) throw new Error("Unknown keyword " + keyword)
   return defFunc
 }
 
-export default ajvKeywordsPlugin
-module.exports = ajvKeywordsPlugin
+export default ajvKeywords
+module.exports = ajvKeywords

@@ -13,6 +13,7 @@ import oneRequired from "./oneRequired"
 import prohibited from "./prohibited"
 import deepProperties from "./deepProperties"
 import deepRequired from "./deepRequired"
+import dynamicDefaults from "./dynamicDefaults"
 
 const definitions: GetDefinition[] = [
   typeofDef,
@@ -28,6 +29,7 @@ const definitions: GetDefinition[] = [
   prohibited,
   deepProperties,
   deepRequired,
+  dynamicDefaults,
 ]
 
 export default function ajvKeywords(opts?: DefinitionOptions): Vocabulary {

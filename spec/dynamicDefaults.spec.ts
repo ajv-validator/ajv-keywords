@@ -1,26 +1,28 @@
-"use strict"
+import dynamicDefaults from "../dist/keywords/dynamicDefaults"
+import dynamicDefaultsDef from "../dist/definitions/dynamicDefaults"
+import getAjvInstances from "./ajv_instances"
+import Ajv from "ajv"
+import {fullFormats} from "ajv-formats/dist/formats"
+import chai from "chai"
+import assert from "assert"
+import {v4 as uuidv4} from "uuid"
 
-const Ajv = require("ajv")
-const defFunc = require("../dist/keywords/dynamicDefaults")
-const defineKeywords = require("../dist")
-const should = require("chai").should()
-const assert = require("assert")
-const uuid = require("uuid")
+const should = chai.should()
 
 describe('keyword "dynamicDefaults"', () => {
-  function getAjv() {
-    return new Ajv({useDefaults: true, unknownFormats: true})
-  }
+  // function getAjv() {
+  //   return new Ajv({useDefaults: true, unknownFormats: true})
+  // }
 
-  const ajvs = [
-    defFunc(getAjv()),
-    defineKeywords(getAjv(), "dynamicDefaults"),
-    defineKeywords(getAjv()),
-  ]
+  const ajvs = getAjvInstances("dynamicDefaults", dynamicDefaultsDef, dynamicDefaults, {
+    useDefaults: true,
+    formats: fullFormats,
+  })
 
   ajvs.forEach((ajv, i) => {
-    it("should assign defaults #" + i, (done) => {
+    it(`should assign defaults #${i}`, (done) => {
       const schema = {
+        type: "object",
         dynamicDefaults: {
           ts: "timestamp",
           dt: "datetime",
@@ -35,29 +37,29 @@ describe('keyword "dynamicDefaults"', () => {
       }
 
       const validate = ajv.compile(schema)
-      const data = {}
+      const data: Record<string, any> = {}
       validate(data).should.equal(true)
       test(data)
       data.s.should.equal(2 * i)
       data.sN.should.equal(2 * i)
 
       setTimeout(() => {
-        const data1 = {}
+        const data1: Record<string, any> = {}
         validate(data1).should.equal(true)
         test(data1)
         assert(data.ts < data1.ts)
-        assert.notEqual(data.dt, data1.dt)
-        assert.equal(data.d, data1.d)
-        assert.notEqual(data.t, data1.t)
-        assert.notEqual(data.r, data1.r)
-        assert.notEqual(data.riN, data1.riN)
+        assert.notStrictEqual(data.dt, data1.dt)
+        assert.strictEqual(data.d, data1.d)
+        assert.notStrictEqual(data.t, data1.t)
+        assert.notStrictEqual(data.r, data1.r)
+        assert.notStrictEqual(data.riN, data1.riN)
 
         data1.s.should.equal(2 * i + 1)
         data1.sN.should.equal(2 * i + 1)
         done()
-      }, 1000)
+      }, 100)
 
-      function test(_data) {
+      function test(_data: Record<string, any>): void {
         _data.ts.should.be.a("number")
         assert(_data.ts <= Date.now())
 
@@ -76,7 +78,7 @@ describe('keyword "dynamicDefaults"', () => {
         assert(_data.ri === 0 || _data.ri === 1)
 
         _data.riN.should.be.a("number")
-        assert.equal(Math.floor(_data.riN), _data.riN)
+        assert.strictEqual(Math.floor(_data.riN), _data.riN)
         assert(_data.riN < 1000000)
         assert(_data.riN >= 0)
 
@@ -86,8 +88,9 @@ describe('keyword "dynamicDefaults"', () => {
       }
     })
 
-    it("should NOT assign default if property is present #" + i, () => {
+    it(`should NOT assign default if property is present #${i}`, () => {
       const schema = {
+        type: "object",
         dynamicDefaults: {
           ts: "timestamp",
         },
@@ -99,25 +102,30 @@ describe('keyword "dynamicDefaults"', () => {
       data.ts.should.equal(123)
     })
 
-    it("should NOT assign default inside anyOf etc. #" + i, () => {
+    it(`should NOT assign default inside anyOf etc. #${i}`, () => {
       const schema = {
         anyOf: [
           {
+            type: "object",
             dynamicDefaults: {
               ts: "timestamp",
             },
+          },
+          {
+            type: "string",
           },
         ],
       }
 
       const validate = ajv.compile(schema)
-      const data = {}
+      const data: Record<string, any> = {}
       validate(data).should.equal(true)
       should.not.exist(data.ts)
     })
 
-    it("should fail schema compilation on unknown default #" + i, () => {
+    it(`should fail schema compilation on unknown default #${i}`, () => {
       const schema = {
+        type: "object",
         dynamicDefaults: {
           ts: "unknown",
         },
@@ -128,10 +136,14 @@ describe('keyword "dynamicDefaults"', () => {
       })
     })
 
-    it("should allow adding defaults #" + i, () => {
+    it(`should allow adding dynamic default functions #${i}`, () => {
       const schema = {
+        type: "object",
         dynamicDefaults: {
           id: "uuid",
+        },
+        properties: {
+          id: {type: "string"},
         },
       }
 
@@ -139,37 +151,28 @@ describe('keyword "dynamicDefaults"', () => {
         ajv.compile(schema)
       })
 
-      defFunc.definition.DEFAULTS.uuid = uuidV4
+      dynamicDefaultsDef.DEFAULTS.uuid = () => uuidv4
 
-      const data = {}
+      const data: Record<string, any> = {}
       test(data)
 
-      should.throw(() => {
-        ajv.compile(schema)
-      })
-
-      defineKeywords.get("dynamicDefaults").definition.DEFAULTS.uuid = uuidV4
-
-      const data1 = {}
+      const data1: Record<string, any> = {}
       test(data1)
-      assert.notEqual(data.id, data1.id)
+      assert.notStrictEqual(data.id, data1.id)
 
-      function test(_data) {
+      delete dynamicDefaultsDef.DEFAULTS.uuid
+
+      function test(_data: Record<string, any>): void {
         ajv.validate(schema, _data).should.equal(true)
         ajv.validate({format: "uuid", type: "string"}, _data.id).should.equal(true)
-
-        delete defFunc.definition.DEFAULTS.uuid
         ajv.removeSchema()
-      }
-
-      function uuidV4() {
-        return uuid.v4()
       }
     })
   })
 
   it('should NOT assign defaults when useDefaults is true/"shared and properties are null, empty or contain a value"', () => {
     const schema = {
+      type: "object",
       allOf: [
         {
           dynamicDefaults: {
@@ -205,10 +208,9 @@ describe('keyword "dynamicDefaults"', () => {
     }
 
     test(new Ajv({useDefaults: true}))
-    test(new Ajv({useDefaults: "shared"}))
 
-    function test(testAjv) {
-      const validate = defFunc(testAjv).compile(schema)
+    function test(testAjv: Ajv): void {
+      const validate = dynamicDefaults(testAjv).compile(schema)
       validate(data).should.equal(false)
 
       data.ts.should.equal("")
@@ -219,6 +221,7 @@ describe('keyword "dynamicDefaults"', () => {
 
   it('should assign defaults when useDefaults = "empty" for properties that are undefined, null or empty strings', (done) => {
     const schema = {
+      type: "object",
       allOf: [
         {
           dynamicDefaults: {
@@ -247,17 +250,17 @@ describe('keyword "dynamicDefaults"', () => {
       ],
     }
 
-    const data = {
+    const data: Record<string, any> = {
       ts: "",
       r: null,
     }
 
-    const data1 = Object.assign({}, data)
+    const data1: Record<string, any> = Object.assign({}, data)
 
     test(new Ajv({useDefaults: "empty"}))
 
-    function test(testAjv) {
-      const validate = defFunc(testAjv).compile(schema)
+    function test(testAjv: Ajv): void {
+      const validate = dynamicDefaults(testAjv).compile(schema)
       validate(data).should.equal(true)
 
       const tsRegex = /\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d\.\d{3}Z/
@@ -272,7 +275,7 @@ describe('keyword "dynamicDefaults"', () => {
         //data.r and data1.r could match, but unlikely
         data.id.should.not.equal(data1.id)
         done()
-      }, 1000)
+      }, 100)
     }
   })
 })
