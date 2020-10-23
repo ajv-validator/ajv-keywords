@@ -10,6 +10,7 @@ import uniqueItemProperties from "./uniqueItemProperties"
 import allRequired from "./allRequired"
 import anyRequired from "./anyRequired"
 import oneRequired from "./oneRequired"
+import patternRequired from "./patternRequired"
 import prohibited from "./prohibited"
 import deepProperties from "./deepProperties"
 import deepRequired from "./deepRequired"
@@ -26,6 +27,7 @@ const definitions: GetDefinition[] = [
   allRequired,
   anyRequired,
   oneRequired,
+  patternRequired,
   prohibited,
   deepProperties,
   deepRequired,

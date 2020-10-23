@@ -2,6 +2,7 @@
   {
     "description": "patternRequired requires that some property matching pattern is present",
     "schema": {
+      "type": "object",
       "patternRequired": ["f.*o"]
     },
     "tests": [
@@ -25,6 +26,7 @@
   {
     "description": "multiple patterns in patternRequired",
     "schema": {
+      "type": "object",
       "patternRequired": ["a+", "b+"]
     },
     "tests": [
@@ -63,6 +65,7 @@
   {
     "description": "regexes in patternRequired are not anchored by default and are case sensitive",
     "schema": {
+      "type": "object",
       "patternRequired": ["X_[0-9]{2,}"]
     },
     "tests": [

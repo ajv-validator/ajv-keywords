@@ -9,6 +9,7 @@ import uniqueItemProperties from "./uniqueItemProperties"
 import allRequired from "./allRequired"
 import anyRequired from "./anyRequired"
 import oneRequired from "./oneRequired"
+import patternRequired from "./patternRequired"
 import prohibited from "./prohibited"
 import deepProperties from "./deepProperties"
 import deepRequired from "./deepRequired"
@@ -26,13 +27,13 @@ const ajvKeywords: Record<string, Plugin<any> | undefined> = {
   allRequired,
   anyRequired,
   oneRequired,
+  patternRequired,
   prohibited,
   deepProperties,
   deepRequired,
   dynamicDefaults,
   formatMinimum: require("./formatMinimum"),
   formatMaximum: require("./formatMaximum"),
-  patternRequired: require("./patternRequired"),
   select: require("./select"),
 }
 
