@@ -1,4 +1,4 @@
-import {Plugin} from "ajv"
+import type {Plugin} from "ajv"
 import getDef from "../definitions/dynamicDefaults"
 
 const dynamicDefaults: Plugin<undefined> = (ajv) => ajv.addKeyword(getDef())

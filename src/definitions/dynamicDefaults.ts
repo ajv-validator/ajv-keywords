@@ -1,4 +1,4 @@
-import {FuncKeywordDefinition, SchemaCxt} from "ajv"
+import type {FuncKeywordDefinition, SchemaCxt} from "ajv"
 
 const sequences: Record<string, number | undefined> = {}
 

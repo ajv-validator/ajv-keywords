@@ -1,4 +1,4 @@
-import {Plugin} from "ajv"
+import type {Plugin} from "ajv"
 import getDef from "../definitions/deepRequired"
 
 const deepRequired: Plugin<undefined> = (ajv) => ajv.addKeyword(getDef())

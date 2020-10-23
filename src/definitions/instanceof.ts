@@ -1,4 +1,4 @@
-import {FuncKeywordDefinition} from "ajv"
+import type {FuncKeywordDefinition} from "ajv"
 
 type Constructor = new (...args: any[]) => any
 

@@ -1,4 +1,4 @@
-import {CodeKeywordDefinition, KeywordCxt, KeywordErrorDefinition} from "ajv"
+import type {CodeKeywordDefinition, KeywordCxt, KeywordErrorDefinition} from "ajv"
 import {_, str, and} from "ajv/dist/compile/codegen"
 import {usePattern} from "./_util"
 

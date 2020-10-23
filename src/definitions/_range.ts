@@ -1,8 +1,9 @@
-import {GetDefinition} from "./_types"
+import type {MacroKeywordDefinition} from "ajv"
+import type {GetDefinition} from "./_types"
 
 type RangeKwd = "range" | "exclusiveRange"
 
-export default function getRangeDef(keyword: RangeKwd): GetDefinition {
+export default function getRangeDef(keyword: RangeKwd): GetDefinition<MacroKeywordDefinition> {
   return () => ({
     keyword,
     type: "number",

@@ -1,4 +1,4 @@
-import {FuncKeywordDefinition, AnySchemaObject} from "ajv"
+import type {FuncKeywordDefinition, AnySchemaObject} from "ajv"
 import equal from "ajv/dist/compile/equal"
 
 const SCALAR_TYPES = ["number", "integer", "string", "boolean", "null"]

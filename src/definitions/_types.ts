@@ -4,4 +4,4 @@ export interface DefinitionOptions {
   defaultMeta?: string | boolean
 }
 
-export type GetDefinition = (opts?: DefinitionOptions) => KeywordDefinition
+export type GetDefinition<T extends KeywordDefinition> = (opts?: DefinitionOptions) => T

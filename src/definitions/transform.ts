@@ -1,4 +1,4 @@
-import {FuncKeywordDefinition, AnySchemaObject} from "ajv"
+import type {FuncKeywordDefinition, AnySchemaObject} from "ajv"
 
 type TransformName =
   | "trimStart"

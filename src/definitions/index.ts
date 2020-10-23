@@ -1,5 +1,5 @@
-import {Vocabulary} from "ajv"
-import {DefinitionOptions, GetDefinition} from "./_types"
+import type {Vocabulary, KeywordDefinition} from "ajv"
+import type {DefinitionOptions, GetDefinition} from "./_types"
 import typeofDef from "./typeof"
 import instanceofDef from "./instanceof"
 import range from "./range"
@@ -16,7 +16,7 @@ import deepProperties from "./deepProperties"
 import deepRequired from "./deepRequired"
 import dynamicDefaults from "./dynamicDefaults"
 
-const definitions: GetDefinition[] = [
+const definitions: GetDefinition<KeywordDefinition>[] = [
   typeofDef,
   instanceofDef,
   range,

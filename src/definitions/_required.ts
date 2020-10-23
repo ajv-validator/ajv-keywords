@@ -1,8 +1,11 @@
-import {GetDefinition} from "./_types"
+import type {MacroKeywordDefinition} from "ajv"
+import type {GetDefinition} from "./_types"
 
 type RequiredKwd = "anyRequired" | "oneRequired"
 
-export default function getRequiredDef(keyword: RequiredKwd): GetDefinition {
+export default function getRequiredDef(
+  keyword: RequiredKwd
+): GetDefinition<MacroKeywordDefinition> {
   return () => ({
     keyword,
     type: "object",

@@ -1,12 +1,14 @@
 import Ajv from "ajv"
-import type {Plugin, Options} from "ajv"
+import type {Plugin, Options, KeywordDefinition} from "ajv"
 import type {GetDefinition} from "../dist/definitions/_types"
 import ajvKeywordsPlugin from "../dist"
 import ajvKeywords from "../dist/definitions"
 
+type GetDef = GetDefinition<KeywordDefinition>
+
 export default function getAjvInstances(
   keyword: string | string[],
-  kwdDef: GetDefinition | GetDefinition[],
+  kwdDef: GetDef | GetDef[],
   kwdPlugin: Plugin<any>,
   opts?: Options
 ): Ajv[] {
