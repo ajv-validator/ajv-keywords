@@ -1,4 +1,4 @@
-import {Plugin} from "ajv"
+import type {Plugin} from "ajv"
 import typeofPlugin from "./typeof"
 import instanceofPlugin from "./instanceof"
 import range from "./range"
@@ -32,8 +32,6 @@ const ajvKeywords: Record<string, Plugin<any> | undefined> = {
   deepProperties,
   deepRequired,
   dynamicDefaults,
-  formatMinimum: require("./formatMinimum"),
-  formatMaximum: require("./formatMaximum"),
   select: require("./select"),
 }
 

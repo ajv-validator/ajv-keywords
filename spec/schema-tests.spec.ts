@@ -14,8 +14,6 @@ const ajvs = [
     "prohibited",
     "deepProperties",
     "deepRequired",
-    // "formatMaximum",
-    // "formatMinimum",
     // "select",
   ]),
   // ajvKeywordsPlugin(getAjv()),
