@@ -14,6 +14,7 @@ import prohibited from "./prohibited"
 import deepProperties from "./deepProperties"
 import deepRequired from "./deepRequired"
 import dynamicDefaults from "./dynamicDefaults"
+import select from "./select"
 
 // TODO type
 const ajvKeywords: Record<string, Plugin<any> | undefined> = {
@@ -32,7 +33,7 @@ const ajvKeywords: Record<string, Plugin<any> | undefined> = {
   deepProperties,
   deepRequired,
   dynamicDefaults,
-  select: require("./select"),
+  select,
 }
 
 export default ajvKeywords
