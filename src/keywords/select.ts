@@ -1,6 +1,6 @@
-import {Plugin} from "ajv"
+import type {Plugin} from "ajv"
 import getDefs from "../definitions/select"
-import {DefinitionOptions} from "../definitions/_types"
+import type {DefinitionOptions} from "../definitions/_types"
 
 const select: Plugin<DefinitionOptions> = (ajv, opts?: DefinitionOptions) => {
   getDefs(opts).forEach((d) => ajv.addKeyword(d))

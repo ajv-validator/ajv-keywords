@@ -14,7 +14,7 @@ describe('keyword "select"', () => {
       selectPlugin(new Ajv({$data: true, allErrors: true})),
       new Ajv({$data: true, keywords: selectDef()}),
       ajvKeywordsPlugin(new Ajv({$data: true}), "select"),
-      // ajvKeywordsPlugin(new Ajv(opts)),
+      ajvKeywordsPlugin(new Ajv({$data: true})),
       new Ajv({$data: true, keywords: ajvKeywords()}),
       new Ajv({$data: true}).addVocabulary(ajvKeywords()),
     ]

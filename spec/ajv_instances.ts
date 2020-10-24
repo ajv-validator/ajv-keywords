@@ -16,7 +16,7 @@ export default function getAjvInstances(
     kwdPlugin(new Ajv(opts)),
     new Ajv({...opts, keywords: Array.isArray(kwdDef) ? kwdDef.map((d) => d()) : [kwdDef()]}),
     ajvKeywordsPlugin(new Ajv(opts), keyword),
-    // ajvKeywordsPlugin(new Ajv(opts)),
+    ajvKeywordsPlugin(new Ajv(opts)),
     new Ajv({...opts, keywords: ajvKeywords()}),
     new Ajv(opts).addVocabulary(ajvKeywords()),
   ]

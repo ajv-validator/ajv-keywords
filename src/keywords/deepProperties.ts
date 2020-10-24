@@ -1,6 +1,6 @@
-import {Plugin} from "ajv"
+import type {Plugin} from "ajv"
 import getDef from "../definitions/deepProperties"
-import {DefinitionOptions} from "../definitions/_types"
+import type {DefinitionOptions} from "../definitions/_types"
 
 const deepProperties: Plugin<DefinitionOptions> = (ajv, opts?: DefinitionOptions) =>
   ajv.addKeyword(getDef(opts))
