@@ -85,5 +85,19 @@
         "valid": false
       }
     ]
+  },
+  {
+    "description": "patternRequired with empty array is valid",
+    "schema": {
+      "type": "object",
+      "patternRequired": []
+    },
+    "tests": [
+      {
+        "description": "any object is valid",
+        "data": {},
+        "valid": true
+      }
+    ]
   }
 ]

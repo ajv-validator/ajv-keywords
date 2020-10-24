@@ -84,5 +84,20 @@
         "valid": true
       }
     ]
+  },
+  {
+    "description": "allRequired with empty properties is valid",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "allRequired": true
+    },
+    "tests": [
+      {
+        "description": "any object is valid",
+        "data": {},
+        "valid": true
+      }
+    ]
   }
 ]

@@ -12,7 +12,7 @@ export default function getDef(): CodeKeywordDefinition {
       ctx.fail(or(...props))
 
       function getData(jsonPointer: string): Code {
-        if (jsonPointer === "") return data
+        if (jsonPointer === "") throw new Error("empty JSON pointer not allowed")
         const segments = jsonPointer.split("/")
         let x: Code = data
         const xs = segments.map((s, i) =>
