@@ -34,7 +34,7 @@ export default function getDef(): FuncKeywordDefinition {
     schemaType: "array",
     errors: false,
     modifying: true,
-    // valid: true, // TODO fix in ajv: this option does not work with code optimization
+    valid: true,
     compile(schema: TransformName[], parentSchema) {
       let cfg: TransformConfig
       if (schema.includes("toEnumCase")) cfg = getEnumCaseCfg(parentSchema)

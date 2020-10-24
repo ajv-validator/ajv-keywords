@@ -38,6 +38,7 @@ function _getDef(): FuncKeywordDefinition {
     type: "object",
     schemaType: ["string", "object"],
     modifying: true,
+    valid: true,
     compile(schema: DefaultSchema, _parentSchema, it: SchemaCxt) {
       if (!it.opts.useDefaults || it.compositeRule) return () => true
       const fs: Record<string, () => any> = {}
