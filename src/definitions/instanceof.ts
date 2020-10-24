@@ -3,13 +3,13 @@ import type {FuncKeywordDefinition} from "ajv"
 type Constructor = new (...args: any[]) => any
 
 const CONSTRUCTORS: Record<string, Constructor | undefined> = {
-  Object: Object,
-  Array: Array,
-  Function: Function,
-  Number: Number,
-  String: String,
-  Date: Date,
-  RegExp: RegExp,
+  Object,
+  Array,
+  Function,
+  Number,
+  String,
+  Date,
+  RegExp,
 }
 
 /* istanbul ignore else */
@@ -42,6 +42,7 @@ function _getDef(): FuncKeywordDefinition {
         }
       }
 
+      /* istanbul ignore next */
       throw new Error("ajv implementation error")
     },
     metaSchema: {

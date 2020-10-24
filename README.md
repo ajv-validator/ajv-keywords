@@ -21,7 +21,6 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
     - [range and exclusiveRange](#range-and-exclusiverange)
   - [Keywords for strings](#keywords-for-strings)
     - [regexp](#regexp)
-    - [formatMaximum / formatMinimum and formatExclusiveMaximum / formatExclusiveMinimum](#formatmaximum--formatminimum-and-formatexclusivemaximum--formatexclusiveminimum)
     - [transform](#transform)<sup>\*</sup>
   - [Keywords for arrays](#keywords-for-arrays)
     - [uniqueItemProperties](#uniqueitemproperties)
@@ -53,8 +52,8 @@ npm install ajv-keywords
 To add all available keywords:
 
 ```javascript
-var Ajv = require("ajv")
-var ajv = new Ajv()
+const Ajv = require("ajv")
+const ajv = new Ajv()
 require("ajv-keywords")(ajv)
 
 ajv.validate({instanceof: "RegExp"}, /.*/) // true
@@ -73,11 +72,32 @@ To add multiple keywords:
 require("ajv-keywords")(ajv, ["typeof", "instanceof"])
 ```
 
-To add a single keyword in browser (to avoid adding unused code):
+To add a single keyword directly (to avoid adding unused code):
 
 ```javascript
-require("ajv-keywords/keywords/instanceof")(ajv)
+require("ajv-keywords/dist/keywords/select")(ajv, opts)
 ```
+
+To add all keywords via Ajv options:
+
+```javascript
+const ajv = new Ajv({keywords: require("ajv-keywords/dist/definitions")(opts)})
+```
+
+To add one or several keywords via options:
+
+```javascript
+const ajv = new Ajv({
+  keywords: [
+    require("ajv-keywords/dist/definitions/typeof")(),
+    require("ajv-keywords/dist/definitions/instanceof")(),
+    // select exports an array of 3 definitions - see "select" in docs
+    ...require("ajv-keywords/dist/definitions/select")(opts),
+  ],
+})
+```
+
+`opts` is an object with a property `defaultMeta` - URI of meta-schema to use for keywords that use subschemas (`select` and `deepProperties`).
 
 ## Keywords
 
@@ -87,21 +107,21 @@ require("ajv-keywords/keywords/instanceof")(ajv)
 
 Based on JavaScript `typeof` operation.
 
-The value of the keyword should be a string (`"undefined"`, `"string"`, `"number"`, `"object"`, `"function"`, `"boolean"` or `"symbol"`) or array of strings.
+The value of the keyword should be a string (`"undefined"`, `"string"`, `"number"`, `"object"`, `"function"`, `"boolean"` or `"symbol"`) or an array of strings.
 
 To pass validation the result of `typeof` operation on the value should be equal to the string (or one of the strings in the array).
 
-```
-ajv.validate({ typeof: 'undefined' }, undefined); // true
-ajv.validate({ typeof: 'undefined' }, null); // false
-ajv.validate({ typeof: ['undefined', 'object'] }, null); // true
+```javascript
+ajv.validate({typeof: "undefined"}, undefined) // true
+ajv.validate({typeof: "undefined"}, null) // false
+ajv.validate({typeof: ["undefined", "object"]}, null) // true
 ```
 
 #### `instanceof`
 
 Based on JavaScript `instanceof` operation.
 
-The value of the keyword should be a string (`"Object"`, `"Array"`, `"Function"`, `"Number"`, `"String"`, `"Date"`, `"RegExp"` or `"Promise"`) or array of strings.
+The value of the keyword should be a string (`"Object"`, `"Array"`, `"Function"`, `"Number"`, `"String"`, `"Date"`, `"RegExp"` or `"Promise"`) or an array of strings.
 
 To pass validation the result of `data instanceof ...` operation on the value should be true:
 
@@ -114,11 +134,9 @@ ajv.validate({instanceof: ["Array", "Function"]}, function () {}) // true
 You can add your own constructor function to be recognised by this keyword:
 
 ```javascript
-function MyClass() {}
-var instanceofDefinition = require("ajv-keywords").get("instanceof").definition
-// or require('ajv-keywords/keywords/instanceof').definition;
-instanceofDefinition.CONSTRUCTORS.MyClass = MyClass
-
+class MyClass {}
+const instanceofDef = require("ajv-keywords/dist/definitions/instanceof")
+instanceofDef.CONSTRUCTORS.MyClass = MyClass
 ajv.validate({instanceof: "MyClass"}, new MyClass()) // true
 ```
 
@@ -159,7 +177,7 @@ This keyword applies only to strings. If the data is not a string, the validatio
 The value of this keyword can be either a string (the result of `regexp.toString()`) or an object with the properties `pattern` and `flags` (the same strings that should be passed to RegExp constructor).
 
 ```javascript
-var schema = {
+const schema = {
   type: "object",
   properties: {
     foo: {type: "string", regexp: "/foo/i"},
@@ -167,42 +185,15 @@ var schema = {
   },
 }
 
-var validData = {
+const validData = {
   foo: "Food",
   bar: "Barmen",
 }
 
-var invalidData = {
+const invalidData = {
   foo: "fog",
   bar: "bad",
 }
-```
-
-#### `formatMaximum` / `formatMinimum` and `formatExclusiveMaximum` / `formatExclusiveMinimum`
-
-These keywords allow to define minimum/maximum constraints when the format keyword defines ordering.
-
-These keywords apply only to strings. If the data is not a string, the validation succeeds.
-
-The value of keyword `formatMaximum` (`formatMinimum`) should be a string. This value is the maximum (minimum) allowed value for the data to be valid as determined by `format` keyword. If `format` is not present schema compilation will throw exception.
-
-When this keyword is added, it defines comparison rules for formats `"date"`, `"time"` and `"date-time"`. Custom formats also can have comparison rules. See [addFormat](https://github.com/epoberezkin/ajv#api-addformat) method.
-
-The value of keyword `formatExclusiveMaximum` (`formatExclusiveMinimum`) should be a boolean value. These keyword cannot be used without `formatMaximum` (`formatMinimum`). If this keyword value is equal to `true`, the data to be valid should not be equal to the value in `formatMaximum` (`formatMinimum`) keyword.
-
-```javascript
-require("ajv-keywords")(ajv, ["formatMinimum", "formatMaximum"])
-
-var schema = {
-  format: "date",
-  formatMinimum: "2016-02-06",
-  formatMaximum: "2016-12-27",
-  formatExclusiveMaximum: true,
-}
-
-var validDataList = ["2016-02-06", "2016-12-26", 1]
-
-var invalidDataList = ["2016-02-05", "2016-12-27", "abc"]
 ```
 
 #### `transform`
@@ -229,7 +220,7 @@ Note: `toEnumCase` requires that all allowed values are unique when case insensi
 **Example: multiple transformations**
 
 ```javascript
-require("ajv-keywords")(ajv, ["transform"])
+require("ajv-keywords")(ajv, "transform")
 
 const schema = {
   type: "array",
@@ -274,17 +265,20 @@ This keyword applies only to arrays. If the data is not an array, the validation
 The value of this keyword must be an array of strings - property names that should have unique values across all items.
 
 ```javascript
-var schema = {uniqueItemProperties: ["id", "name"]}
+const schema = {
+  type: "array",
+  uniqueItemProperties: ["id", "name"],
+}
 
-var validData = [{id: 1}, {id: 2}, {id: 3}]
+const validData = [{id: 1}, {id: 2}, {id: 3}]
 
-var invalidData1 = [
+const invalidData1 = [
   {id: 1},
   {id: 1}, // duplicate "id"
   {id: 3},
 ]
 
-var invalidData2 = [
+const invalidData2 = [
   {id: 1, name: "taco"},
   {id: 2, name: "taco"}, // duplicate "name"
   {id: 3, name: "salsa"},
@@ -310,7 +304,8 @@ If the value of the keyword is `true`, the validation succeeds if the data conta
 If the `properties` keyword is not present in the same schema object, schema compilation will throw exception.
 
 ```javascript
-var schema = {
+const schema = {
+  type: "object",
   properties: {
     foo: {type: 'number'},
     bar: {type: 'number'}
@@ -318,10 +313,10 @@ var schema = {
   allRequired: true
 };
 
-var validData = { foo: 1, bar: 2 };
-var alsoValidData = { foo: 1, bar: 2, baz: 3 };
+const validData = { foo: 1, bar: 2 };
+const alsoValidData = { foo: 1, bar: 2, baz: 3 };
 
-var invalidDataList = [ {}, { foo: 1 }, { bar: 2 } ];
+const invalidDataList = [ {}, { foo: 1 }, { bar: 2 } ];
 ```
 
 #### `anyRequired`
@@ -333,14 +328,15 @@ This keyword applies only to objects. If the data is not an object, the validati
 The value of this keyword must be an array of strings, each string being a property name. For data object to be valid at least one of the properties in this array should be present in the object.
 
 ```javascript
-var schema = {
+const schema = {
+  type: "object",
   anyRequired: ["foo", "bar"],
 }
 
-var validData = {foo: 1}
-var alsoValidData = {foo: 1, bar: 2}
+const validData = {foo: 1}
+const alsoValidData = {foo: 1, bar: 2}
 
-var invalidDataList = [{}, {baz: 3}]
+const invalidDataList = [{}, {baz: 3}]
 ```
 
 #### `oneRequired`
@@ -352,14 +348,15 @@ This keyword applies only to objects. If the data is not an object, the validati
 The value of this keyword must be an array of strings, each string being a property name. For data object to be valid exactly one of the properties in this array should be present in the object.
 
 ```javascript
-var schema = {
+const schema = {
+  type: "object",
   oneRequired: ["foo", "bar"],
 }
 
-var validData = {foo: 1}
-var alsoValidData = {bar: 2, baz: 3}
+const validData = {foo: 1}
+const alsoValidData = {bar: 2, baz: 3}
 
-var invalidDataList = [{}, {baz: 3}, {foo: 1, bar: 2}]
+const invalidDataList = [{}, {baz: 3}, {foo: 1, bar: 2}]
 ```
 
 #### `patternRequired`
@@ -373,12 +370,15 @@ The value of this keyword should be an array of strings, each string being a reg
 If the array contains multiple regular expressions, more than one expression can match the same property name.
 
 ```javascript
-var schema = {patternRequired: ["f.*o", "b.*r"]}
+const schema = {
+  type: "object",
+  patternRequired: ["f.*o", "b.*r"],
+}
 
-var validData = {foo: 1, bar: 2}
-var alsoValidData = {foobar: 3}
+const validData = {foo: 1, bar: 2}
+const alsoValidData = {foobar: 3}
 
-var invalidDataList = [{}, {foo: 1}, {bar: 2}]
+const invalidDataList = [{}, {foo: 1}, {bar: 2}]
 ```
 
 #### `prohibited`
@@ -389,17 +389,16 @@ This keyword applies only to objects. If the data is not an object, the validati
 
 The value of this keyword should be an array of strings, each string being a property name. For data object to be valid none of the properties in this array should be present in the object.
 
-```
-var schema = { prohibited: ['foo', 'bar']};
+```javascript
+const schema = {
+  type: "object",
+  prohibited: ["foo", "bar"],
+}
 
-var validData = { baz: 1 };
-var alsoValidData = {};
+const validData = {baz: 1}
+const alsoValidData = {}
 
-var invalidDataList = [
-  { foo: 1 },
-  { bar: 2 },
-  { foo: 1, bar: 2}
-];
+const invalidDataList = [{foo: 1}, {bar: 2}, {foo: 1, bar: 2}]
 ```
 
 **Please note**: `{prohibited: ['foo', 'bar']}` is equivalent to `{not: {anyRequired: ['foo', 'bar']}}` (i.e. it has the same validation result for any data).
@@ -413,14 +412,14 @@ This keyword applies only to objects. If the data is not an object, the validati
 The value should be an object, where keys are JSON pointers to the data, starting from the current position in data, and the values are JSON schemas. For data object to be valid the value of each JSON pointer should be valid according to the corresponding schema.
 
 ```javascript
-var schema = {
+const schema = {
   type: "object",
   deepProperties: {
     "/users/1/role": {enum: ["admin"]},
   },
 }
 
-var validData = {
+const validData = {
   users: [
     {},
     {
@@ -430,7 +429,7 @@ var validData = {
   ],
 }
 
-var alsoValidData = {
+const alsoValidData = {
   users: {
     1: {
       id: 123,
@@ -439,7 +438,7 @@ var alsoValidData = {
   },
 }
 
-var invalidData = {
+const invalidData = {
   users: [
     {},
     {
@@ -449,7 +448,7 @@ var invalidData = {
   ],
 }
 
-var alsoInvalidData = {
+const alsoInvalidData = {
   users: {
     1: {
       id: 123,
@@ -468,12 +467,12 @@ This keyword applies only to objects. If the data is not an object, the validati
 The value should be an array of JSON pointers to the data, starting from the current position in data. For data object to be valid each JSON pointer should be some existing part of the data.
 
 ```javascript
-var schema = {
+const schema = {
   type: "object",
   deepRequired: ["/users/1/role"],
 }
 
-var validData = {
+const validData = {
   users: [
     {},
     {
@@ -483,7 +482,7 @@ var validData = {
   ],
 }
 
-var invalidData = {
+const invalidData = {
   users: [
     {},
     {
@@ -503,7 +502,7 @@ These keywords allow to choose the schema to validate the data based on the valu
 
 These keywords must be present in the same schema object (`selectDefault` is optional).
 
-The value of `select` keyword should be a [\$data reference](https://github.com/epoberezkin/ajv/tree/5.0.2-beta.0#data-reference) that points to any primitive JSON type (string, number, boolean or null) in the data that is validated. You can also use a constant of primitive type as the value of this keyword (e.g., for debugging purposes).
+The value of `select` keyword should be a [\$data reference](https://github.com/ajv-validator/ajv/blob/v7-beta/docs/validation.md#data-reference) that points to any primitive JSON type (string, number, boolean or null) in the data that is validated. You can also use a constant of primitive type as the value of this keyword (e.g., for debugging purposes).
 
 The value of `selectCases` keyword must be an object where each property name is a possible string representation of the value of `select` keyword and each property value is a corresponding schema (from draft-06 it can be boolean) that must be used to validate the data.
 
@@ -522,8 +521,8 @@ If `select` value (in data) is not a primitive type the validation fails.
 ```javascript
 require('ajv-keywords')(ajv, 'select');
 
-var schema = {
-  type: object,
+const schema = {
+  type: "object",
   required: ['kind'],
   properties: {
     kind: { type: 'string' }
@@ -554,13 +553,13 @@ var schema = {
   }
 };
 
-var validDataList = [
+const validDataList = [
   { kind: 'foo', foo: 'any' },
   { kind: 'bar', bar: 1 },
   { kind: 'anything_else', not_bar_or_foo: 'any value' }
 ];
 
-var invalidDataList = [
+const invalidDataList = [
   { kind: 'foo' }, // no propery foo
   { kind: 'bar' }, // no propery bar
   { kind: 'foo', foo: 'any', another: 'any value' }, // additional property
@@ -594,7 +593,7 @@ There are several predefined dynamic default functions:
 - `"seq"` - sequential integer number starting from 0. If string is used as a property value, the default sequence will be used. If object `{ func: 'seq', args: { name: 'foo'} }` is used then the sequence with name `"foo"` will be used. Sequences are global, even if different ajv instances are used.
 
 ```javascript
-var schema = {
+const schema = {
   type: "object",
   dynamicDefaults: {
     ts: "datetime",
@@ -634,6 +633,7 @@ When using the `useDefaults` option value `"empty"`, properties and items equal 
 
 ```javascript
 const schema = {
+  type: "object",
   allOf: [
     {
       dynamicDefaults: {
@@ -643,7 +643,6 @@ const schema = {
       },
     },
     {
-      type: "object",
       properties: {
         ts: {
           type: "string",
@@ -672,7 +671,7 @@ You can add your own dynamic default function to be recognised by this keyword:
 ```javascript
 const uuid = require("uuid")
 
-const def = require("ajv-keywords/definitions/dynamicDefaults")
+const def = require("ajv-keywords/dist/definitions/dynamicDefaults")
 def.DEFAULTS.uuid = () => uuid.v4
 
 const schema = {
@@ -699,10 +698,10 @@ function getUuid(args) {
   return uuid[version]
 }
 
-const def = require("ajv-keywords/definitions/dynamicDefaults")
+const def = require("ajv-keywords/dist/definitions/dynamicDefaults")
 def.DEFAULTS.uuid = getUuid
 
-var schema = {
+const schema = {
   dynamicDefaults: {
     id1: "uuid", // v4
     id2: {func: "uuid", v: 4}, // v4
