@@ -4,11 +4,13 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
 
 [![Build Status](https://travis-ci.org/ajv-validator/ajv-keywords.svg?branch=master)](https://travis-ci.org/ajv-validator/ajv-keywords)
 [![npm](https://img.shields.io/npm/v/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
+[![npm (beta)](https://img.shields.io/npm/v/ajv-keywords/beta)](https://www.npmjs.com/package/ajv-keywords/v/4.0.0-beta.0)
 [![npm downloads](https://img.shields.io/npm/dm/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
 [![Coverage Status](https://coveralls.io/repos/github/ajv-validator/ajv-keywords/badge.svg?branch=master)](https://coveralls.io/github/ajv-validator/ajv-keywords?branch=master)
 [![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=ajv-validator/ajv-keywords)](https://app.dependabot.com/accounts/ajv-validator/repos/60477053)
 [![Gitter](https://img.shields.io/gitter/room/ajv-validator/ajv.svg)](https://gitter.im/ajv-validator/ajv)
 
+**Please note**: [ajv-keywords v4.0.0-beta](https://github.com/ajv-validator/ajv-keywords/releases/tag/v4.0.0-beta.0) should be used with [ajv v7 (beta)](https://github.com/ajv-validator/ajv/tree/v7-beta)
 
 ## Contents
 
@@ -45,45 +47,42 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
 
 <sup>\*</sup> - keywords that modify data
 
-
 ## Install
 
 ```
 npm install ajv-keywords
 ```
 
-
 ## Usage
 
 To add all available keywords:
 
 ```javascript
-var Ajv = require('ajv');
-var ajv = new Ajv;
-require('ajv-keywords')(ajv);
+var Ajv = require("ajv");
+var ajv = new Ajv();
+require("ajv-keywords")(ajv);
 
-ajv.validate({ instanceof: 'RegExp' }, /.*/); // true
-ajv.validate({ instanceof: 'RegExp' }, '.*'); // false
+ajv.validate({ instanceof: "RegExp" }, /.*/); // true
+ajv.validate({ instanceof: "RegExp" }, ".*"); // false
 ```
 
 To add a single keyword:
 
 ```javascript
-require('ajv-keywords')(ajv, 'instanceof');
+require("ajv-keywords")(ajv, "instanceof");
 ```
 
 To add multiple keywords:
 
 ```javascript
-require('ajv-keywords')(ajv, ['typeof', 'instanceof']);
+require("ajv-keywords")(ajv, ["typeof", "instanceof"]);
 ```
 
 To add a single keyword in browser (to avoid adding unused code):
 
 ```javascript
-require('ajv-keywords/keywords/instanceof')(ajv);
+require("ajv-keywords/keywords/instanceof")(ajv);
 ```
-
 
 ## Keywords
 
@@ -103,7 +102,6 @@ ajv.validate({ typeof: 'undefined' }, null); // false
 ajv.validate({ typeof: ['undefined', 'object'] }, null); // true
 ```
 
-
 #### `instanceof`
 
 Based on JavaScript `instanceof` operation.
@@ -122,13 +120,12 @@ You can add your own constructor function to be recognised by this keyword:
 
 ```javascript
 function MyClass() {}
-var instanceofDefinition = require('ajv-keywords').get('instanceof').definition;
+var instanceofDefinition = require("ajv-keywords").get("instanceof").definition;
 // or require('ajv-keywords/keywords/instanceof').definition;
 instanceofDefinition.CONSTRUCTORS.MyClass = MyClass;
 
-ajv.validate({ instanceof: 'MyClass' }, new MyClass); // true
+ajv.validate({ instanceof: "MyClass" }, new MyClass()); // true
 ```
-
 
 ### Keywords for numbers
 
@@ -156,7 +153,6 @@ ajv.validate(schema, 1); // false
 ajv.validate(schema, 3); // false
 ```
 
-
 ### Keywords for strings
 
 #### `regexp`
@@ -169,24 +165,23 @@ The value of this keyword can be either a string (the result of `regexp.toString
 
 ```javascript
 var schema = {
-  type: 'object',
+  type: "object",
   properties: {
-    foo: { regexp: '/foo/i' },
-    bar: { regexp: { pattern: 'bar', flags: 'i' } }
-  }
+    foo: { regexp: "/foo/i" },
+    bar: { regexp: { pattern: "bar", flags: "i" } },
+  },
 };
 
 var validData = {
-  foo: 'Food',
-  bar: 'Barmen'
+  foo: "Food",
+  bar: "Barmen",
 };
 
 var invalidData = {
-  foo: 'fog',
-  bar: 'bad'
+  foo: "fog",
+  bar: "bad",
 };
 ```
-
 
 #### `formatMaximum` / `formatMinimum` and `formatExclusiveMaximum` / `formatExclusiveMinimum`
 
@@ -201,32 +196,33 @@ When this keyword is added, it defines comparison rules for formats `"date"`, `"
 The value of keyword `formatExclusiveMaximum` (`formatExclusiveMinimum`) should be a boolean value. These keyword cannot be used without `formatMaximum` (`formatMinimum`). If this keyword value is equal to `true`, the data to be valid should not be equal to the value in `formatMaximum` (`formatMinimum`) keyword.
 
 ```javascript
-require('ajv-keywords')(ajv, ['formatMinimum', 'formatMaximum']);
+require("ajv-keywords")(ajv, ["formatMinimum", "formatMaximum"]);
 
 var schema = {
-  format: 'date',
-  formatMinimum: '2016-02-06',
-  formatMaximum: '2016-12-27',
-  formatExclusiveMaximum: true
-}
+  format: "date",
+  formatMinimum: "2016-02-06",
+  formatMaximum: "2016-12-27",
+  formatExclusiveMaximum: true,
+};
 
-var validDataList = ['2016-02-06', '2016-12-26', 1];
+var validDataList = ["2016-02-06", "2016-12-26", 1];
 
-var invalidDataList = ['2016-02-05', '2016-12-27', 'abc'];
+var invalidDataList = ["2016-02-05", "2016-12-27", "abc"];
 ```
-
 
 #### `transform`
 
-This keyword allows a string to be modified before validation. 
+This keyword allows a string to be modified before validation.
 
 These keywords apply only to strings. If the data is not a string, the transform is skipped.
 
 There are limitation due to how ajv is written:
+
 - a stand alone string cannot be transformed. ie `data = 'a'; ajv.validate(schema, data);`
 - currently cannot work with `ajv-pack`
 
 **Supported options:**
+
 - `trim`: remove whitespace from start and end
 - `trimLeft`: remove whitespace from start
 - `trimRight`: remove whitespace from end
@@ -239,41 +235,41 @@ Options are applied in the order they are listed.
 Note: `toEnumCase` requires that all allowed values are unique when case insensitive.
 
 **Example: multiple options**
+
 ```javascript
-require('ajv-keywords')(ajv, ['transform']);
+require("ajv-keywords")(ajv, ["transform"]);
 
 var schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type:'string',
-    transform:['trim','toLowerCase']
-  }
+    type: "string",
+    transform: ["trim", "toLowerCase"],
+  },
 };
 
-var data = ['  MixCase  '];
+var data = ["  MixCase  "];
 ajv.validate(schema, data);
 console.log(data); // ['mixcase']
-
 ```
 
 **Example: `enumcase`**
+
 ```javascript
-require('ajv-keywords')(ajv, ['transform']);
+require("ajv-keywords")(ajv, ["transform"]);
 
 var schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type:'string',
-    transform:['trim','toEnumCase'],
-    enum:['pH']
-  }
+    type: "string",
+    transform: ["trim", "toEnumCase"],
+    enum: ["pH"],
+  },
 };
 
-var data = ['ph',' Ph','PH','pH '];
+var data = ["ph", " Ph", "PH", "pH "];
 ajv.validate(schema, data);
 console.log(data); // ['pH','pH','pH','pH']
 ```
-
 
 ### Keywords for arrays
 
@@ -286,29 +282,24 @@ This keyword applies only to arrays. If the data is not an array, the validation
 The value of this keyword must be an array of strings - property names that should have unique values across all items.
 
 ```javascript
-var schema = { uniqueItemProperties: [ "id", "name" ] };
+var schema = { uniqueItemProperties: ["id", "name"] };
 
-var validData = [
-  { id: 1 },
-  { id: 2 },
-  { id: 3 }
-];
+var validData = [{ id: 1 }, { id: 2 }, { id: 3 }];
 
 var invalidData1 = [
   { id: 1 },
   { id: 1 }, // duplicate "id"
-  { id: 3 }
+  { id: 3 },
 ];
 
 var invalidData2 = [
   { id: 1, name: "taco" },
   { id: 2, name: "taco" }, // duplicate "name"
-  { id: 3, name: "salsa" }
+  { id: 3, name: "salsa" },
 ];
 ```
 
 This keyword is contributed by [@blainesch](https://github.com/blainesch).
-
 
 ### Keywords for objects
 
@@ -341,7 +332,6 @@ var alsoValidData = { foo: 1, bar: 2, baz: 3 };
 var invalidDataList = [ {}, { foo: 1 }, { bar: 2 } ];
 ```
 
-
 #### `anyRequired`
 
 This keyword allows to require the presence of any (at least one) property from the list.
@@ -352,15 +342,14 @@ The value of this keyword must be an array of strings, each string being a prope
 
 ```javascript
 var schema = {
-  anyRequired: ['foo', 'bar']
+  anyRequired: ["foo", "bar"],
 };
 
 var validData = { foo: 1 };
 var alsoValidData = { foo: 1, bar: 2 };
 
-var invalidDataList = [ {}, { baz: 3 } ];
+var invalidDataList = [{}, { baz: 3 }];
 ```
-
 
 #### `oneRequired`
 
@@ -372,15 +361,14 @@ The value of this keyword must be an array of strings, each string being a prope
 
 ```javascript
 var schema = {
-  oneRequired: ['foo', 'bar']
+  oneRequired: ["foo", "bar"],
 };
 
 var validData = { foo: 1 };
 var alsoValidData = { bar: 2, baz: 3 };
 
-var invalidDataList = [ {}, { baz: 3 }, { foo: 1, bar: 2 } ];
+var invalidDataList = [{}, { baz: 3 }, { foo: 1, bar: 2 }];
 ```
-
 
 #### `patternRequired`
 
@@ -393,14 +381,13 @@ The value of this keyword should be an array of strings, each string being a reg
 If the array contains multiple regular expressions, more than one expression can match the same property name.
 
 ```javascript
-var schema = { patternRequired: [ 'f.*o', 'b.*r' ] };
+var schema = { patternRequired: ["f.*o", "b.*r"] };
 
 var validData = { foo: 1, bar: 2 };
 var alsoValidData = { foobar: 3 };
 
-var invalidDataList = [ {}, { foo: 1 }, { bar: 2 } ];
+var invalidDataList = [{}, { foo: 1 }, { bar: 2 }];
 ```
-
 
 #### `prohibited`
 
@@ -423,8 +410,7 @@ var invalidDataList = [
 ];
 ```
 
-__Please note__: `{prohibited: ['foo', 'bar']}` is equivalent to `{not: {anyRequired: ['foo', 'bar']}}` (i.e. it has the same validation result for any data).
-
+**Please note**: `{prohibited: ['foo', 'bar']}` is equivalent to `{not: {anyRequired: ['foo', 'bar']}}` (i.e. it has the same validation result for any data).
 
 #### `deepProperties`
 
@@ -436,10 +422,10 @@ The value should be an object, where keys are JSON pointers to the data, startin
 
 ```javascript
 var schema = {
-  type: 'object',
+  type: "object",
   deepProperties: {
-    "/users/1/role": { "enum": ["admin"] }
-  }
+    "/users/1/role": { enum: ["admin"] },
+  },
 };
 
 var validData = {
@@ -447,18 +433,18 @@ var validData = {
     {},
     {
       id: 123,
-      role: 'admin'
-    }
-  ]
+      role: "admin",
+    },
+  ],
 };
 
 var alsoValidData = {
   users: {
-    "1": {
+    1: {
       id: 123,
-      role: 'admin'
-    }
-  }
+      role: "admin",
+    },
+  },
 };
 
 var invalidData = {
@@ -466,21 +452,20 @@ var invalidData = {
     {},
     {
       id: 123,
-      role: 'user'
-    }
-  ]
+      role: "user",
+    },
+  ],
 };
 
 var alsoInvalidData = {
   users: {
-    "1": {
+    1: {
       id: 123,
-      role: 'user'
-    }
-  }
+      role: "user",
+    },
+  },
 };
 ```
-
 
 #### `deepRequired`
 
@@ -492,8 +477,8 @@ The value should be an array of JSON pointers to the data, starting from the cur
 
 ```javascript
 var schema = {
-  type: 'object',
-  deepRequired: ["/users/1/role"]
+  type: "object",
+  deepRequired: ["/users/1/role"],
 };
 
 var validData = {
@@ -501,29 +486,28 @@ var validData = {
     {},
     {
       id: 123,
-      role: 'admin'
-    }
-  ]
+      role: "admin",
+    },
+  ],
 };
 
 var invalidData = {
   users: [
     {},
     {
-      id: 123
-    }
-  ]
+      id: 123,
+    },
+  ],
 };
 ```
 
 See [json-schema-org/json-schema-spec#203](https://github.com/json-schema-org/json-schema-spec/issues/203#issue-197211916) for an example of the equivalent schema without `deepRequired` keyword.
 
-
 ### Compound keywords
 
 #### `switch` (deprecated)
 
-__Please note__: this keyword is provided to preserve backward compatibility with previous versions of Ajv. It is strongly recommended to use `if`/`then`/`else` keywords instead, as they have been added to the draft-07 of JSON Schema specification.
+**Please note**: this keyword is provided to preserve backward compatibility with previous versions of Ajv. It is strongly recommended to use `if`/`then`/`else` keywords instead, as they have been added to the draft-07 of JSON Schema specification.
 
 This keyword allows to perform advanced conditional validation.
 
@@ -536,37 +520,37 @@ The value of the keyword is the array of if/then clauses. Each clause is the obj
 The validation process is dynamic; all clauses are executed sequentially in the following way:
 
 1. `if`:
-    1.  `if` property is JSON-schema according to which the data is:
-        1.  valid => go to step 2.
-        2.  invalid => go to the NEXT clause, if this was the last clause the validation of `switch` SUCCEEDS.
-    2.  `if` property is absent => go to step 2.
+   1. `if` property is JSON-schema according to which the data is:
+      1. valid => go to step 2.
+      2. invalid => go to the NEXT clause, if this was the last clause the validation of `switch` SUCCEEDS.
+   2. `if` property is absent => go to step 2.
 2. `then`:
-    1.  `then` property is `true` or it is JSON-schema according to which the data is valid => go to step 3.
-    2.  `then` property is `false` or it is JSON-schema according to which the data is invalid => the validation of `switch` FAILS.
+   1. `then` property is `true` or it is JSON-schema according to which the data is valid => go to step 3.
+   2. `then` property is `false` or it is JSON-schema according to which the data is invalid => the validation of `switch` FAILS.
 3. `continue`:
-    1.  `continue` property is `true` => go to the NEXT clause, if this was the last clause the validation of `switch` SUCCEEDS.
-    2.  `continue` property is `false` or absent => validation of `switch` SUCCEEDS.
+   1. `continue` property is `true` => go to the NEXT clause, if this was the last clause the validation of `switch` SUCCEEDS.
+   2. `continue` property is `false` or absent => validation of `switch` SUCCEEDS.
 
 ```javascript
-require('ajv-keywords')(ajv, 'switch');
+require("ajv-keywords")(ajv, "switch");
 
 var schema = {
-  type: 'array',
+  type: "array",
   items: {
-    type: 'integer',
-    'switch': [
+    type: "integer",
+    switch: [
       { if: { not: { minimum: 1 } }, then: false },
       { if: { maximum: 10 }, then: true },
       { if: { maximum: 100 }, then: { multipleOf: 10 } },
       { if: { maximum: 1000 }, then: { multipleOf: 100 } },
-      { then: false }
-    ]
-  }
+      { then: false },
+    ],
+  },
 };
 
 var validItems = [1, 5, 10, 20, 50, 100, 200, 500, 1000];
 
-var invalidItems = [1, 0, 2000, 11, 57, 123, 'foo'];
+var invalidItems = [1, 0, 2000, 11, 57, 123, "foo"];
 ```
 
 The above schema is equivalent to (for example):
@@ -591,28 +575,27 @@ The above schema is equivalent to (for example):
 }
 ```
 
-
 #### `select`/`selectCases`/`selectDefault`
 
 These keywords allow to choose the schema to validate the data based on the value of some property in the validated data.
 
 These keywords must be present in the same schema object (`selectDefault` is optional).
 
-The value of `select` keyword should be a [$data reference](https://github.com/epoberezkin/ajv/tree/5.0.2-beta.0#data-reference) that points to any primitive JSON type (string, number, boolean or null) in the data that is validated. You can also use a constant of primitive type as the value of this keyword (e.g., for debugging purposes).
+The value of `select` keyword should be a [\$data reference](https://github.com/epoberezkin/ajv/tree/5.0.2-beta.0#data-reference) that points to any primitive JSON type (string, number, boolean or null) in the data that is validated. You can also use a constant of primitive type as the value of this keyword (e.g., for debugging purposes).
 
 The value of `selectCases` keyword must be an object where each property name is a possible string representation of the value of `select` keyword and each property value is a corresponding schema (from draft-06 it can be boolean) that must be used to validate the data.
 
 The value of `selectDefault` keyword is a schema (from draft-06 it can be boolean) that must be used to validate the data in case `selectCases` has no key equal to the stringified value of `select` keyword.
 
 The validation succeeds in one of the following cases:
+
 - the validation of data using selected schema succeeds,
 - none of the schemas is selected for validation,
 - the value of select is undefined (no property in the data that the data reference points to).
 
 If `select` value (in data) is not a primitive type the validation fails.
 
-__Please note__: these keywords require Ajv `$data` option to support [$data reference](https://github.com/epoberezkin/ajv/tree/5.0.2-beta.0#data-reference).
-
+**Please note**: these keywords require Ajv `$data` option to support [\$data reference](https://github.com/epoberezkin/ajv/tree/5.0.2-beta.0#data-reference).
 
 ```javascript
 require('ajv-keywords')(ajv, 'select');
@@ -665,8 +648,7 @@ var invalidDataList = [
 ];
 ```
 
-__Please note__: the current implementation is BETA. It does not allow using relative URIs in $ref keywords in schemas in `selectCases` and `selectDefault` that point outside of these schemas. The workaround is to use absolute URIs (that can point to any (sub-)schema added to Ajv, including those inside the current root schema where `select` is used). See [tests](https://github.com/epoberezkin/ajv-keywords/blob/v2.0.0/spec/tests/select.json#L314).
-
+**Please note**: the current implementation is BETA. It does not allow using relative URIs in \$ref keywords in schemas in `selectCases` and `selectDefault` that point outside of these schemas. The workaround is to use absolute URIs (that can point to any (sub-)schema added to Ajv, including those inside the current root schema where `select` is used). See [tests](https://github.com/epoberezkin/ajv-keywords/blob/v2.0.0/spec/tests/select.json#L314).
 
 ### Keywords for all types
 
@@ -695,27 +677,27 @@ There are several predefined dynamic default functions:
 
 ```javascript
 var schema = {
-  type: 'object',
+  type: "object",
   dynamicDefaults: {
-    ts: 'datetime',
-    r: { func: 'randomint', args: { max: 100 } },
-    id: { func: 'seq', args: { name: 'id' } }
+    ts: "datetime",
+    r: { func: "randomint", args: { max: 100 } },
+    id: { func: "seq", args: { name: "id" } },
   },
   properties: {
     ts: {
-      type: 'string',
-      format: 'date-time'
+      type: "string",
+      format: "date-time",
     },
     r: {
-      type: 'integer',
+      type: "integer",
       minimum: 0,
-      exclusiveMaximum: 100
+      exclusiveMaximum: 100,
     },
     id: {
-      type: 'integer',
-      minimum: 0
-    }
-  }
+      type: "integer",
+      minimum: 0,
+    },
+  },
 };
 
 var data = {};
@@ -730,39 +712,39 @@ ajv.validate(data1); // true
 data1; // didn't change, as all properties were defined
 ```
 
-When using the `useDefaults` option value `"empty"`, properties and items equal to `null` or `""` (empty string) will be considered missing and assigned defaults.  Use the `allOf` [compound keyword](https://github.com/epoberezkin/ajv/blob/master/KEYWORDS.md#compound-keywords) to execute `dynamicDefaults` before validation.
+When using the `useDefaults` option value `"empty"`, properties and items equal to `null` or `""` (empty string) will be considered missing and assigned defaults. Use the `allOf` [compound keyword](https://github.com/epoberezkin/ajv/blob/master/KEYWORDS.md#compound-keywords) to execute `dynamicDefaults` before validation.
 
 ```javascript
 var schema = {
   allOf: [
     {
       dynamicDefaults: {
-        ts: 'datetime',
-        r: { func: 'randomint', args: { min: 5, max: 100 } },
-        id: { func: 'seq', args: { name: 'id' } }
-      }
+        ts: "datetime",
+        r: { func: "randomint", args: { min: 5, max: 100 } },
+        id: { func: "seq", args: { name: "id" } },
+      },
     },
     {
-      type: 'object',
+      type: "object",
       properties: {
         ts: {
-          type: 'string'
+          type: "string",
         },
         r: {
-          type: 'number',
+          type: "number",
           minimum: 5,
-          exclusiveMaximum: 100
+          exclusiveMaximum: 100,
         },
         id: {
-          type: 'integer',
-          minimum: 0
-        }
-      }
-    }
-  ]
+          type: "integer",
+          minimum: 0,
+        },
+      },
+    },
+  ],
 };
 
-var data = { ts: '', r: null };
+var data = { ts: "", r: null };
 ajv.validate(data); // true
 data; // { ts: '2016-12-01T22:07:28.829Z', r: 25, id: 0 }
 ```
@@ -770,17 +752,19 @@ data; // { ts: '2016-12-01T22:07:28.829Z', r: 25, id: 0 }
 You can add your own dynamic default function to be recognised by this keyword:
 
 ```javascript
-var uuid = require('uuid');
+var uuid = require("uuid");
 
-function uuidV4() { return uuid.v4(); }
+function uuidV4() {
+  return uuid.v4();
+}
 
-var definition = require('ajv-keywords').get('dynamicDefaults').definition;
+var definition = require("ajv-keywords").get("dynamicDefaults").definition;
 // or require('ajv-keywords/keywords/dynamicDefaults').definition;
 definition.DEFAULTS.uuid = uuidV4;
 
 var schema = {
-  dynamicDefaults: { id: 'uuid' },
-  properties: { id: { type: 'string', format: 'uuid' } }
+  dynamicDefaults: { id: "uuid" },
+  properties: { id: { type: "string", format: "uuid" } },
 };
 
 var data = {};
@@ -795,27 +779,26 @@ data1; // { id: '5b008de7-1669-467a-a5c6-70fa244d7209' }
 You also can define dynamic default that accepts parameters, e.g. version of uuid:
 
 ```javascript
-var uuid = require('uuid');
+var uuid = require("uuid");
 
 function getUuid(args) {
-  var version = 'v' + (arvs && args.v || 4);
-  return function() {
+  var version = "v" + ((arvs && args.v) || 4);
+  return function () {
     return uuid[version]();
   };
 }
 
-var definition = require('ajv-keywords').get('dynamicDefaults').definition;
+var definition = require("ajv-keywords").get("dynamicDefaults").definition;
 definition.DEFAULTS.uuid = getUuid;
 
 var schema = {
   dynamicDefaults: {
-    id1: 'uuid', // v4
-    id2: { func: 'uuid', v: 4 }, // v4
-    id3: { func: 'uuid', v: 1 } // v1
-  }
+    id1: "uuid", // v4
+    id2: { func: "uuid", v: 4 }, // v4
+    id3: { func: "uuid", v: 1 }, // v1
+  },
 };
 ```
-
 
 ## Security contact
 
@@ -825,11 +808,9 @@ Tidelift will coordinate the fix and disclosure.
 
 Please do NOT report security vulnerabilities via GitHub issues.
 
-
 ## Open-source software support
 
 Ajv-keywords is a part of [Tidelift subscription](https://tidelift.com/subscription/pkg/npm-ajv-keywords?utm_source=npm-ajv-keywords&utm_medium=referral&utm_campaign=readme) - it provides a centralised support to open-source software users, in addition to the support provided by software maintainers.
-
 
 ## License
 
