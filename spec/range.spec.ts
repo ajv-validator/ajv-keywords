@@ -1,4 +1,4 @@
-import type Ajv from "Ajv"
+import type Ajv from "ajv"
 import rangePlugin from "../dist/keywords/range"
 import rangeDef from "../dist/definitions/range"
 import exclusiveRangePlugin from "../dist/keywords/exclusiveRange"
