@@ -126,4 +126,28 @@ describe('keyword "transform"', function () {
     });
   });
 
+  ajvs.forEach(function (ajv, i) {
+    it('transform toCapitalize #' + i, function () {
+      var schema, data;
+
+      data = ['All to CAPITALIZE'];
+      schema = {type: 'array', items: {type: 'string', transform: ['toCapitalize']}};
+      ajv.validate(schema, data) .should.equal(true);
+      data.should.deep.equal(['All To Capitalize']);
+
+    });
+  });
+
+  ajvs.forEach(function (ajv, i) {
+    it('transform trimSpaces #' + i, function () {
+      var schema, data;
+
+      data = ['Doubles  Spaces    and more'];
+      schema = {type: 'array', items: {type: 'string', transform: ['trimSpaces']}};
+      ajv.validate(schema, data) .should.equal(true);
+      data.should.deep.equal(['Doubles Spaces and more']);
+
+    });
+  });
+
 });

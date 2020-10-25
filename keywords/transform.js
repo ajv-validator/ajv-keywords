@@ -19,6 +19,12 @@ module.exports = function defFunc (ajv) {
     },
     toEnumCase: function (value, cfg) {
       return cfg.hash[makeHashTableKey(value)] || value;
+    },
+    toCapitalize: function (value) {
+      return value.toLowerCase().replace(/(^|[^a-zA-Z\u00C0-\u017F'])([a-zA-Z\u00C0-\u017F])/g, (l) => l.toUpperCase());
+    },
+    trimSpaces: function (value) {
+      return value.replace(/  +/g, ' ');
     }
   };
 
@@ -65,7 +71,8 @@ module.exports = function defFunc (ajv) {
         type: 'string',
         enum: [
           'trimLeft', 'trimRight', 'trim',
-          'toLowerCase', 'toUpperCase', 'toEnumCase'
+          'toLowerCase', 'toUpperCase', 'toEnumCase',
+          'toCapitalize', 'trimSpaces'
         ]
       }
     }
