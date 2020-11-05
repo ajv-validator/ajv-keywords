@@ -519,6 +519,8 @@ The validation succeeds in one of the following cases:
 
 If `select` value (in data) is not a primitive type the validation fails.
 
+This keyword correctly tracks evaluated properties and items to work with `unevaluatedProperties` and `unevaluatedItems` keywords - only properties and items from the subschema that was used (one of `selectCases` subschemas or `selectDefault` subschema) are marked as evaluated.
+
 **Please note**: these keywords require Ajv `$data` option to support [\$data reference](https://github.com/epoberezkin/ajv/tree/5.0.2-beta.0#data-reference).
 
 ```javascript
