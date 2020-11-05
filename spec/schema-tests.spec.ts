@@ -49,6 +49,7 @@ jsonSchemaTest(ajvs, {
 function getAjv(extras?: boolean, keywords?: Vocabulary): Ajv {
   return new Ajv({
     $data: true,
+    unevaluated: true,
     allErrors: extras,
     verbose: extras,
     keywords,
@@ -61,6 +62,7 @@ function getAjv(extras?: boolean, keywords?: Vocabulary): Ajv {
 function getAjvNoMeta(keywords?: Vocabulary): Ajv {
   return new Ajv({
     $data: true,
+    unevaluated: true,
     keywords,
     formats: {allowedUnknown: true},
     meta: false,

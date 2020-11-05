@@ -1,5 +1,5 @@
 import type {KeywordDefinition, KeywordErrorDefinition, KeywordCxt} from "ajv"
-import {_, str, nil} from "ajv/dist/compile/codegen"
+import {_, str, nil, Name} from "ajv/dist/compile/codegen"
 import type {DefinitionOptions} from "./_types"
 import {metaSchemaRef} from "./_util"
 
@@ -32,13 +32,15 @@ export default function getDef(opts?: DefinitionOptions): KeywordDefinition[] {
           for (const schemaProp in parentSchema.selectCases) {
             cxt.setParams({schemaProp})
             gen.elseIf(_`${value} == ${schemaProp}`) // intentional ==, to match numbers and booleans
-            cxt.subschema({keyword: "selectCases", schemaProp}, schValid)
+            const schCxt = cxt.subschema({keyword: "selectCases", schemaProp}, schValid)
+            cxt.mergeEvaluated(schCxt, Name)
             gen.assign(valid, schValid)
           }
           gen.else()
           if (parentSchema.selectDefault !== undefined) {
             cxt.setParams({schemaProp: undefined})
-            cxt.subschema({keyword: "selectDefault"}, schValid)
+            const schCxt = cxt.subschema({keyword: "selectDefault"}, schValid)
+            cxt.mergeEvaluated(schCxt, Name)
             gen.assign(valid, schValid)
           }
           gen.endIf()

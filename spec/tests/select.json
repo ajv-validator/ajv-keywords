@@ -373,5 +373,102 @@
         "valid": false
       }
     ]
+  },
+  {
+    "description": "select keyword with unevaluatedProperties",
+    "schema": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": {"type": "string"}
+      },
+      "unevaluatedProperties": false,
+      "select": {"$data": "0/type"},
+      "selectCases": {
+        "foo": {
+          "properties": {
+            "foo": {"type": "string"}
+          }
+        },
+        "bar": {
+          "properties": {
+            "bar": {"type": "number"}
+          }
+        }
+      },
+      "selectDefault": {
+        "properties": {
+          "unknown": {"type": "string"}
+        }
+      }
+    },
+    "tests": [
+      {
+        "description": "valid object, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": "anything"
+        },
+        "valid": true
+      },
+      {
+        "description": "valid object, type=bar",
+        "data": {
+          "type": "bar",
+          "bar": 123
+        },
+        "valid": true
+      },
+      {
+        "description": "invalid object, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": 123
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object, type=bar",
+        "data": {
+          "type": "bar",
+          "bar": "anything"
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object with additional property, type=foo",
+        "data": {
+          "type": "foo",
+          "foo": "anything",
+          "another": 1
+        },
+        "valid": false
+      },
+      {
+        "description": "valid object with unknown type",
+        "data": {
+          "type": "another",
+          "unknown": "anything"
+        },
+        "valid": true
+      },
+      {
+        "description": "invalid object with unknown type",
+        "data": {
+          "type": "another",
+          "unknown": 1
+        },
+        "valid": false
+      },
+      {
+        "description": "invalid object with additional property, unknown type",
+        "data": {
+          "type": "another",
+          "unknown": "anything",
+          "another": 1
+        },
+        "valid": false
+      }
+    ]
   }
 ]
