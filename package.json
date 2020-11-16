@@ -3,7 +3,7 @@
   "version": "4.0.0-beta.1",
   "description": "Custom JSON-Schema keywords for Ajv validator",
   "main": "dist/index.js",
-  "typings": "ajv-keywords.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && tsc",
     "prepublish": "npm run build",
