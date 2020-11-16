@@ -40,3 +40,5 @@ export default function getDef(): CodeKeywordDefinition {
     },
   }
 }
+
+module.exports = getDef

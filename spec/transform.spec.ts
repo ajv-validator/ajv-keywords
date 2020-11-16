@@ -100,9 +100,7 @@ describe('keyword "transform"', () => {
       try {
         ajv.validate(schema, data).should.equal(false)
       } catch (e) {
-        e.message.should.equal(
-          'Missing enum. To use `transform:["toEnumCase"]`, `enum:[...]` is required.'
-        )
+        e.message.should.match(/transform.*enum/)
       }
 
       data = ["ph"]
@@ -113,9 +111,7 @@ describe('keyword "transform"', () => {
       try {
         ajv.validate(schema, data).should.equal(false)
       } catch (e) {
-        e.message.should.equal(
-          'Invalid enum uniqueness. To use `transform:["toEnumCase"]`, all values must be unique when case insensitive.'
-        )
+        e.message.should.match(/transform.*unique/)
       }
 
       data = ["  ph  "]

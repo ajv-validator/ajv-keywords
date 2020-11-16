@@ -1,5 +1,5 @@
 import type {KeywordDefinition, KeywordErrorDefinition, KeywordCxt} from "ajv"
-import {_, str, nil, Name} from "ajv/dist/compile/codegen"
+import {_, str, nil, Name} from "ajv"
 import type {DefinitionOptions} from "./_types"
 import {metaSchemaRef} from "./_util"
 
@@ -63,3 +63,5 @@ export default function getDef(opts?: DefinitionOptions): KeywordDefinition[] {
     },
   ]
 }
+
+module.exports = getDef

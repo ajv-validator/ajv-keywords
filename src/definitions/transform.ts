@@ -1,4 +1,5 @@
-import type {FuncKeywordDefinition, AnySchemaObject} from "ajv"
+import type {CodeKeywordDefinition, AnySchemaObject, KeywordCxt, Code, Name} from "ajv"
+import {_, stringify} from "ajv"
 
 type TransformName =
   | "trimStart"
@@ -27,27 +28,33 @@ const transform: {[key in TransformName]: Transform} = {
   toEnumCase: (s, cfg) => cfg?.hash[configKey(s)] || s,
 }
 
-export default function getDef(): FuncKeywordDefinition {
+export default function getDef(): CodeKeywordDefinition {
   return {
     keyword: "transform",
-    type: "string",
     schemaType: "array",
-    errors: false,
-    modifying: true,
-    valid: true,
-    compile(schema: TransformName[], parentSchema) {
-      let cfg: TransformConfig
-      if (schema.includes("toEnumCase")) cfg = getEnumCaseCfg(parentSchema)
+    before: "enum",
+    code(cxt: KeywordCxt) {
+      const {gen, data, schema, parentSchema, it} = cxt
+      const {parentData, parentDataProperty} = it
+      const tNames: string[] = schema
+      if (!tNames.length) return
+      let cfg: Name | undefined
+      if (tNames.includes("toEnumCase")) {
+        const config = getEnumCaseCfg(parentSchema)
+        cfg = gen.scopeValue("obj", {ref: config, code: stringify(config)})
+      }
+      gen.if(_`typeof ${data} == "string" && ${parentData} !== undefined`, () => {
+        gen.assign(data, transformExpr(tNames))
+        gen.assign(_`${parentData}[${parentDataProperty}]`, data)
+      })
 
-      return function (data, dataCxt): boolean {
-        // skip if top level value
-        if (!dataCxt) return true
-        const {parentData, parentDataProperty: key} = dataCxt
-        if (!parentData) return true // TODO fix in ajv: either dataCxt type should be changed or undefined context should be passed when parentData is undefined
-        // apply transforms in order provided
-        for (const t of schema) data = transform[t](data, cfg)
-        parentData[key as keyof typeof parentData] = data
-        return true
+      function transformExpr(ts: string[]): Code {
+        if (!ts.length) return data
+        const t = ts.pop() as string
+        if (!(t in transform)) throw new Error(`transform: unknown transformation ${t}`)
+        const func = gen.scopeValue("func", {ref: transform[t as TransformName]})
+        const inner = transformExpr(ts)
+        return cfg && t === "toEnumCase" ? _`${func}(${inner}, ${cfg})` : _`${func}(${inner})`
       }
     },
     metaSchema: {
@@ -62,17 +69,13 @@ function getEnumCaseCfg(parentSchema: AnySchemaObject): TransformConfig {
   const cfg: TransformConfig = {hash: {}}
 
   // requires `enum` in the same schema as transform
-  if (!parentSchema.enum) {
-    throw new Error('Missing enum. To use `transform:["toEnumCase"]`, `enum:[...]` is required.')
-  }
+  if (!parentSchema.enum) throw new Error('transform: "toEnumCase" requires "enum"')
   for (const v of parentSchema.enum) {
     if (typeof v !== "string") continue
     const k = configKey(v)
     // requires all `enum` values have unique keys
     if (cfg.hash[k]) {
-      throw new Error(
-        'Invalid enum uniqueness. To use `transform:["toEnumCase"]`, all values must be unique when case insensitive.'
-      )
+      throw new Error('transform: "toEnumCase" requires all lowercased "enum" values to be unique')
     }
     cfg.hash[k] = v
   }

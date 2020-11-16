@@ -106,7 +106,7 @@ const ajv = new Ajv({
 })
 ```
 
-`opts` is an object with a property `defaultMeta` - URI of meta-schema to use for keywords that use subschemas (`select` and `deepProperties`).
+`opts` is an optional object with a property `defaultMeta` - URI of meta-schema to use for keywords that use subschemas (`select` and `deepProperties`). The default is `"http://json-schema.org/schema"`.
 
 ## Keywords
 

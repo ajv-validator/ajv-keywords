@@ -54,3 +54,5 @@ function getScalarKeys(keys: string[], schema: AnySchemaObject): boolean[] {
       : SCALAR_TYPES.includes(t)
   })
 }
+
+module.exports = getDef

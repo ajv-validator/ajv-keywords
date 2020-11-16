@@ -38,3 +38,4 @@ const definitions: GetDefinition<KeywordDefinition>[] = [
 export default function ajvKeywords(opts?: DefinitionOptions): Vocabulary {
   return definitions.map((d) => d(opts)).concat(selectDef(opts))
 }
+module.exports = ajvKeywords

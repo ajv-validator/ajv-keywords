@@ -31,3 +31,5 @@ export default function getDef(): CodeKeywordDefinition {
 function unescapeJPSegment(s: string): string {
   return s.replace(/~1/g, "/").replace(/~0/g, "~")
 }
+
+module.exports = getDef

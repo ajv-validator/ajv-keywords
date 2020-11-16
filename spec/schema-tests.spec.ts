@@ -1,4 +1,4 @@
-import Ajv from "ajv"
+import Ajv from "ajv/dist/2019"
 import type {Vocabulary} from "ajv"
 import ajvKeywordsPlugin from "../dist"
 import ajvKeywords from "../dist/definitions"
@@ -16,8 +16,8 @@ const ajvs = [
     "deepRequired",
     "select",
   ]),
-  // ajvKeywordsPlugin(getAjv()),
-  // ajvKeywordsPlugin(getAjv(true)),
+  ajvKeywordsPlugin(getAjv()),
+  ajvKeywordsPlugin(getAjv(true)),
   getAjv(undefined, ajvKeywords()),
   getAjv(true, ajvKeywords()),
   // ajvKeywordsPlugin(getAjvNoMeta()),
@@ -49,7 +49,6 @@ jsonSchemaTest(ajvs, {
 function getAjv(extras?: boolean, keywords?: Vocabulary): Ajv {
   return new Ajv({
     $data: true,
-    unevaluated: true,
     allErrors: extras,
     verbose: extras,
     keywords,
@@ -62,7 +61,6 @@ function getAjv(extras?: boolean, keywords?: Vocabulary): Ajv {
 function getAjvNoMeta(keywords?: Vocabulary): Ajv {
   return new Ajv({
     $data: true,
-    unevaluated: true,
     keywords,
     formats: {allowedUnknown: true},
     meta: false,
