@@ -10,10 +10,6 @@ import {v4 as uuidv4} from "uuid"
 const should = chai.should()
 
 describe('keyword "dynamicDefaults"', () => {
-  // function getAjv() {
-  //   return new Ajv({useDefaults: true, unknownFormats: true})
-  // }
-
   const ajvs = getAjvInstances("dynamicDefaults", dynamicDefaultsDef, dynamicDefaults, {
     useDefaults: true,
     formats: fullFormats,

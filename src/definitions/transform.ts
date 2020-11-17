@@ -53,8 +53,8 @@ export default function getDef(): CodeKeywordDefinition {
         const t = ts.pop() as string
         if (!(t in transform)) throw new Error(`transform: unknown transformation ${t}`)
         const func = gen.scopeValue("func", {ref: transform[t as TransformName]})
-        const inner = transformExpr(ts)
-        return cfg && t === "toEnumCase" ? _`${func}(${inner}, ${cfg})` : _`${func}(${inner})`
+        const arg = transformExpr(ts)
+        return cfg && t === "toEnumCase" ? _`${func}(${arg}, ${cfg})` : _`${func}(${arg})`
       }
     },
     metaSchema: {
