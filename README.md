@@ -7,7 +7,6 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
 [![npm (beta)](https://img.shields.io/npm/v/ajv-keywords/beta)](https://www.npmjs.com/package/ajv-keywords/v/4.0.0-beta.1)
 [![npm downloads](https://img.shields.io/npm/dm/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
 [![Coverage Status](https://coveralls.io/repos/github/ajv-validator/ajv-keywords/badge.svg?branch=master)](https://coveralls.io/github/ajv-validator/ajv-keywords?branch=master)
-[![Dependabot](https://api.dependabot.com/badges/status?host=github&repo=ajv-validator/ajv-keywords)](https://app.dependabot.com/accounts/ajv-validator/repos/60477053)
 [![Gitter](https://img.shields.io/gitter/room/ajv-validator/ajv.svg)](https://gitter.im/ajv-validator/ajv)
 
 **Please note**: [ajv-keywords v4.0.0-beta](https://github.com/ajv-validator/ajv-keywords/releases/tag/v4.0.0-beta.0) should be used with [ajv v7 (beta)](https://github.com/ajv-validator/ajv/tree/v7-beta)
