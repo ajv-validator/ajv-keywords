@@ -4,7 +4,7 @@ import ajvKeywordsPlugin from "../dist"
 import ajvKeywords from "../dist/definitions"
 import Ajv from "ajv"
 import chai from "chai"
-
+import ajvPack from "./ajv_pack"
 const should = chai.should()
 
 describe('keyword "select"', () => {
@@ -17,6 +17,7 @@ describe('keyword "select"', () => {
       ajvKeywordsPlugin(new Ajv({$data: true})),
       new Ajv({$data: true, keywords: ajvKeywords()}),
       new Ajv({$data: true}).addVocabulary(ajvKeywords()),
+      selectPlugin(ajvPack({$data: true})),
     ]
 
     ajvs.forEach((ajv, i) => {

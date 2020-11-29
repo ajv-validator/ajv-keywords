@@ -29,17 +29,7 @@ jsonSchemaTest(ajvs, {
   suites: {
     tests: "./tests/{**/,}*.json",
   },
-  only: [
-    "uniqueItemProperties",
-    "allRequired",
-    "anyRequired",
-    "oneRequired",
-    "patternRequired",
-    "prohibited",
-    "deepProperties",
-    "deepRequired",
-    "select",
-  ],
+  only: [],
   // afterError: after.error,
   // afterEach: after.each,
   cwd: __dirname,

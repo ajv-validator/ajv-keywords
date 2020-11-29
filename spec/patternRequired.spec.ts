@@ -2,17 +2,16 @@ import patternRequired from "../dist/keywords/patternRequired"
 import patternRequiredDef from "../dist/definitions/patternRequired"
 import getAjvInstances from "./ajv_instances"
 import chai from "chai"
-
+// import ajvPack from "./ajv_pack"
 chai.should()
 
 describe('keywords "patternRequired"', () => {
-  const ajvs = getAjvInstances("patternRequired", patternRequiredDef, patternRequired, {
-    allErrors: true,
-  })
-  const ajvsOP = getAjvInstances("patternRequired", patternRequiredDef, patternRequired, {
-    allErrors: true,
-    ownProperties: true,
-  })
+  const opts = {allErrors: true}
+  const ajvs = getAjvInstances("patternRequired", patternRequiredDef, patternRequired, opts)
+  // ajvs.push(patternRequired(ajvPack(opts)))
+  const optsOP = {allErrors: true, ownProperties: true}
+  const ajvsOP = getAjvInstances("patternRequired", patternRequiredDef, patternRequired, optsOP)
+  // ajvsOP.push(patternRequired(ajvPack(optsOP)))
 
   ajvs.forEach((ajv, i) => {
     it(`should only validate against own properties when using patternRequired #${i}`, () => {
