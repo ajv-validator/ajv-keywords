@@ -19,14 +19,14 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
 - [Keywords](#keywords)
   - [Types](#types)
     - [typeof](#typeof)
-    - [instanceof](#instanceof)
+    - [instanceof](#instanceof)<sup>\+</sup>
   - [Keywords for numbers](#keywords-for-numbers)
     - [range and exclusiveRange](#range-and-exclusiverange)
   - [Keywords for strings](#keywords-for-strings)
     - [regexp](#regexp)
     - [transform](#transform)<sup>\*</sup>
   - [Keywords for arrays](#keywords-for-arrays)
-    - [uniqueItemProperties](#uniqueitemproperties)
+    - [uniqueItemProperties](#uniqueitemproperties)<sup>\+</sup>
   - [Keywords for objects](#keywords-for-objects)
     - [allRequired](#allrequired)
     - [anyRequired](#anyrequired)
@@ -35,7 +35,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
     - [prohibited](#prohibited)
     - [deepProperties](#deepproperties)
     - [deepRequired](#deeprequired)
-    - [dynamicDefaults](#dynamicdefaults)<sup>\*</sup>
+    - [dynamicDefaults](#dynamicdefaults)<sup>\*</sup><sup>\+</sup>
   - [Keywords for all types](#keywords-for-all-types)
     - [select/selectCases/selectDefault](#selectselectcasesselectdefault)
 - [Security contact](#security-contact)
@@ -43,6 +43,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
 - [License](#license)
 
 <sup>\*</sup> - keywords that modify data
+<sup>\+</sup> - keywords that are not supported in [standalone validation code](https://github.com/ajv-validator/ajv/blob/master/docs/standalone.md)
 
 ## Install
 
@@ -148,6 +149,8 @@ const instanceofDef = require("ajv-keywords/dist/definitions/instanceof")
 instanceofDef.CONSTRUCTORS.MyClass = MyClass
 ajv.validate({instanceof: "MyClass"}, new MyClass()) // true
 ```
+
+**Please note**: currently `instanceof` is not supported in [standalone validation code](https://github.com/ajv-validator/ajv/blob/master/docs/standalone.md) - it has to be implemented as [`code` keyword](https://github.com/ajv-validator/ajv/blob/master/docs/keywords.md#define-keyword-with-code-generation-function) to support it (PR is welcome).
 
 ### Keywords for numbers
 
@@ -295,6 +298,8 @@ const invalidData2 = [
 ```
 
 This keyword is contributed by [@blainesch](https://github.com/blainesch).
+
+**Please note**: currently `uniqueItemProperties` is not supported in [standalone validation code](https://github.com/ajv-validator/ajv/blob/master/docs/standalone.md) - it has to be implemented as [`code` keyword](https://github.com/ajv-validator/ajv/blob/master/docs/keywords.md#define-keyword-with-code-generation-function) to support it (PR is welcome).
 
 ### Keywords for objects
 
@@ -721,7 +726,9 @@ const schema = {
 }
 ```
 
-**Please note**: dynamic default functions differented by the number of parameters they have (`function.length`). Functions that do not expect default must have one non-optional argument so that `function.length` > 0.
+**Please note**: dynamic default functions are differentiated by the number of parameters they have (`function.length`). Functions that do not expect default must have one non-optional argument so that `function.length` > 0.
+
+`dynamicDefaults` is not supported in [standalone validation code](https://github.com/ajv-validator/ajv/blob/master/docs/standalone.md).
 
 ## Security contact
 

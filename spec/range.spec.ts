@@ -5,8 +5,7 @@ import exclusiveRangePlugin from "../dist/keywords/exclusiveRange"
 import exclusiveRangeDef from "../dist/definitions/exclusiveRange"
 import getAjvInstances from "./ajv_instances"
 import chai from "chai"
-
-// const ajvPack = require('ajv-pack');
+import ajvPack from "./ajv_pack"
 
 const should = chai.should()
 
@@ -16,7 +15,7 @@ describe('keyword "range"', () => {
     [rangeDef, exclusiveRangeDef],
     (ajv: Ajv) => exclusiveRangePlugin(rangePlugin(ajv))
   )
-  // ajvs.push(exclusiveRangePlugin(rangePlugin(ajvPack.instance(new Ajv({sourceCode: true})))))
+  ajvs.push(exclusiveRangePlugin(rangePlugin(ajvPack())))
 
   ajvs.forEach((ajv, i) => {
     it(`should validate that value is in range #${i}`, () => {

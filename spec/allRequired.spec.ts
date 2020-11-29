@@ -2,14 +2,12 @@ import allRequiredPlugin from "../dist/keywords/allRequired"
 import allRequiredDef from "../dist/definitions/allRequired"
 import getAjvInstances from "./ajv_instances"
 import chai from "chai"
-
-// var ajvPack = require('ajv-pack');
-
+import ajvPack from "./ajv_pack"
 const should = chai.should()
 
 describe('keyword "allRequired"', () => {
   const ajvs = getAjvInstances("allRequired", allRequiredDef, allRequiredPlugin)
-  // ajvs.push(allRequiredPlugin(ajvPack.instance(new Ajv({sourceCode: true}))))
+  ajvs.push(allRequiredPlugin(ajvPack()))
 
   ajvs.forEach((ajv, i) => {
     it(`should validate that all defined properties are present #${i}`, () => {
