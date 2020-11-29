@@ -1,14 +1,14 @@
 import typeofPlugin from "../dist/keywords/typeof"
 import typeofDef from "../dist/definitions/typeof"
 import getAjvInstances from "./ajv_instances"
+import ajvPack from "./ajv_pack"
 import chai from "chai"
 
-// const ajvPack = require('ajv-pack');
 const should = chai.should()
 
 describe('keyword "typeof"', () => {
   const ajvs = getAjvInstances("typeof", typeofDef, typeofPlugin)
-  // ajvs.push(typeofPlugin(ajvPack.instance(new Ajv({sourceCode: true}))))
+  ajvs.push(typeofPlugin(ajvPack()))
 
   ajvs.forEach((ajv, i) => {
     it(`should validate value types #${i}`, () => {

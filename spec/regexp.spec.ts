@@ -2,14 +2,12 @@ import regexpPlugin from "../dist/keywords/regexp"
 import regexpDef from "../dist/definitions/regexp"
 import getAjvInstances from "./ajv_instances"
 import chai from "chai"
-
-// var ajvPack = require('ajv-pack');
-
+import ajvPack from "./ajv_pack"
 const should = chai.should()
 
 describe('keyword "regexp"', () => {
   const ajvs = getAjvInstances("regexp", regexpDef, regexpPlugin, {logger: false})
-  // ajvs.push(regexpPlugin(ajvPack.instance(new Ajv({sourceCode: true}))))
+  ajvs.push(regexpPlugin(ajvPack()))
 
   ajvs.forEach((ajv, i) => {
     it(`should validate that values match regular expressions with flags #${i}`, () => {
