@@ -9,7 +9,9 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
 [![Coverage Status](https://coveralls.io/repos/github/ajv-validator/ajv-keywords/badge.svg?branch=master)](https://coveralls.io/github/ajv-validator/ajv-keywords?branch=master)
 [![Gitter](https://img.shields.io/gitter/room/ajv-validator/ajv.svg)](https://gitter.im/ajv-validator/ajv)
 
-**Please note**: [ajv-keywords v4.0.0-beta](https://github.com/ajv-validator/ajv-keywords/releases/tag/v4.0.0-beta.0) should be used with [ajv v7 (beta)](https://github.com/ajv-validator/ajv/tree/v7-beta)
+**Please note**: This readme file is for [ajv-keywords v4.0.0-beta](https://github.com/ajv-validator/ajv-keywords/releases/tag/v4.0.0-beta.0) that should be used with [ajv v7 (beta)](https://github.com/ajv-validator/ajv).
+
+[ajv-keywords v3](https://github.com/ajv-validator/ajv-keywords/tree/v3) should be used with [ajv v6](https://github.com/ajv-validator/ajv/tree/v6).
 
 ## Contents
 
