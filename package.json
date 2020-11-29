@@ -9,7 +9,7 @@
     "prepublish": "npm run build",
     "prettier:write": "prettier --write \"./**/*.{md,json,yaml,js,ts}\"",
     "prettier:check": "prettier --list-different \"./**/*.{md,json,yaml,js,ts}\"",
-    "test": "npm run build && npm run eslint && npm run test-cov",
+    "test": "npm link && npm-link ajv-keywords && npm run build && npm run eslint && npm run test-cov",
     "eslint": "eslint \"src/**/*.*s\" \"spec/**/*.*s\"",
     "test-spec": "jest spec/*.ts",
     "test-cov": "jest spec/*.ts --coverage"

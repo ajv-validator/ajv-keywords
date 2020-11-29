@@ -1,5 +1,6 @@
 import type {CodeKeywordDefinition, AnySchemaObject, KeywordCxt, Code, Name} from "ajv"
 import {_, stringify} from "ajv"
+import {getProperty} from "ajv/dist/compile/codegen"
 
 type TransformName =
   | "trimStart"
@@ -28,7 +29,11 @@ const transform: {[key in TransformName]: Transform} = {
   toEnumCase: (s, cfg) => cfg?.hash[configKey(s)] || s,
 }
 
-export default function getDef(): CodeKeywordDefinition {
+const getDef: (() => CodeKeywordDefinition) & {
+  transform: typeof transform
+} = Object.assign(_getDef, {transform})
+
+function _getDef(): CodeKeywordDefinition {
   return {
     keyword: "transform",
     schemaType: "array",
@@ -52,7 +57,10 @@ export default function getDef(): CodeKeywordDefinition {
         if (!ts.length) return data
         const t = ts.pop() as string
         if (!(t in transform)) throw new Error(`transform: unknown transformation ${t}`)
-        const func = gen.scopeValue("func", {ref: transform[t as TransformName]})
+        const func = gen.scopeValue("func", {
+          ref: transform[t as TransformName],
+          code: _`require("ajv-keywords/dist/definitions/transform").transform${getProperty(t)}`
+        })
         const arg = transformExpr(ts)
         return cfg && t === "toEnumCase" ? _`${func}(${arg}, ${cfg})` : _`${func}(${arg})`
       }
@@ -87,4 +95,5 @@ function configKey(s: string): string {
   return s.toLowerCase()
 }
 
+export default getDef
 module.exports = getDef
