@@ -575,8 +575,8 @@ const validDataList = [
 ];
 
 const invalidDataList = [
-  { kind: 'foo' }, // no propery foo
-  { kind: 'bar' }, // no propery bar
+  { kind: 'foo' }, // no property foo
+  { kind: 'bar' }, // no property bar
   { kind: 'foo', foo: 'any', another: 'any value' }, // additional property
   { kind: 'bar', bar: 1, another: 'any value' }, // additional property
   { kind: 'anything_else', foo: 'any' } // property foo not allowed
@@ -715,7 +715,6 @@ function getUuid(args) {
 
 const def = require("ajv-keywords/dist/definitions/dynamicDefaults")
 def.DEFAULTS.uuid = getUuid
-
 
 const schema = {
   dynamicDefaults: {
