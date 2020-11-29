@@ -716,6 +716,7 @@ function getUuid(args) {
 const def = require("ajv-keywords/dist/definitions/dynamicDefaults")
 def.DEFAULTS.uuid = getUuid
 
+
 const schema = {
   dynamicDefaults: {
     id1: "uuid", // v4
