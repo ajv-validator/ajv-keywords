@@ -3,7 +3,7 @@
     "description": "deepRequired keyword validation",
     "schema": {
       "type": "object",
-      "deepRequired": [ "/foo/bar", "/foo/baz", "/quux" ]
+      "deepRequired": ["/foo/bar", "/foo/baz", "/quux"]
     },
     "tests": [
       {
@@ -50,7 +50,7 @@
       "properties": {
         "inside": {
           "type": "object",
-          "deepRequired": [ "/foo/1/bar", "/foo/2/baz", "/quux/3" ]
+          "deepRequired": ["/foo/1/bar", "/foo/2/baz", "/quux/3"]
         }
       }
     },
@@ -59,12 +59,8 @@
         "description": "object with all required properties/items is valid",
         "data": {
           "inside": {
-            "foo": [
-              {},
-              { "bar": 1 },
-              { "baz": 2 }
-            ],
-            "quux": [ 0, 1, 2, 3 ]
+            "foo": [{}, {"bar": 1}, {"baz": 2}],
+            "quux": [0, 1, 2, 3]
           }
         },
         "valid": true
@@ -83,7 +79,7 @@
         "description": "object with one required property is invalid",
         "data": {
           "inside": {
-            "quux": [ 0, 1, 2, 3 ]
+            "quux": [0, 1, 2, 3]
           }
         },
         "valid": false
@@ -92,12 +88,8 @@
         "description": "object with one required sub-property is invalid",
         "data": {
           "inside": {
-            "foo": [
-              {},
-              { "bar": 1 },
-              {}
-            ],
-            "quux": [ 0, 1, 2, 3 ]
+            "foo": [{}, {"bar": 1}, {}],
+            "quux": [0, 1, 2, 3]
           }
         },
         "valid": false
@@ -110,7 +102,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "deepRequired": [ "/", "/foo/", "/bar//baz" ]
+        "deepRequired": ["/", "/foo/", "/bar//baz"]
       }
     },
     "tests": [
@@ -170,19 +162,6 @@
           }
         ],
         "valid": false
-      }
-    ]
-  },
-  {
-    "description": "deepRequired keyword with non-objects",
-    "schema": {
-      "deepRequired": [ "/foo/bar" ]
-    },
-    "tests": [
-      {
-        "description": "non-object is valid",
-        "data": 1,
-        "valid": true
       }
     ]
   }

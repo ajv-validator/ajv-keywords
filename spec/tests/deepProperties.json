@@ -4,9 +4,9 @@
     "schema": {
       "type": "object",
       "deepProperties": {
-         "/foo/bar": { "type": "number" },
-         "/foo/baz": { "type": "string" },
-         "/quux": { "type": "boolean" }
+        "/foo/bar": {"type": "number"},
+        "/foo/baz": {"type": "string"},
+        "/quux": {"type": "boolean"}
       }
     },
     "tests": [
@@ -69,9 +69,9 @@
         "inside": {
           "type": "object",
           "deepProperties": {
-             "/foo/1/bar": { "type": "number" },
-             "/foo/2/baz": { "type": "string" },
-             "/quux/3": { "type": "boolean" }
+            "/foo/1/bar": {"type": "number"},
+            "/foo/2/baz": {"type": "string"},
+            "/quux/3": {"type": "boolean"}
           }
         }
       }
@@ -81,12 +81,8 @@
         "description": "object with all valid properties/items is valid",
         "data": {
           "inside": {
-            "foo": [
-              {},
-              { "bar": 1 },
-              { "baz": "2" }
-            ],
-            "quux": [ 0, 0, 0, true ]
+            "foo": [{}, {"bar": 1}, {"baz": "2"}],
+            "quux": [0, 0, 0, true]
           }
         },
         "valid": true
@@ -95,11 +91,8 @@
         "description": "object with some valid properties/items is valid",
         "data": {
           "inside": {
-            "foo": [
-              {},
-              { "bar": 1 }
-            ],
-            "quux": [ 0, 0, 0, true ]
+            "foo": [{}, {"bar": 1}],
+            "quux": [0, 0, 0, true]
           }
         },
         "valid": true
@@ -108,12 +101,8 @@
         "description": "object with all invalid properties is invalid",
         "data": {
           "inside": {
-            "foo": [
-              {},
-              { "bar": null },
-              { "baz": null }
-            ],
-            "quux": [ 0, 0, 0, null ]
+            "foo": [{}, {"bar": null}, {"baz": null}],
+            "quux": [0, 0, 0, null]
           }
         },
         "valid": false
@@ -122,12 +111,8 @@
         "description": "object with one invalid property is invalid",
         "data": {
           "inside": {
-            "foo": [
-              {},
-              { "bar": 1 },
-              { "baz": "2" }
-            ],
-            "quux": [ 0, 0, 0, null ]
+            "foo": [{}, {"bar": 1}, {"baz": "2"}],
+            "quux": [0, 0, 0, null]
           }
         },
         "valid": false
@@ -136,12 +121,8 @@
         "description": "object with one invalid sub-property is invalid",
         "data": {
           "inside": {
-            "foo": [
-              {},
-              { "bar": 1 },
-              { "baz": null }
-            ],
-            "quux": [ 0, 0, 0, true ]
+            "foo": [{}, {"bar": 1}, {"baz": null}],
+            "quux": [0, 0, 0, true]
           }
         },
         "valid": false
@@ -155,9 +136,9 @@
       "items": {
         "type": "object",
         "deepProperties": {
-          "/": { "type": "number" },
-          "/foo/": { "type": "string" },
-          "/bar//baz": { "type": "boolean" }
+          "/": {"type": "number"},
+          "/foo/": {"type": "string"},
+          "/bar//baz": {"type": "boolean"}
         }
       }
     },
@@ -254,9 +235,9 @@
         "inside": {
           "type": "object",
           "deepProperties": {
-             "/foo/1/bar": { "type": "number" },
-             "/foo/2/baz": { "type": "string" },
-             "/quux/3": { "type": "boolean" }
+            "/foo/1/bar": {"type": "number"},
+            "/foo/2/baz": {"type": "string"},
+            "/quux/3": {"type": "boolean"}
           }
         }
       }
@@ -267,8 +248,8 @@
         "data": {
           "inside": {
             "foo": {
-              "1": { "bar": 1 },
-              "2": { "baz": "2" }
+              "1": {"bar": 1},
+              "2": {"baz": "2"}
             },
             "quux": {
               "3": true
@@ -282,7 +263,7 @@
         "data": {
           "inside": {
             "foo": {
-              "1": { "bar": 1 }
+              "1": {"bar": 1}
             },
             "quux": {
               "3": true
@@ -296,8 +277,8 @@
         "data": {
           "inside": {
             "foo": {
-              "1": { "bar": null },
-              "2": { "baz": null }
+              "1": {"bar": null},
+              "2": {"baz": null}
             },
             "quux": {
               "3": null
@@ -311,8 +292,8 @@
         "data": {
           "inside": {
             "foo": {
-              "1": { "bar": 1 },
-              "2": { "baz": "2" }
+              "1": {"bar": 1},
+              "2": {"baz": "2"}
             },
             "quux": {
               "3": null
@@ -326,8 +307,8 @@
         "data": {
           "inside": {
             "foo": {
-              "1": { "bar": 1 },
-              "2": { "baz": null }
+              "1": {"bar": 1},
+              "2": {"baz": null}
             },
             "quux": {
               "3": true
@@ -335,21 +316,6 @@
           }
         },
         "valid": false
-      }
-    ]
-  },
-  {
-    "description": "deepProperties keyword with non-objects",
-    "schema": {
-      "deepProperties": {
-         "/foo/bar": { "type": "number" }
-      }
-    },
-    "tests": [
-      {
-        "description": "non-object is valid",
-        "data": 1,
-        "valid": true
       }
     ]
   }

@@ -2,6 +2,7 @@
   {
     "description": "anyRequired requires that at least on property in the list is present",
     "schema": {
+      "type": "object",
       "anyRequired": ["foo"]
     },
     "tests": [
@@ -17,7 +18,7 @@
       },
       {
         "description": "no property present is invalid",
-        "data": { "baz": 1 },
+        "data": {"baz": 1},
         "valid": false
       },
       {
@@ -30,6 +31,7 @@
   {
     "description": "multiple properties in prohibited",
     "schema": {
+      "type": "object",
       "anyRequired": ["foo", "bar"]
     },
     "tests": [
@@ -68,6 +70,7 @@
   {
     "description": "anyRequired: [] is always valid",
     "schema": {
+      "type": "object",
       "anyRequired": []
     },
     "tests": [

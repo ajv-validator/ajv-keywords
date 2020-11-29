@@ -7,37 +7,29 @@
     "tests": [
       {
         "description": "with all unique ids",
-        "data": [
-          { "id": 1 },
-          { "id": 2 },
-          { "id": 3 }
-        ],
+        "data": [{"id": 1}, {"id": 2}, {"id": 3}],
         "valid": true
       },
       {
         "description": "without unique ids",
-        "data": [
-          { "id": 1 },
-          { "id": 1 },
-          { "id": 3 }
-        ],
+        "data": [{"id": 1}, {"id": 1}, {"id": 3}],
         "valid": false
       },
       {
         "description": "with all unique object-ids",
         "data": [
-          { "id": { "_id": 1, "date": 1495213151726 } },
-          { "id": { "_id": 2, "date": 1495213151727 } },
-          { "id": { "_id": 3, "date": 1495213151728 } }
+          {"id": {"_id": 1, "date": 1495213151726}},
+          {"id": {"_id": 2, "date": 1495213151727}},
+          {"id": {"_id": 3, "date": 1495213151728}}
         ],
         "valid": true
       },
       {
         "description": "without unique object-ids",
         "data": [
-          { "id": { "_id": 1, "date": 1495213151726 } },
-          { "id": { "_id": 1, "date": 1495213151726 } },
-          { "id": { "_id": 3, "date": 1495213151728 } }
+          {"id": {"_id": 1, "date": 1495213151726}},
+          {"id": {"_id": 1, "date": 1495213151726}},
+          {"id": {"_id": 3, "date": 1495213151728}}
         ],
         "valid": false
       },
@@ -49,17 +41,15 @@
       {
         "description": "non-array is valid even for pseudo-arrays",
         "data": {
-          "0": { "id": 1 },
-          "1": { "id": 1 },
+          "0": {"id": 1},
+          "1": {"id": 1},
           "length": 2
         },
         "valid": true
       },
       {
         "description": "array with one item is valid",
-        "data": [
-          { "id": 1 }
-        ],
+        "data": [{"id": 1}],
         "valid": true
       },
       {
@@ -84,24 +74,25 @@
       {
         "description": "with all unique ids and names",
         "data": [
-          { "id": 1, "name": "taco" },
-          { "id": 2, "name": "burrito" },
-          { "id": 3, "name": "salsa" }
+          {"id": 1, "name": "taco"},
+          {"id": 2, "name": "burrito"},
+          {"id": 3, "name": "salsa"}
         ],
         "valid": true
       },
       {
         "description": "with unique ids but not unique names",
         "data": [
-          { "id": 1, "name": "taco" },
-          { "id": 2, "name": "taco" },
-          { "id": 3, "name": "salsa" }
+          {"id": 1, "name": "taco"},
+          {"id": 2, "name": "taco"},
+          {"id": 3, "name": "salsa"}
         ],
         "valid": false
       }
     ]
   },
-  { "description": "uniqueItemProperties keyword validation with no properties",
+  {
+    "description": "uniqueItemProperties keyword validation with no properties",
     "schema": {
       "type": "array",
       "uniqueItemProperties": []
@@ -109,11 +100,7 @@
     "tests": [
       {
         "description": "with deepEqual like objects",
-        "data": [
-          { "id": 1 },
-          { "id": 1 },
-          { "id": 1 }
-        ],
+        "data": [{"id": 1}, {"id": 1}, {"id": 1}],
         "valid": true
       }
     ]
@@ -131,37 +118,29 @@
     "tests": [
       {
         "description": "with all unique ids",
-        "data": [
-          { "id": 1 },
-          { "id": 2 },
-          { "id": 3 }
-        ],
+        "data": [{"id": 1}, {"id": 2}, {"id": 3}],
         "valid": true
       },
       {
         "description": "without unique ids",
-        "data": [
-          { "id": 1 },
-          { "id": 1 },
-          { "id": 3 }
-        ],
+        "data": [{"id": 1}, {"id": 1}, {"id": 3}],
         "valid": false
       },
       {
         "description": "with all unique object-ids",
         "data": [
-          { "id": { "_id": 1, "date": 1495213151726 } },
-          { "id": { "_id": 2, "date": 1495213151727 } },
-          { "id": { "_id": 3, "date": 1495213151728 } }
+          {"id": {"_id": 1, "date": 1495213151726}},
+          {"id": {"_id": 2, "date": 1495213151727}},
+          {"id": {"_id": 3, "date": 1495213151728}}
         ],
         "valid": false
       },
       {
         "description": "without unique object-ids",
         "data": [
-          { "id": { "_id": 1, "date": 1495213151726 } },
-          { "id": { "_id": 1, "date": 1495213151726 } },
-          { "id": { "_id": 3, "date": 1495213151728 } }
+          {"id": {"_id": 1, "date": 1495213151726}},
+          {"id": {"_id": 1, "date": 1495213151726}},
+          {"id": {"_id": 3, "date": 1495213151728}}
         ],
         "valid": false
       },
@@ -173,17 +152,15 @@
       {
         "description": "non-array is valid even for pseudo-arrays",
         "data": {
-          "0": { "id": 1 },
-          "1": { "id": 1 },
+          "0": {"id": 1},
+          "1": {"id": 1},
           "length": 2
         },
         "valid": true
       },
       {
         "description": "array with one item is valid",
-        "data": [
-          { "id": 1 }
-        ],
+        "data": [{"id": 1}],
         "valid": true
       },
       {
@@ -212,18 +189,18 @@
       {
         "description": "with all unique object-ids",
         "data": [
-          { "id": { "_id": 1, "date": 1495213151726 } },
-          { "id": { "_id": 2, "date": 1495213151727 } },
-          { "id": { "_id": 3, "date": 1495213151728 } }
+          {"id": {"_id": 1, "date": 1495213151726}},
+          {"id": {"_id": 2, "date": 1495213151727}},
+          {"id": {"_id": 3, "date": 1495213151728}}
         ],
         "valid": true
       },
       {
         "description": "without unique object-ids",
         "data": [
-          { "id": { "_id": 1, "date": 1495213151726 } },
-          { "id": { "_id": 1, "date": 1495213151726 } },
-          { "id": { "_id": 3, "date": 1495213151728 } }
+          {"id": {"_id": 1, "date": 1495213151726}},
+          {"id": {"_id": 1, "date": 1495213151726}},
+          {"id": {"_id": 3, "date": 1495213151728}}
         ],
         "valid": false
       }
@@ -242,26 +219,12 @@
     "tests": [
       {
         "description": "with all unique ids",
-        "data": [
-          { "id": 1 },
-          { "id": 2 },
-          { "id": 3 },
-          { "id": "1" },
-          { "id": "2" },
-          { "id": "3" }
-        ],
+        "data": [{"id": 1}, {"id": 2}, {"id": 3}, {"id": "1"}, {"id": "2"}, {"id": "3"}],
         "valid": true
       },
       {
         "description": "without unique ids",
-        "data": [
-          { "id": 1 },
-          { "id": 1 },
-          { "id": 3 },
-          { "id": "1" },
-          { "id": "2" },
-          { "id": "3" }
-        ],
+        "data": [{"id": 1}, {"id": 1}, {"id": 3}, {"id": "1"}, {"id": "2"}, {"id": "3"}],
         "valid": false
       }
     ]
@@ -280,24 +243,24 @@
       {
         "description": "with all unique ids",
         "data": [
-          { "id": 1 },
-          { "id": 2 },
-          { "id": 3 },
-          { "id": { "_id": 1, "date": 1495213151726 } },
-          { "id": { "_id": 2, "date": 1495213151727 } },
-          { "id": { "_id": 3, "date": 1495213151728 } }
+          {"id": 1},
+          {"id": 2},
+          {"id": 3},
+          {"id": {"_id": 1, "date": 1495213151726}},
+          {"id": {"_id": 2, "date": 1495213151727}},
+          {"id": {"_id": 3, "date": 1495213151728}}
         ],
         "valid": true
       },
       {
         "description": "without unique ids",
         "data": [
-          { "id": 1 },
-          { "id": 2 },
-          { "id": 3 },
-          { "id": { "_id": 1, "date": 1495213151726 } },
-          { "id": { "_id": 1, "date": 1495213151726 } },
-          { "id": { "_id": 3, "date": 1495213151728 } }
+          {"id": 1},
+          {"id": 2},
+          {"id": 3},
+          {"id": {"_id": 1, "date": 1495213151726}},
+          {"id": {"_id": 1, "date": 1495213151726}},
+          {"id": {"_id": 3, "date": 1495213151728}}
         ],
         "valid": false
       }
@@ -313,18 +276,18 @@
       {
         "description": "with all unique ids and names",
         "data": [
-          { "id": 1, "name": "taco" },
-          { "id": 2, "name": "burrito" },
-          { "id": 3, "name": "salsa" }
+          {"id": 1, "name": "taco"},
+          {"id": 2, "name": "burrito"},
+          {"id": 3, "name": "salsa"}
         ],
         "valid": true
       },
       {
         "description": "with unique ids but not unique names",
         "data": [
-          { "id": 1, "name": "taco" },
-          { "id": 2, "name": "taco" },
-          { "id": 3, "name": "salsa" }
+          {"id": 1, "name": "taco"},
+          {"id": 2, "name": "taco"},
+          {"id": 3, "name": "salsa"}
         ],
         "valid": false
       }
@@ -346,18 +309,18 @@
       {
         "description": "with all unique ids and names",
         "data": [
-          { "id": 1, "name": "taco" },
-          { "id": 2, "name": "burrito" },
-          { "id": 3, "name": "salsa" }
+          {"id": 1, "name": "taco"},
+          {"id": 2, "name": "burrito"},
+          {"id": 3, "name": "salsa"}
         ],
         "valid": true
       },
       {
         "description": "with unique ids but not unique names",
         "data": [
-          { "id": 1, "name": "taco" },
-          { "id": 2, "name": "taco" },
-          { "id": 3, "name": "salsa" }
+          {"id": 1, "name": "taco"},
+          {"id": 2, "name": "taco"},
+          {"id": 3, "name": "salsa"}
         ],
         "valid": false
       }
@@ -379,18 +342,18 @@
       {
         "description": "with all unique ids and names",
         "data": [
-          { "id": { "_id": 1, "date": 1495213151726 }, "name": "taco" },
-          { "id": { "_id": 2, "date": 1495213151727 }, "name": "burrito" },
-          { "id": { "_id": 3, "date": 1495213151728 }, "name": "salsa" }
+          {"id": {"_id": 1, "date": 1495213151726}, "name": "taco"},
+          {"id": {"_id": 2, "date": 1495213151727}, "name": "burrito"},
+          {"id": {"_id": 3, "date": 1495213151728}, "name": "salsa"}
         ],
         "valid": true
       },
       {
         "description": "with non-unique ids but unique names",
         "data": [
-          { "id": { "_id": 1, "date": 1495213151726 }, "name": "taco" },
-          { "id": { "_id": 1, "date": 1495213151726 }, "name": "burrito" },
-          { "id": { "_id": 3, "date": 1495213151727 }, "name": "salsa" }
+          {"id": {"_id": 1, "date": 1495213151726}, "name": "taco"},
+          {"id": {"_id": 1, "date": 1495213151726}, "name": "burrito"},
+          {"id": {"_id": 3, "date": 1495213151727}, "name": "salsa"}
         ],
         "valid": false
       }
@@ -410,22 +373,12 @@
     "tests": [
       {
         "description": "with all unique ids and null items is valid",
-        "data": [
-          { "id": 1 },
-          { "id": 2 },
-          null,
-          null
-        ],
+        "data": [{"id": 1}, {"id": 2}, null, null],
         "valid": true
       },
       {
         "description": "with non-unique ids and null item is invalid",
-        "data": [
-          { "id": 1 },
-          { "id": 1 },
-          null,
-          null
-        ],
+        "data": [{"id": 1}, {"id": 1}, null, null],
         "valid": false
       }
     ]
@@ -444,22 +397,12 @@
     "tests": [
       {
         "description": "with all unique ids and null items is valid",
-        "data": [
-          { "id": {"_id": 1} },
-          { "id": {"_id": 2} },
-          null,
-          null
-        ],
+        "data": [{"id": {"_id": 1}}, {"id": {"_id": 2}}, null, null],
         "valid": true
       },
       {
         "description": "with non-unique ids and null item is invalid",
-        "data": [
-          { "id": {"_id": 1} },
-          { "id": {"_id": 1} },
-          null,
-          null
-        ],
+        "data": [{"id": {"_id": 1}}, {"id": {"_id": 1}}, null, null],
         "valid": false
       }
     ]

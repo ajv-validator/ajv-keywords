@@ -2,6 +2,7 @@
   {
     "description": "allRequired: true requires the presense of all defined properties",
     "schema": {
+      "type": "object",
       "properties": {
         "foo": true,
         "bar": true
@@ -44,6 +45,7 @@
   {
     "description": "allRequired: false is always ignored",
     "schema": {
+      "type": "object",
       "properties": {
         "foo": true,
         "bar": true
@@ -78,6 +80,21 @@
       },
       {
         "description": "empty object is valid",
+        "data": {},
+        "valid": true
+      }
+    ]
+  },
+  {
+    "description": "allRequired with empty properties is valid",
+    "schema": {
+      "type": "object",
+      "properties": {},
+      "allRequired": true
+    },
+    "tests": [
+      {
+        "description": "any object is valid",
         "data": {},
         "valid": true
       }

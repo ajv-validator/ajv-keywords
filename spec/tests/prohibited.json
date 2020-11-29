@@ -2,12 +2,13 @@
   {
     "description": "prohibited requires that no property in the list is present",
     "schema": {
+      "type": "object",
       "prohibited": ["foo"]
     },
     "tests": [
       {
         "description": "no property present is valid",
-        "data": { "baz": 1 },
+        "data": {"baz": 1},
         "valid": true
       },
       {
@@ -17,7 +18,7 @@
       },
       {
         "description": "property is present is invalid",
-        "data": { "foo": 1 },
+        "data": {"foo": 1},
         "valid": false
       }
     ]
@@ -25,12 +26,13 @@
   {
     "description": "multiple properties in prohibited",
     "schema": {
+      "type": "object",
       "prohibited": ["foo", "bar"]
     },
     "tests": [
       {
         "description": "no property present is valid",
-        "data": { "baz": 1 },
+        "data": {"baz": 1},
         "valid": true
       },
       {
@@ -40,12 +42,12 @@
       },
       {
         "description": "one of properties present is invalid",
-        "data": { "foo": 1 },
+        "data": {"foo": 1},
         "valid": false
       },
       {
         "description": "both properties present is invalid",
-        "data": { "foo": 1, "bar": 2 },
+        "data": {"foo": 1, "bar": 2},
         "valid": false
       }
     ]
@@ -53,12 +55,13 @@
   {
     "description": "prohibited with the empty list of properties",
     "schema": {
+      "type": "object",
       "prohibited": []
     },
     "tests": [
       {
         "description": "any object is valid",
-        "data": { "foo": 1 },
+        "data": {"foo": 1},
         "valid": true
       },
       {

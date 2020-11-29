@@ -1,16 +1,18 @@
 {
   "name": "ajv-keywords",
-  "version": "3.5.2",
+  "version": "4.0.0-beta.3",
   "description": "Custom JSON-Schema keywords for Ajv validator",
-  "main": "index.js",
-  "typings": "ajv-keywords.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "node node_modules/ajv/scripts/compile-dots.js node_modules/ajv/lib keywords",
+    "build": "rm -rf dist && tsc",
     "prepublish": "npm run build",
-    "test": "npm run build && npm run eslint && npm run test-cov",
-    "eslint": "eslint index.js keywords/*.js spec",
-    "test-spec": "mocha spec/*.spec.js -R spec",
-    "test-cov": "istanbul cover -x 'spec/**' node_modules/mocha/bin/_mocha -- spec/*.spec.js -R spec"
+    "prettier:write": "prettier --write \"./**/*.{md,json,yaml,js,ts}\"",
+    "prettier:check": "prettier --list-different \"./**/*.{md,json,yaml,js,ts}\"",
+    "test": "npm link && npm link ajv-keywords && npm run eslint && npm run test-cov",
+    "eslint": "eslint \"src/**/*.*s\" \"spec/**/*.*s\"",
+    "test-spec": "jest spec/*.ts",
+    "test-cov": "jest spec/*.ts --coverage"
   },
   "repository": {
     "type": "git",
@@ -22,9 +24,9 @@
     "keywords"
   ],
   "files": [
-    "index.js",
-    "ajv-keywords.d.ts",
-    "keywords"
+    "src",
+    "dist",
+    "ajv-keywords.d.ts"
   ],
   "author": "Evgeny Poberezkin",
   "license": "MIT",
@@ -33,21 +35,42 @@
   },
   "homepage": "https://github.com/epoberezkin/ajv-keywords#readme",
   "peerDependencies": {
-    "ajv": "^6.9.1"
+    "ajv": "^7.0.0-beta.8"
   },
   "devDependencies": {
-    "ajv": "^6.9.1",
-    "ajv-pack": "^0.3.0",
+    "@ajv-validator/config": "^0.2.3",
+    "@types/jest": "^26.0.14",
+    "@types/node": "^14.11.10",
+    "@types/uuid": "^8.3.0",
+    "@typescript-eslint/eslint-plugin": "^4.4.1",
+    "@typescript-eslint/parser": "^4.4.1",
+    "ajv": "^7.0.0-beta.8",
+    "ajv-formats": "^0.3.4",
     "chai": "^4.2.0",
-    "coveralls": "^3.0.2",
     "dot": "^1.1.1",
     "eslint": "^7.2.0",
+    "eslint-config-prettier": "^6.13.0",
     "glob": "^7.1.3",
-    "istanbul": "^0.4.3",
+    "husky": "^4.3.0",
+    "jest": "^26.5.3",
     "js-beautify": "^1.8.9",
     "json-schema-test": "^2.0.0",
-    "mocha": "^8.0.1",
-    "pre-commit": "^1.1.3",
+    "lint-staged": "^10.4.2",
+    "prettier": "^2.1.2",
+    "ts-jest": "^26.4.1",
+    "typescript": "^4.0.3",
     "uuid": "^8.1.0"
+  },
+  "prettier": "@ajv-validator/config/prettierrc.json",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm test"
+    }
+  },
+  "lint-staged": {
+    "*.{md,json,yaml,js,ts}": "prettier --write"
+  },
+  "dependencies": {
+    "@types/chai": "^4.2.14"
   }
 }
