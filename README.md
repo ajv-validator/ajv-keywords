@@ -2,7 +2,7 @@
 
 Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) validator
 
-[![Build Status](https://travis-ci.org/ajv-validator/ajv-keywords.svg?branch=master)](https://travis-ci.org/ajv-validator/ajv-keywords)
+[![build](https://github.com/ajv-validator/ajv-keywords/workflows/build/badge.svg)](https://github.com/ajv-validator/ajv-keywords/actions?query=workflow%3Abuild)
 [![npm](https://img.shields.io/npm/v/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
 [![npm (beta)](https://img.shields.io/npm/v/ajv-keywords/beta)](https://www.npmjs.com/package/ajv-keywords/v/4.0.0-beta.1)
 [![npm downloads](https://img.shields.io/npm/dm/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
