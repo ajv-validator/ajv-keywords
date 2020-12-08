@@ -2,6 +2,8 @@ import Ajv from "ajv"
 import {Plugin} from "ajv"
 import plugins from "./keywords"
 
+export {AjvKeywordsError} from "./definitions"
+
 const ajvKeywords: Plugin<string | string[]> = (ajv: Ajv, keyword?: string | string[]): Ajv => {
   if (Array.isArray(keyword)) {
     for (const k of keyword) get(k)(ajv)

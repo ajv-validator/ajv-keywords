@@ -59,7 +59,7 @@ function _getDef(): CodeKeywordDefinition {
         if (!(t in transform)) throw new Error(`transform: unknown transformation ${t}`)
         const func = gen.scopeValue("func", {
           ref: transform[t as TransformName],
-          code: _`require("ajv-keywords/dist/definitions/transform").transform${getProperty(t)}`
+          code: _`require("ajv-keywords/dist/definitions/transform").transform${getProperty(t)}`,
         })
         const arg = transformExpr(ts)
         return cfg && t === "toEnumCase" ? _`${func}(${arg}, ${cfg})` : _`${func}(${arg})`

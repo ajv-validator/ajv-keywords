@@ -1,7 +1,9 @@
-import type {KeywordDefinition, KeywordErrorDefinition, KeywordCxt} from "ajv"
+import type {KeywordDefinition, KeywordErrorDefinition, KeywordCxt, ErrorObject} from "ajv"
 import {_, str, nil, Name} from "ajv"
 import type {DefinitionOptions} from "./_types"
 import {metaSchemaRef} from "./_util"
+
+export type SelectError = ErrorObject<"select", {failingCase?: string; failingDefault?: true}>
 
 const error: KeywordErrorDefinition = {
   message: ({params: {schemaProp}}) =>

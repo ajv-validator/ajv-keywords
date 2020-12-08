@@ -1,4 +1,4 @@
-import type {Vocabulary, KeywordDefinition} from "ajv"
+import type {Vocabulary, KeywordDefinition, ErrorNoParams} from "ajv"
 import type {DefinitionOptions, GetDefinition} from "./_types"
 import typeofDef from "./typeof"
 import instanceofDef from "./instanceof"
@@ -10,12 +10,12 @@ import uniqueItemProperties from "./uniqueItemProperties"
 import allRequired from "./allRequired"
 import anyRequired from "./anyRequired"
 import oneRequired from "./oneRequired"
-import patternRequired from "./patternRequired"
+import patternRequired, {PatternRequiredError} from "./patternRequired"
 import prohibited from "./prohibited"
 import deepProperties from "./deepProperties"
 import deepRequired from "./deepRequired"
 import dynamicDefaults from "./dynamicDefaults"
-import selectDef from "./select"
+import selectDef, {SelectError} from "./select"
 
 const definitions: GetDefinition<KeywordDefinition>[] = [
   typeofDef,
@@ -38,4 +38,24 @@ const definitions: GetDefinition<KeywordDefinition>[] = [
 export default function ajvKeywords(opts?: DefinitionOptions): Vocabulary {
   return definitions.map((d) => d(opts)).concat(selectDef(opts))
 }
+
+export type AjvKeywordsError =
+  | PatternRequiredError
+  | SelectError
+  | ErrorNoParams<
+      | "range"
+      | "exclusiveRange"
+      | "anyRequired"
+      | "oneRequired"
+      | "allRequired"
+      | "deepProperties"
+      | "deepRequired"
+      | "dynamicDefaults"
+      | "instanceof"
+      | "prohibited"
+      | "regexp"
+      | "transform"
+      | "uniqueItemProperties"
+    >
+
 module.exports = ajvKeywords
