@@ -1,6 +1,8 @@
-import type {CodeKeywordDefinition, KeywordCxt, KeywordErrorDefinition} from "ajv"
+import type {CodeKeywordDefinition, KeywordCxt, KeywordErrorDefinition, ErrorObject} from "ajv"
 import {_, str, and} from "ajv/dist/compile/codegen"
 import {usePattern} from "./_util"
+
+export type PatternRequiredError = ErrorObject<"patternRequired", {missingPattern: string}>
 
 const error: KeywordErrorDefinition = {
   message: ({params: {missingPattern}}) =>
