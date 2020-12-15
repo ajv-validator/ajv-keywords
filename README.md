@@ -4,12 +4,11 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
 
 [![build](https://github.com/ajv-validator/ajv-keywords/workflows/build/badge.svg)](https://github.com/ajv-validator/ajv-keywords/actions?query=workflow%3Abuild)
 [![npm](https://img.shields.io/npm/v/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
-[![npm (beta)](https://img.shields.io/npm/v/ajv-keywords/beta)](https://www.npmjs.com/package/ajv-keywords/v/4.0.0-rc.0)
 [![npm downloads](https://img.shields.io/npm/dm/ajv-keywords.svg)](https://www.npmjs.com/package/ajv-keywords)
-[![Coverage Status](https://coveralls.io/repos/github/ajv-validator/ajv-keywords/badge.svg?branch=master)](https://coveralls.io/github/ajv-validator/ajv-keywords?branch=master)
-[![Gitter](https://img.shields.io/gitter/room/ajv-validator/ajv.svg)](https://gitter.im/ajv-validator/ajv)
+[![coverage](https://coveralls.io/repos/github/ajv-validator/ajv-keywords/badge.svg?branch=master)](https://coveralls.io/github/ajv-validator/ajv-keywords?branch=master)
+[![gitter](https://img.shields.io/gitter/room/ajv-validator/ajv.svg)](https://gitter.im/ajv-validator/ajv)
 
-**Please note**: This readme file is for [ajv-keywords v4.0.0-beta](https://github.com/ajv-validator/ajv-keywords/releases/tag/v4.0.0-beta.0) that should be used with [ajv v7 (beta)](https://github.com/ajv-validator/ajv).
+**Please note**: This readme file is for [ajv-keywords v4.0.0](https://github.com/ajv-validator/ajv-keywords/releases/tag/v4.0.0) that should be used with [ajv v7](https://github.com/ajv-validator/ajv).
 
 [ajv-keywords v3](https://github.com/ajv-validator/ajv-keywords/tree/v3) should be used with [ajv v6](https://github.com/ajv-validator/ajv/tree/v6).
 
@@ -48,14 +47,10 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
 
 ## Install
 
+To install version 4 to use with [Ajv v7](https://github.com/ajv-validator/ajv):
+
 ```
 npm install ajv-keywords
-```
-
-To install version 4 beta to use with [Ajv v7 beta](https://github.com/ajv-validator/ajv/tree/v7-beta):
-
-```
-npm install ajv-keywords@beta
 ```
 
 ## Usage
@@ -517,7 +512,7 @@ These keywords allow to choose the schema to validate the data based on the valu
 
 These keywords must be present in the same schema object (`selectDefault` is optional).
 
-The value of `select` keyword should be a [\$data reference](https://github.com/ajv-validator/ajv/blob/v7-beta/docs/validation.md#data-reference) that points to any primitive JSON type (string, number, boolean or null) in the data that is validated. You can also use a constant of primitive type as the value of this keyword (e.g., for debugging purposes).
+The value of `select` keyword should be a [\$data reference](https://github.com/ajv-validator/ajv/blob/master/docs/validation.md#data-reference) that points to any primitive JSON type (string, number, boolean or null) in the data that is validated. You can also use a constant of primitive type as the value of this keyword (e.g., for debugging purposes).
 
 The value of `selectCases` keyword must be an object where each property name is a possible string representation of the value of `select` keyword and each property value is a corresponding schema (from draft-06 it can be boolean) that must be used to validate the data.
 
@@ -533,7 +528,7 @@ If `select` value (in data) is not a primitive type the validation fails.
 
 This keyword correctly tracks evaluated properties and items to work with `unevaluatedProperties` and `unevaluatedItems` keywords - only properties and items from the subschema that was used (one of `selectCases` subschemas or `selectDefault` subschema) are marked as evaluated.
 
-**Please note**: these keywords require Ajv `$data` option to support [\$data reference](https://github.com/epoberezkin/ajv/tree/5.0.2-beta.0#data-reference).
+**Please note**: these keywords require Ajv `$data` option to support [\$data reference](https://github.com/ajv-validator/ajv/blob/master/docs/validation.md#data-reference).
 
 ```javascript
 require('ajv-keywords')(ajv, 'select');
