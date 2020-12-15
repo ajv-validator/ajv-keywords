@@ -1,5 +1,5 @@
 import type {KeywordDefinition, KeywordErrorDefinition, KeywordCxt, ErrorObject} from "ajv"
-import {_, str, nil, Name} from "ajv"
+import {_, str, nil, Name} from "ajv/dist/compile/codegen"
 import type {DefinitionOptions} from "./_types"
 import {metaSchemaRef} from "./_util"
 

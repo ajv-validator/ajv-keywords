@@ -1,5 +1,5 @@
 import type {CodeKeywordDefinition, KeywordCxt} from "ajv"
-import {_} from "ajv"
+import {_} from "ajv/dist/compile/codegen"
 
 const TYPES = ["undefined", "string", "number", "object", "function", "boolean", "symbol"]
 

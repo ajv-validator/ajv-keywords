@@ -1,4 +1,4 @@
-import {KeywordDefinition} from "ajv"
+import type {KeywordDefinition} from "ajv"
 
 export interface DefinitionOptions {
   defaultMeta?: string | boolean

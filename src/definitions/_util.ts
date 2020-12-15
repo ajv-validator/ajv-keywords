@@ -1,6 +1,6 @@
 import type {DefinitionOptions} from "./_types"
 import type {SchemaObject, CodeGen, Name} from "ajv"
-import {_} from "ajv"
+import {_} from "ajv/dist/compile/codegen"
 
 const META_SCHEMA_ID = "http://json-schema.org/schema"
 

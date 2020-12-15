@@ -1,5 +1,5 @@
 import type {CodeKeywordDefinition, KeywordCxt, JSONSchemaType, Name} from "ajv"
-import {_} from "ajv"
+import {_} from "ajv/dist/compile/codegen"
 import {usePattern} from "./_util"
 
 interface RegexpSchema {

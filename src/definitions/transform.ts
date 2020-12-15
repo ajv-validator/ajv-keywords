@@ -1,6 +1,5 @@
 import type {CodeKeywordDefinition, AnySchemaObject, KeywordCxt, Code, Name} from "ajv"
-import {_, stringify} from "ajv"
-import {getProperty} from "ajv/dist/compile/codegen"
+import {_, stringify, getProperty} from "ajv/dist/compile/codegen"
 
 type TransformName =
   | "trimStart"

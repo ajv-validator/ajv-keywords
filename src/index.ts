@@ -1,5 +1,5 @@
-import Ajv from "ajv"
-import {Plugin} from "ajv"
+import type Ajv from "ajv"
+import type {Plugin} from "ajv"
 import plugins from "./keywords"
 
 export {AjvKeywordsError} from "./definitions"
