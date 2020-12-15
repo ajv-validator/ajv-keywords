@@ -49,7 +49,7 @@
     "ajv-formats": "^0.3.4",
     "chai": "^4.2.0",
     "eslint": "^7.2.0",
-    "eslint-config-prettier": "^6.13.0",
+    "eslint-config-prettier": "^7.0.0",
     "husky": "^4.3.0",
     "jest": "^26.5.3",
     "json-schema-test": "^2.0.0",
