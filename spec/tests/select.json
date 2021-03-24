@@ -470,5 +470,58 @@
         "valid": false
       }
     ]
+  },
+  {
+    "description": "select keyword with boolean selector tag (issue #150)",
+    "schema": {
+      "type": "object",
+      "properties": {
+        "tag": {"type": "boolean"}
+      },
+      "select": {
+        "$data": "0/tag"
+      },
+      "selectCases": {
+        "false": {
+          "not": {"required": ["foo"]}
+        },
+        "true": {
+          "required": ["foo"]
+        }
+      },
+      "selectDefault": false
+    },
+    "tests": [
+      {
+        "description": "false tag: valid",
+        "data": {"tag": false},
+        "valid": true
+      },
+      {
+        "description": "false tag: invalid",
+        "data": {"tag": false, "foo": 1},
+        "valid": false
+      },
+      {
+        "description": "true tag: valid",
+        "data": {"tag": true, "foo": 1},
+        "valid": true
+      },
+      {
+        "description": "true tag: invalid",
+        "data": {"tag": true},
+        "valid": false
+      },
+      {
+        "description": "no tag - select not validated 1 (valid)",
+        "data": {"foo": 1},
+        "valid": true
+      },
+      {
+        "description": "no tag - select not validated 1 (valid)",
+        "data": {},
+        "valid": true
+      }
+    ]
   }
 ]

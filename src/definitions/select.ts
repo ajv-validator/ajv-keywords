@@ -33,7 +33,7 @@ export default function getDef(opts?: DefinitionOptions): KeywordDefinition[] {
           gen.if(false) // optimizer should remove it from generated code
           for (const schemaProp in parentSchema.selectCases) {
             cxt.setParams({schemaProp})
-            gen.elseIf(_`${value} == ${schemaProp}`) // intentional ==, to match numbers and booleans
+            gen.elseIf(_`"" + ${value} == ${schemaProp}`) // intentional ==, to match numbers and booleans
             const schCxt = cxt.subschema({keyword: "selectCases", schemaProp}, schValid)
             cxt.mergeEvaluated(schCxt, Name)
             gen.assign(valid, schValid)
