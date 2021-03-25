@@ -1,7 +1,7 @@
 {
   "name": "ajv-keywords",
   "version": "5.0.0-beta.1",
-  "description": "Custom JSON-Schema keywords for Ajv validator",
+  "description": "Additional JSON-Schema keywords for Ajv JSON validator",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
