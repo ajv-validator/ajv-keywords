@@ -508,6 +508,8 @@ See [json-schema-org/json-schema-spec#203](https://github.com/json-schema-org/js
 
 #### `select`/`selectCases`/`selectDefault`
 
+**Please note**: these keywords are deprecated. It is recommended to use OpenAPI [discriminator](https://ajv.js.org/json-schema.html#discriminator) keyword supported by Ajv v8 instead of `select`.
+
 These keywords allow to choose the schema to validate the data based on the value of some property in the validated data.
 
 These keywords must be present in the same schema object (`selectDefault` is optional).
