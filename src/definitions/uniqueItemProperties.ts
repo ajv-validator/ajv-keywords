@@ -1,5 +1,5 @@
 import type {FuncKeywordDefinition, AnySchemaObject} from "ajv"
-import equal from "ajv/dist/compile/equal"
+import equal = require("fast-deep-equal")
 
 const SCALAR_TYPES = ["number", "integer", "string", "boolean", "null"]
 
