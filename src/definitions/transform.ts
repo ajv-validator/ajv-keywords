@@ -48,7 +48,7 @@ function _getDef(): CodeKeywordDefinition {
         cfg = gen.scopeValue("obj", {ref: config, code: stringify(config)})
       }
       gen.if(_`typeof ${data} == "string" && ${parentData} !== undefined`, () => {
-        gen.assign(data, transformExpr(tNames))
+        gen.assign(data, transformExpr(tNames.slice()))
         gen.assign(_`${parentData}[${parentDataProperty}]`, data)
       })
 

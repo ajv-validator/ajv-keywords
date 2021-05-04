@@ -129,4 +129,15 @@ describe('keyword "transform"', () => {
       data.should.deep.equal(["ab"])
     })
   })
+
+  ajvs.forEach((ajv, i) => {
+    it(`shouldn't mutate the transform array of the schema while compiling it #${i}`, () => {
+      const data = {p: "  trimObject  "}
+      const schema = {type: "object", properties: {p: {type: "string", transform: ["trimLeft"]}}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal({p: "trimObject  "})
+
+      schema.properties.p.transform.should.deep.equal(["trimLeft"])
+    })
+  })
 })
