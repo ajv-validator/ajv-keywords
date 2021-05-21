@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "prettier:write": "prettier --write \"./**/*.{md,json,yaml,js,ts}\"",
     "prettier:check": "prettier --list-different \"./**/*.{md,json,yaml,js,ts}\"",
     "test": "npm link && npm link ajv-keywords && npm run eslint && npm run test-cov",
