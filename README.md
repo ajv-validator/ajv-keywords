@@ -21,6 +21,7 @@ Custom JSON-Schema keywords for [Ajv](https://github.com/epoberezkin/ajv) valida
     - [typeof](#typeof)
     - [instanceof](#instanceof)<sup>\+</sup>
   - [Keywords for numbers](#keywords-for-numbers)
+    - [precision](#precision)
     - [range and exclusiveRange](#range-and-exclusiverange)
   - [Keywords for strings](#keywords-for-strings)
     - [regexp](#regexp)
@@ -149,6 +150,18 @@ ajv.validate({instanceof: "MyClass"}, new MyClass()) // true
 **Please note**: currently `instanceof` is not supported in [standalone validation code](https://github.com/ajv-validator/ajv/blob/master/docs/standalone.md) - it has to be implemented as [`code` keyword](https://github.com/ajv-validator/ajv/blob/master/docs/keywords.md#define-keyword-with-code-generation-function) to support it (PR is welcome).
 
 ### Keywords for numbers
+
+#### `precision`
+
+Allow enforcing certain `precision` of a number, meaning maximum number of digits after decimal point.
+
+```javascript
+const schema = {type: "number", precision: 2}
+ajv.validate(schema, 4) // true
+ajv.validate(schema, 4.3) // true
+ajv.validate(schema, 4.32) // true
+ajv.validate(schema, 4.321) // false
+```
 
 #### `range` and `exclusiveRange`
 
