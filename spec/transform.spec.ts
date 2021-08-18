@@ -129,4 +129,30 @@ describe('keyword "transform"', () => {
       data.should.deep.equal(["ab"])
     })
   })
+
+  ajvs.forEach((ajv, i) => {
+    it(`should transform normalize #${i}`, () => {
+      let schema, data
+
+      data = ["  normalize  object    to test  "]
+      schema = {type: "array", items: {type: "string", transform: ["normalize"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal([" normalize object to test "])
+
+      data = ["normalize"]
+      schema = {type: "array", items: {type: "string", transform: ["normalize"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal(["normalize"])
+
+      data = ["normalize object to test"]
+      schema = {type: "array", items: {type: "string", transform: ["normalize"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal(["normalize object to test"])
+
+      data = ["normalize  object to    test"]
+      schema = {type: "array", items: {type: "string", transform: ["normalize"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal(["normalize object to test"])
+    })
+  })
 })
