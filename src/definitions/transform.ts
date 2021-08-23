@@ -31,7 +31,7 @@ const transform: {[key in TransformName]: Transform} = {
   normalizeSpaces: (s) => s.replace(/[\s\t\n]+/g, " "),
   trimInner: (s) =>
     (/^[\s\t\n]+/.exec(s)?.shift() || "") +
-    s.trim().replace(/[\s|\t|\n]+/g, "") +
+    s.trim().replace(/[\s\t\n]+/g, "") +
     (/[\s\t\n]+$/.exec(s)?.shift() || ""),
 }
 
