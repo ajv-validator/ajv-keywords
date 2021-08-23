@@ -131,28 +131,89 @@ describe('keyword "transform"', () => {
   })
 
   ajvs.forEach((ajv, i) => {
-    it(`should transform normalize #${i}`, () => {
+    it(`should transform normalizeSpaces #${i}`, () => {
       let schema, data
 
       data = ["  normalize  object    to test  "]
-      schema = {type: "array", items: {type: "string", transform: ["normalize"]}}
+      schema = {type: "array", items: {type: "string", transform: ["normalizeSpaces"]}}
       ajv.validate(schema, data).should.equal(true)
       data.should.deep.equal([" normalize object to test "])
 
       data = ["normalize"]
-      schema = {type: "array", items: {type: "string", transform: ["normalize"]}}
+      schema = {type: "array", items: {type: "string", transform: ["normalizeSpaces"]}}
       ajv.validate(schema, data).should.equal(true)
       data.should.deep.equal(["normalize"])
 
       data = ["normalize object to test"]
-      schema = {type: "array", items: {type: "string", transform: ["normalize"]}}
+      schema = {type: "array", items: {type: "string", transform: ["normalizeSpaces"]}}
       ajv.validate(schema, data).should.equal(true)
       data.should.deep.equal(["normalize object to test"])
 
       data = ["normalize  object to    test"]
-      schema = {type: "array", items: {type: "string", transform: ["normalize"]}}
+      schema = {type: "array", items: {type: "string", transform: ["normalizeSpaces"]}}
       ajv.validate(schema, data).should.equal(true)
       data.should.deep.equal(["normalize object to test"])
+
+      data = [
+        `A tab\t\tanother multiple tabs\t\t\t\tnew line
+multiple new lines
+
+
+
+Multiple spaces                   end`,
+      ]
+      schema = {type: "array", items: {type: "string", transform: ["normalizeSpaces"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal([
+        "A tab another multiple tabs new line multiple new lines Multiple spaces end",
+      ])
+    })
+  })
+
+  ajvs.forEach((ajv, i) => {
+    it(`should transform trimInner #${i}`, () => {
+      let schema, data
+
+      data = ["  trimInner  object    to test  "]
+      schema = {type: "array", items: {type: "string", transform: ["trimInner"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal(["  trimInnerobjecttotest  "])
+
+      data = [
+        `
+      trimInner
+      multiple spaces
+      `,
+      ]
+      schema = {type: "array", items: {type: "string", transform: ["trimInner"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal([
+        `
+      trimInnermultiplespaces
+      `,
+      ])
+
+      data = ["trimInner \twith\t\t\ttabs\t\t\tinside"]
+      schema = {type: "array", items: {type: "string", transform: ["trimInner"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal(["trimInnerwithtabsinside"])
+
+      data = [" trimInner   object to    test with  multiple \t\t  spaces   \t"]
+      schema = {type: "array", items: {type: "string", transform: ["trimInner"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal([" trimInnerobjecttotestwithmultiplespaces   \t"])
+
+      data = [
+        `A tab\t\tanother multiple tabs\t\t\t\tnew line
+multiple new lines
+
+
+
+Multiple spaces                   end`,
+      ]
+      schema = {type: "array", items: {type: "string", transform: ["trimInner"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal(["AtabanothermultipletabsnewlinemultiplenewlinesMultiplespacesend"])
     })
   })
 })
