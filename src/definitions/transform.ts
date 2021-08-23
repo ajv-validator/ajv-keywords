@@ -11,7 +11,6 @@ type TransformName =
   | "toUpperCase"
   | "toEnumCase"
   | "normalizeSpaces"
-  | "trimInner"
 
 interface TransformConfig {
   hash: Record<string, string | undefined>
@@ -29,10 +28,6 @@ const transform: {[key in TransformName]: Transform} = {
   toUpperCase: (s) => s.toUpperCase(),
   toEnumCase: (s, cfg) => cfg?.hash[configKey(s)] || s,
   normalizeSpaces: (s) => s.replace(/[\s\t\n]+/g, " "),
-  trimInner: (s) =>
-    (/^[\s\t\n]+/.exec(s)?.shift() || "") +
-    s.trim().replace(/[\s\t\n]+/g, "") +
-    (/[\s\t\n]+$/.exec(s)?.shift() || ""),
 }
 
 const getDef: (() => CodeKeywordDefinition) & {
