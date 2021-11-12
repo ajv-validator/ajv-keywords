@@ -5,13 +5,14 @@ var SCALAR_TYPES = ['number', 'integer', 'string', 'boolean', 'null'];
 module.exports = function defFunc(ajv) {
   defFunc.definition = {
     type: 'array',
-    compile: function(keys, parentSchema, it) {
+    errors: true,
+    compile: function (keys, parentSchema, it) {
       var equal = it.util.equal;
       var scalar = getScalarKeys(keys, parentSchema);
 
-      return function(data) {
+      return function validate(data) {
         if (data.length > 1) {
-          for (var k=0; k < keys.length; k++) {
+          for (var k = 0; k < keys.length; k++) {
             var i, key = keys[k];
             if (scalar[k]) {
               var hash = {};
@@ -20,15 +21,20 @@ module.exports = function defFunc(ajv) {
                 var prop = data[i][key];
                 if (prop && typeof prop == 'object') continue;
                 if (typeof prop == 'string') prop = '"' + prop;
-                if (hash[prop]) return false;
+                if (hash[prop]) {
+                  validate.errors = constructError(key);
+                  return false;
+                }
                 hash[prop] = true;
               }
             } else {
               for (i = data.length; i--;) {
                 if (!data[i] || typeof data[i] != 'object') continue;
                 for (var j = i; j--;) {
-                  if (data[j] && typeof data[j] == 'object' && equal(data[i][key], data[j][key]))
+                  if (data[j] && typeof data[j] == 'object' && equal(data[i][key], data[j][key])) {
+                    validate.errors = constructError(key);
                     return false;
+                  }
                 }
               }
             }
@@ -39,7 +45,7 @@ module.exports = function defFunc(ajv) {
     },
     metaSchema: {
       type: 'array',
-      items: {type: 'string'}
+      items: { type: 'string' }
     }
   };
 
@@ -49,11 +55,21 @@ module.exports = function defFunc(ajv) {
 
 
 function getScalarKeys(keys, schema) {
-  return keys.map(function(key) {
+  return keys.map(function (key) {
     var properties = schema.items && schema.items.properties;
     var propType = properties && properties[key] && properties[key].type;
     return Array.isArray(propType)
-            ? propType.indexOf('object') < 0 && propType.indexOf('array') < 0
-            : SCALAR_TYPES.indexOf(propType) >= 0;
+      ? propType.indexOf('object') < 0 && propType.indexOf('array') < 0
+      : SCALAR_TYPES.indexOf(propType) >= 0;
   });
+}
+
+
+function constructError(key) {
+  const keyword = 'uniqueItemProperties';
+  return [{
+    keyword,
+    params: { keyword },
+    message: 'should have unique ' + key,
+  }];
 }
