@@ -317,16 +317,16 @@ If the `properties` keyword is not present in the same schema object, schema com
 const schema = {
   type: "object",
   properties: {
-    foo: {type: 'number'},
-    bar: {type: 'number'}
-  }
-  allRequired: true
-};
+    foo: {type: "number"},
+    bar: {type: "number"},
+  },
+  allRequired: true,
+}
 
-const validData = { foo: 1, bar: 2 };
-const alsoValidData = { foo: 1, bar: 2, baz: 3 };
+const validData = {foo: 1, bar: 2}
+const alsoValidData = {foo: 1, bar: 2, baz: 3}
 
-const invalidDataList = [ {}, { foo: 1 }, { bar: 2 } ];
+const invalidDataList = [{}, {foo: 1}, {bar: 2}]
 ```
 
 #### `anyRequired`
@@ -533,54 +533,54 @@ This keyword correctly tracks evaluated properties and items to work with `uneva
 **Please note**: these keywords require Ajv `$data` option to support [\$data reference](https://github.com/ajv-validator/ajv/blob/master/docs/validation.md#data-reference).
 
 ```javascript
-require('ajv-keywords')(ajv, 'select');
+require("ajv-keywords")(ajv, "select")
 
 const schema = {
   type: "object",
-  required: ['kind'],
+  required: ["kind"],
   properties: {
-    kind: { type: 'string' }
+    kind: {type: "string"},
   },
-  select: { $data: '0/kind' },
+  select: {$data: "0/kind"},
   selectCases: {
     foo: {
-      required: ['foo'],
+      required: ["foo"],
       properties: {
         kind: {},
-        foo: { type: 'string' }
+        foo: {type: "string"},
       },
-      additionalProperties: false
+      additionalProperties: false,
     },
     bar: {
-      required: ['bar'],
+      required: ["bar"],
       properties: {
         kind: {},
-        bar: { type: 'number' }
+        bar: {type: "number"},
       },
-      additionalProperties: false
-    }
+      additionalProperties: false,
+    },
   },
   selectDefault: {
     propertyNames: {
-      not: { enum: ['foo', 'bar'] }
-    }
-  }
-};
+      not: {enum: ["foo", "bar"]},
+    },
+  },
+}
 
 const validDataList = [
-  { kind: 'foo', foo: 'any' },
-  { kind: 'bar', bar: 1 },
-  { kind: 'anything_else', not_bar_or_foo: 'any value' }
-];
+  {kind: "foo", foo: "any"},
+  {kind: "bar", bar: 1},
+  {kind: "anything_else", not_bar_or_foo: "any value"},
+]
 
 const invalidDataList = [
-  { kind: 'foo' }, // no property foo
-  { kind: 'bar' }, // no property bar
-  { kind: 'foo', foo: 'any', another: 'any value' }, // additional property
-  { kind: 'bar', bar: 1, another: 'any value' }, // additional property
-  { kind: 'anything_else', foo: 'any' } // property foo not allowed
-  { kind: 'anything_else', bar: 1 } // property bar not allowed
-];
+  {kind: "foo"}, // no property foo
+  {kind: "bar"}, // no property bar
+  {kind: "foo", foo: "any", another: "any value"}, // additional property
+  {kind: "bar", bar: 1, another: "any value"}, // additional property
+  {kind: "anything_else", foo: "any"}, // property foo not allowed
+  {kind: "anything_else", bar: 1}, // property bar not allowed
+]
 ```
 
 #### `dynamicDefaults`
