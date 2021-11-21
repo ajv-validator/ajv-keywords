@@ -26,7 +26,7 @@ export default function getDef(): CodeKeywordDefinition {
         const matched = gen.let("matched", false)
 
         gen.forIn("key", data, (key) => {
-          gen.assign(matched, _`${usePattern(gen, pattern)}.test(${key})`)
+          gen.assign(matched, _`${usePattern(cxt, pattern)}.test(${key})`)
           gen.if(matched, () => gen.break())
         })
 
