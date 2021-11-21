@@ -101,7 +101,7 @@ describe('keyword "transform"', () => {
       try {
         ajv.validate(schema, data).should.equal(false)
       } catch (e) {
-        e.message.should.match(/transform.*enum/)
+        ;(e as Error).message.should.match(/transform.*enum/)
       }
 
       data = ["ph"]
@@ -112,7 +112,7 @@ describe('keyword "transform"', () => {
       try {
         ajv.validate(schema, data).should.equal(false)
       } catch (e) {
-        e.message.should.match(/transform.*unique/)
+        ;(e as Error).message.should.match(/transform.*unique/)
       }
 
       data = ["  ph  "]
