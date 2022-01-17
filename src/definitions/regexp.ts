@@ -25,14 +25,14 @@ export default function getDef(): CodeKeywordDefinition {
     type: "string",
     schemaType: ["string", "object"],
     code(cxt: KeywordCxt) {
-      const {gen, data, schema} = cxt
+      const {data, schema} = cxt
       const regx = getRegExp(schema)
       cxt.pass(_`${regx}.test(${data})`)
 
       function getRegExp(sch: string | RegexpSchema): Name {
-        if (typeof sch == "object") return usePattern(gen, sch.pattern, sch.flags)
+        if (typeof sch == "object") return usePattern(cxt, sch.pattern, sch.flags)
         const rx = metaRegexp.exec(sch)
-        if (rx) return usePattern(gen, rx[1], rx[2])
+        if (rx) return usePattern(cxt, rx[1], rx[2])
         throw new Error("cannot parse string into RegExp")
       }
     },
