@@ -220,6 +220,7 @@ A standalone string cannot be modified, i.e. `data = 'a'; ajv.validate(schema, d
 - `toLowerCase`: convert to lower case
 - `toUpperCase`: convert to upper case
 - `toEnumCase`: change string case to be equal to one of `enum` values in the schema
+- `normalizeSpaces`: replace all multiple white spaces with a single white space in a string
 
 Transformations are applied in the order they are listed.
 

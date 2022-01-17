@@ -131,6 +131,43 @@ describe('keyword "transform"', () => {
   })
 
   ajvs.forEach((ajv, i) => {
+    it(`should transform normalizeSpaces #${i}`, () => {
+      let schema, data
+
+      data = ["  normalize  object    to test  "]
+      schema = {type: "array", items: {type: "string", transform: ["normalizeSpaces"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal([" normalize object to test "])
+
+      data = ["normalize"]
+      schema = {type: "array", items: {type: "string", transform: ["normalizeSpaces"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal(["normalize"])
+
+      data = ["normalize object to test"]
+      schema = {type: "array", items: {type: "string", transform: ["normalizeSpaces"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal(["normalize object to test"])
+
+      data = ["normalize  object to    test"]
+      schema = {type: "array", items: {type: "string", transform: ["normalizeSpaces"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal(["normalize object to test"])
+
+      data = [
+        `A tab\t\tanother multiple tabs\t\t\t\tnew line
+multiple new lines
+
+
+
+Multiple spaces                   end`,
+      ]
+      schema = {type: "array", items: {type: "string", transform: ["normalizeSpaces"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal([
+        "A tab another multiple tabs new line multiple new lines Multiple spaces end",
+      ])
+      
     it(`shouldn't mutate the transform array of the schema while compiling it #${i}`, () => {
       const data = {p: "  trimObject  "}
       const schema = {type: "object", properties: {p: {type: "string", transform: ["trimLeft"]}}}
