@@ -131,6 +131,47 @@ describe('keyword "transform"', () => {
   })
 
   ajvs.forEach((ajv, i) => {
+    it(`should transform trimInner #${i}`, () => {
+      let schema, data
+
+      data = ["  trimInner  object    to test  "]
+      schema = {type: "array", items: {type: "string", transform: ["trimInner"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal(["  trimInnerobjecttotest  "])
+
+      data = [
+        `
+      trimInner
+      multiple spaces
+      `,
+      ]
+      schema = {type: "array", items: {type: "string", transform: ["trimInner"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal([
+        `
+      trimInnermultiplespaces
+      `,
+      ])
+
+      data = ["trimInner \twith\t\t\ttabs\t\t\tinside"]
+      schema = {type: "array", items: {type: "string", transform: ["trimInner"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal(["trimInnerwithtabsinside"])
+
+      data = [" trimInner   object to    test with  multiple \t\t  spaces   \t"]
+      schema = {type: "array", items: {type: "string", transform: ["trimInner"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal([" trimInnerobjecttotestwithmultiplespaces   \t"])
+
+      data = [
+        `A tab\t\tanother multiple tabs\t\t\t\tnew line
+multiple new lines
+Multiple spaces                   end`,
+      ]
+      schema = {type: "array", items: {type: "string", transform: ["trimInner"]}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal(["AtabanothermultipletabsnewlinemultiplenewlinesMultiplespacesend"])
+
     it(`shouldn't mutate the transform array of the schema while compiling it #${i}`, () => {
       const data = {p: "  trimObject  "}
       const schema = {type: "object", properties: {p: {type: "string", transform: ["trimLeft"]}}}
