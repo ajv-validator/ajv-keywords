@@ -101,7 +101,7 @@ describe('keyword "transform"', () => {
       try {
         ajv.validate(schema, data).should.equal(false)
       } catch (e) {
-        e.message.should.match(/transform.*enum/)
+        ;(e as Error).message.should.match(/transform.*enum/)
       }
 
       data = ["ph"]
@@ -112,7 +112,7 @@ describe('keyword "transform"', () => {
       try {
         ajv.validate(schema, data).should.equal(false)
       } catch (e) {
-        e.message.should.match(/transform.*unique/)
+        ;(e as Error).message.should.match(/transform.*unique/)
       }
 
       data = ["  ph  "]
@@ -167,6 +167,14 @@ Multiple spaces                   end`,
       data.should.deep.equal([
         "A tab another multiple tabs new line multiple new lines Multiple spaces end",
       ])
+      
+    it(`shouldn't mutate the transform array of the schema while compiling it #${i}`, () => {
+      const data = {p: "  trimObject  "}
+      const schema = {type: "object", properties: {p: {type: "string", transform: ["trimLeft"]}}}
+      ajv.validate(schema, data).should.equal(true)
+      data.should.deep.equal({p: "trimObject  "})
+
+      schema.properties.p.transform.should.deep.equal(["trimLeft"])
     })
   })
 })
