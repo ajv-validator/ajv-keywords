@@ -1,7 +1,8 @@
 import type {CodeKeywordDefinition, AnySchemaObject, KeywordCxt, Code, Name} from "ajv"
+import type {KeywordOptions} from "./_types"
 import {_, stringify, getProperty} from "ajv/dist/compile/codegen"
 
-type TransformName =
+type TransformationName =
   | "trimStart"
   | "trimEnd"
   | "trimLeft"
@@ -15,9 +16,9 @@ interface TransformConfig {
   hash: Record<string, string | undefined>
 }
 
-type Transform = (s: string, cfg?: TransformConfig) => string
+export type Transformation = (s: string, cfg?: TransformConfig) => string
 
-const transform: {[key in TransformName]: Transform} = {
+const builtInTransformations: {[key in TransformationName]: Transformation} = {
   trimStart: (s) => s.trimStart(),
   trimEnd: (s) => s.trimEnd(),
   trimLeft: (s) => s.trimStart(),
@@ -28,11 +29,13 @@ const transform: {[key in TransformName]: Transform} = {
   toEnumCase: (s, cfg) => cfg?.hash[configKey(s)] || s,
 }
 
-const getDef: (() => CodeKeywordDefinition) & {
-  transform: typeof transform
-} = Object.assign(_getDef, {transform})
+function getDef(opts?: KeywordOptions["transform"]): CodeKeywordDefinition {
+  const customTransformations = opts?.customTransformations || {}
+  const availableTransformations = [
+    ...Object.keys(builtInTransformations),
+    ...Object.keys(customTransformations),
+  ]
 
-function _getDef(): CodeKeywordDefinition {
   return {
     keyword: "transform",
     schemaType: "array",
@@ -54,19 +57,32 @@ function _getDef(): CodeKeywordDefinition {
 
       function transformExpr(ts: string[]): Code {
         if (!ts.length) return data
-        const t = ts.pop() as string
-        if (!(t in transform)) throw new Error(`transform: unknown transformation ${t}`)
-        const func = gen.scopeValue("func", {
-          ref: transform[t as TransformName],
-          code: _`require("ajv-keywords/dist/definitions/transform").transform${getProperty(t)}`,
-        })
+        const t = ts.pop() as TransformationName | string
+        if (!availableTransformations.includes(t)) {
+          throw new Error(`transform: unknown transformation ${t}`)
+        }
+
+        const func = gen.scopeValue(
+          "func",
+          customTransformations[t] // eslint-disable-line @typescript-eslint/no-unnecessary-condition
+            ? {
+                ref: customTransformations[t].transformation,
+                code: _`require("${customTransformations[t].modulePath}")${getProperty(t)}`,
+              }
+            : {
+                ref: builtInTransformations[t as TransformationName],
+                code: _`require("ajv-keywords/dist/definitions/transform").transform${getProperty(
+                  t
+                )}`,
+              }
+        )
         const arg = transformExpr(ts)
         return cfg && t === "toEnumCase" ? _`${func}(${arg}, ${cfg})` : _`${func}(${arg})`
       }
     },
     metaSchema: {
       type: "array",
-      items: {type: "string", enum: Object.keys(transform)},
+      items: {type: "string", enum: availableTransformations},
     },
   }
 }

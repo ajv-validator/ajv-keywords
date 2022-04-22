@@ -1,19 +1,24 @@
 import type Ajv from "ajv"
 import type {Plugin} from "ajv"
+import type {KeywordOptions, KeywordsWithCustomization} from "./definitions/_types"
 import plugins from "./keywords"
 
 export {AjvKeywordsError} from "./definitions"
 
-const ajvKeywords: Plugin<string | string[]> = (ajv: Ajv, keyword?: string | string[]): Ajv => {
+const ajvKeywords: Plugin<string | string[]> = (
+  ajv: Ajv,
+  keyword?: string | string[],
+  keywordOptions: KeywordOptions = {}
+): Ajv => {
   if (Array.isArray(keyword)) {
-    for (const k of keyword) get(k)(ajv)
+    for (const k of keyword) get(k)(ajv, keywordOptions[k as KeywordsWithCustomization])
     return ajv
   }
   if (keyword) {
-    get(keyword)(ajv)
+    get(keyword)(ajv, keywordOptions[keyword as KeywordsWithCustomization])
     return ajv
   }
-  for (keyword in plugins) get(keyword)(ajv)
+  for (keyword in plugins) get(keyword)(ajv, keywordOptions[keyword as KeywordsWithCustomization])
   return ajv
 }
 
