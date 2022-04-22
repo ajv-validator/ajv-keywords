@@ -1,33 +1,46 @@
+/* eslint-disable valid-jsdoc */ // this rule is deprecated and insists on adding type annotations that already exist in TypeScript
 import type Ajv from "ajv"
 import type {Plugin} from "ajv"
-import type {KeywordOptions, KeywordsWithCustomization} from "./definitions/_types"
-import plugins from "./keywords"
+import type {DefinitionOptions} from "./definitions/_types"
+import keywords from "./keywords"
 
 export {AjvKeywordsError} from "./definitions"
 
+/**
+ * @param ajv instance
+ * @param specificKeywords only these keywords to-be-added
+ * @param options modifications passed to keywords
+ * @returns ajv instance
+ */
 const ajvKeywords: Plugin<string | string[]> = (
   ajv: Ajv,
-  keyword?: string | string[],
-  keywordOptions: KeywordOptions = {}
+  specificKeywords?: string | string[],
+  options: DefinitionOptions = {}
 ): Ajv => {
-  if (Array.isArray(keyword)) {
-    for (const k of keyword) get(k)(ajv, keywordOptions[k as KeywordsWithCustomization])
+  if (Array.isArray(specificKeywords)) {
+    for (const k of specificKeywords) addKeyword(ajv, k, options)
     return ajv
   }
-  if (keyword) {
-    get(keyword)(ajv, keywordOptions[keyword as KeywordsWithCustomization])
+  if (specificKeywords) {
+    addKeyword(ajv, specificKeywords, options)
     return ajv
   }
-  for (keyword in plugins) get(keyword)(ajv, keywordOptions[keyword as KeywordsWithCustomization])
+
+  for (const keyword in keywords) addKeyword(ajv, keyword, options)
   return ajv
 }
 
 ajvKeywords.get = get
 
 function get(keyword: string): Plugin<any> {
-  const defFunc = plugins[keyword]
+  const defFunc = keywords[keyword]
   if (!defFunc) throw new Error("Unknown keyword " + keyword)
   return defFunc
+}
+
+function addKeyword(ajv: Ajv, keyword: string, options: DefinitionOptions): void {
+  const defFunc = get(keyword)
+  defFunc(ajv, options)
 }
 
 export default ajvKeywords

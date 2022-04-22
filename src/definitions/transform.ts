@@ -1,5 +1,5 @@
 import type {CodeKeywordDefinition, AnySchemaObject, KeywordCxt, Code, Name} from "ajv"
-import type {KeywordOptions} from "./_types"
+import type {DefinitionOptions} from "./_types"
 import {_, stringify, getProperty} from "ajv/dist/compile/codegen"
 
 type TransformationName =
@@ -29,8 +29,8 @@ const builtInTransformations: {[key in TransformationName]: Transformation} = {
   toEnumCase: (s, cfg) => cfg?.hash[configKey(s)] || s,
 }
 
-function getDef(opts?: KeywordOptions["transform"]): CodeKeywordDefinition {
-  const customTransformations = opts?.customTransformations || {}
+function getDef(opts?: DefinitionOptions): CodeKeywordDefinition {
+  const customTransformations = opts?.transform || {}
   const availableTransformations = [
     ...Object.keys(builtInTransformations),
     ...Object.keys(customTransformations),

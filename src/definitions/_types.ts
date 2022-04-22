@@ -1,10 +1,6 @@
 import type {KeywordDefinition} from "ajv"
 import type {Transformation} from "./transform"
 
-export interface DefinitionOptions {
-  defaultMeta?: string | boolean
-}
-
 export interface KeywordOptions {
   /**
    * Modifications to the "transform" keyword
@@ -15,7 +11,7 @@ export interface KeywordOptions {
      * @example // overrides existing "trim" transformation, if "trim" didn't exist, it would have been added
      *   import { trim } from "@example-org/pkgName/example-trim"
      *
-     *   customTransformations: {
+     *   transform: {
      *     trim: {
      *       transformation: trim,
      *       modulePath: "@example-org/pkgName/example-trim",
@@ -26,14 +22,16 @@ export interface KeywordOptions {
      *   export const trim = (value: string) => value.trim()
      * @end
      */
-    customTransformations?: {
-      [key: string]: {
-        transformation: Transformation
-        modulePath: string
-      }
+    [key: string]: {
+      transformation: Transformation
+      modulePath: string
     }
   }
 }
 export type KeywordsWithCustomization = keyof KeywordOptions
+
+export interface DefinitionOptions extends KeywordOptions {
+  defaultMeta?: string | boolean
+}
 
 export type GetDefinition<T extends KeywordDefinition> = (opts?: DefinitionOptions) => T
