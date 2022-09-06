@@ -60,7 +60,7 @@
     "prettier": "^2.1.2",
     "ts-jest": "^26.4.1",
     "typescript": "^4.2.0",
-    "uuid": "^8.1.0"
+    "uuid": "^9.0.0"
   },
   "prettier": "@ajv-validator/config/prettierrc.json",
   "husky": {
