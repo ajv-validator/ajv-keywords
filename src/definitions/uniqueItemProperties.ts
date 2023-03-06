@@ -1,5 +1,5 @@
 import type {FuncKeywordDefinition, AnySchemaObject} from "ajv"
-import equal = require("fast-deep-equal")
+import {deepEqual} from "fast-equals"
 
 const SCALAR_TYPES = ["number", "integer", "string", "boolean", "null"]
 
@@ -31,7 +31,7 @@ export default function getDef(): FuncKeywordDefinition {
               if (!x || typeof x != "object") continue
               for (let j = i; j--; ) {
                 const y = data[j]
-                if (y && typeof y == "object" && equal(x[key], y[key])) return false
+                if (y && typeof y == "object" && deepEqual(x[key], y[key])) return false
               }
             }
           }
