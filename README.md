@@ -270,7 +270,11 @@ The keyword allows to check that some properties in array items are unique.
 
 This keyword applies only to arrays. If the data is not an array, the validation succeeds.
 
-The value of this keyword must be an array of strings - property names that should have unique values across all items.
+The value of this keyword must be either be an array of strings, an array or array of strings, or a combination of the two.
+
+##### Where Values are Array of Strings
+
+Where the values are an array of strings the strings should be property names that should have unique values across all items.
 
 ```javascript
 const schema = {
@@ -289,6 +293,41 @@ const invalidData1 = [
 const invalidData2 = [
   {id: 1, name: "taco"},
   {id: 2, name: "taco"}, // duplicate "name"
+  {id: 3, name: "salsa"},
+]
+```
+
+##### Where Values are Arrays of Array of Strings
+
+Where the values are arrays of array of strings the strings, property names that are used the the nested array should be unique together across all items.
+
+```javascript
+const schema = {
+  type: "array",
+  uniqueItemProperties: [["id", "name"]],
+}
+
+const validData1 = [
+  {id: 1, name: "taco"},
+  {id: 2, name: "burrito"},
+  {id: 3, name: "salsa"},
+]
+
+const validData2 = [
+  {id: 1, name: "taco"},
+  {id: 1, name: "burrito"}, // duplicate "id"
+  {id: 3, name: "salsa"},
+]
+
+const validData3 = [
+  {id: 1, name: "taco"},
+  {id: 2, name: "taco"}, // duplicate "name"
+  {id: 3, name: "salsa"},
+]
+
+const invalidData = [
+  {id: 1, name: "taco"},
+  {id: 1, name: "taco"}, // duplicate "name" and 'id
   {id: 3, name: "salsa"},
 ]
 ```
