@@ -8,14 +8,32 @@ export default function getDef(): FuncKeywordDefinition {
     keyword: "uniqueItemProperties",
     type: "array",
     schemaType: "array",
-    compile(keys: string[], parentSchema: AnySchemaObject) {
+    compile(keys: string[] | string[][], parentSchema: AnySchemaObject) {
       const scalar = getScalarKeys(keys, parentSchema)
 
       return (data) => {
         if (data.length <= 1) return true
+
         for (let k = 0; k < keys.length; k++) {
           const key = keys[k]
-          if (scalar[k]) {
+          if (Array.isArray(key)) {
+            for (let i = data.length; i--; ) {
+              const x = data[i]
+              if (!x || typeof x != "object") continue
+
+              for (let j = i; j--; ) {
+                const y = data[j]
+                if (
+                  y &&
+                  typeof y == "object" &&
+                  key.map((ki: string): boolean => equal(x[ki], y[ki])).filter(Boolean).length ===
+                    key.length
+                ) {
+                  return false
+                }
+              }
+            }
+          } else if (scalar[k]) {
             const hash: Record<string, any> = {}
             for (const x of data) {
               if (!x || typeof x != "object") continue
@@ -29,6 +47,7 @@ export default function getDef(): FuncKeywordDefinition {
             for (let i = data.length; i--; ) {
               const x = data[i]
               if (!x || typeof x != "object") continue
+
               for (let j = i; j--; ) {
                 const y = data[j]
                 if (y && typeof y == "object" && equal(x[key], y[key])) return false
@@ -36,18 +55,20 @@ export default function getDef(): FuncKeywordDefinition {
             }
           }
         }
+
         return true
       }
     },
     metaSchema: {
       type: "array",
-      items: {type: "string"},
+      items: {type: ["string", "array"]},
     },
   }
 }
 
-function getScalarKeys(keys: string[], schema: AnySchemaObject): boolean[] {
+function getScalarKeys(keys: string[] | string[][], schema: AnySchemaObject): boolean[] {
   return keys.map((key) => {
+    if (Array.isArray(key)) return false
     const t = schema.items?.properties?.[key]?.type
     return Array.isArray(t)
       ? !t.includes("object") && !t.includes("array")

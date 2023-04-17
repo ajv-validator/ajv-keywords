@@ -2,34 +2,86 @@
   {
     "description": "uniqueItemProperties keyword validation with single property",
     "schema": {
-      "uniqueItemProperties": ["id"]
+      "uniqueItemProperties": [
+        "id"
+      ]
     },
     "tests": [
       {
         "description": "with all unique ids",
-        "data": [{"id": 1}, {"id": 2}, {"id": 3}],
+        "data": [
+          {
+            "id": 1
+          },
+          {
+            "id": 2
+          },
+          {
+            "id": 3
+          }
+        ],
         "valid": true
       },
       {
         "description": "without unique ids",
-        "data": [{"id": 1}, {"id": 1}, {"id": 3}],
+        "data": [
+          {
+            "id": 1
+          },
+          {
+            "id": 1
+          },
+          {
+            "id": 3
+          }
+        ],
         "valid": false
       },
       {
         "description": "with all unique object-ids",
         "data": [
-          {"id": {"_id": 1, "date": 1495213151726}},
-          {"id": {"_id": 2, "date": 1495213151727}},
-          {"id": {"_id": 3, "date": 1495213151728}}
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            }
+          },
+          {
+            "id": {
+              "_id": 2,
+              "date": 1495213151727
+            }
+          },
+          {
+            "id": {
+              "_id": 3,
+              "date": 1495213151728
+            }
+          }
         ],
         "valid": true
       },
       {
         "description": "without unique object-ids",
         "data": [
-          {"id": {"_id": 1, "date": 1495213151726}},
-          {"id": {"_id": 1, "date": 1495213151726}},
-          {"id": {"_id": 3, "date": 1495213151728}}
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            }
+          },
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            }
+          },
+          {
+            "id": {
+              "_id": 3,
+              "date": 1495213151728
+            }
+          }
         ],
         "valid": false
       },
@@ -41,15 +93,23 @@
       {
         "description": "non-array is valid even for pseudo-arrays",
         "data": {
-          "0": {"id": 1},
-          "1": {"id": 1},
+          "0": {
+            "id": 1
+          },
+          "1": {
+            "id": 1
+          },
           "length": 2
         },
         "valid": true
       },
       {
         "description": "array with one item is valid",
-        "data": [{"id": 1}],
+        "data": [
+          {
+            "id": 1
+          }
+        ],
         "valid": true
       },
       {
@@ -59,7 +119,10 @@
       },
       {
         "description": "array with non-objects is valid",
-        "data": [1, 1],
+        "data": [
+          1,
+          1
+        ],
         "valid": true
       }
     ]
@@ -68,24 +131,45 @@
     "description": "uniqueItemProperties keyword validation with multiple properties",
     "schema": {
       "type": "array",
-      "uniqueItemProperties": ["id", "name"]
+      "uniqueItemProperties": [
+        "id",
+        "name"
+      ]
     },
     "tests": [
       {
         "description": "with all unique ids and names",
         "data": [
-          {"id": 1, "name": "taco"},
-          {"id": 2, "name": "burrito"},
-          {"id": 3, "name": "salsa"}
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 2,
+            "name": "burrito"
+          },
+          {
+            "id": 3,
+            "name": "salsa"
+          }
         ],
         "valid": true
       },
       {
         "description": "with unique ids but not unique names",
         "data": [
-          {"id": 1, "name": "taco"},
-          {"id": 2, "name": "taco"},
-          {"id": 3, "name": "salsa"}
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 2,
+            "name": "taco"
+          },
+          {
+            "id": 3,
+            "name": "salsa"
+          }
         ],
         "valid": false
       }
@@ -100,7 +184,17 @@
     "tests": [
       {
         "description": "with deepEqual like objects",
-        "data": [{"id": 1}, {"id": 1}, {"id": 1}],
+        "data": [
+          {
+            "id": 1
+          },
+          {
+            "id": 1
+          },
+          {
+            "id": 1
+          }
+        ],
         "valid": true
       }
     ]
@@ -108,39 +202,93 @@
   {
     "description": "uniqueItemProperties keyword validation with single property of scalar type",
     "schema": {
-      "uniqueItemProperties": ["id"],
+      "uniqueItemProperties": [
+        "id"
+      ],
       "items": {
         "properties": {
-          "id": {"type": "number"}
+          "id": {
+            "type": "number"
+          }
         }
       }
     },
     "tests": [
       {
         "description": "with all unique ids",
-        "data": [{"id": 1}, {"id": 2}, {"id": 3}],
+        "data": [
+          {
+            "id": 1
+          },
+          {
+            "id": 2
+          },
+          {
+            "id": 3
+          }
+        ],
         "valid": true
       },
       {
         "description": "without unique ids",
-        "data": [{"id": 1}, {"id": 1}, {"id": 3}],
+        "data": [
+          {
+            "id": 1
+          },
+          {
+            "id": 1
+          },
+          {
+            "id": 3
+          }
+        ],
         "valid": false
       },
       {
         "description": "with all unique object-ids",
         "data": [
-          {"id": {"_id": 1, "date": 1495213151726}},
-          {"id": {"_id": 2, "date": 1495213151727}},
-          {"id": {"_id": 3, "date": 1495213151728}}
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            }
+          },
+          {
+            "id": {
+              "_id": 2,
+              "date": 1495213151727
+            }
+          },
+          {
+            "id": {
+              "_id": 3,
+              "date": 1495213151728
+            }
+          }
         ],
         "valid": false
       },
       {
         "description": "without unique object-ids",
         "data": [
-          {"id": {"_id": 1, "date": 1495213151726}},
-          {"id": {"_id": 1, "date": 1495213151726}},
-          {"id": {"_id": 3, "date": 1495213151728}}
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            }
+          },
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            }
+          },
+          {
+            "id": {
+              "_id": 3,
+              "date": 1495213151728
+            }
+          }
         ],
         "valid": false
       },
@@ -152,15 +300,23 @@
       {
         "description": "non-array is valid even for pseudo-arrays",
         "data": {
-          "0": {"id": 1},
-          "1": {"id": 1},
+          "0": {
+            "id": 1
+          },
+          "1": {
+            "id": 1
+          },
           "length": 2
         },
         "valid": true
       },
       {
         "description": "array with one item is valid",
-        "data": [{"id": 1}],
+        "data": [
+          {
+            "id": 1
+          }
+        ],
         "valid": true
       },
       {
@@ -170,7 +326,10 @@
       },
       {
         "description": "array with non-objects is valid",
-        "data": [1, 1],
+        "data": [
+          1,
+          1
+        ],
         "valid": true
       }
     ]
@@ -178,10 +337,14 @@
   {
     "description": "uniqueItemProperties keyword validation with single property of non-scalar type",
     "schema": {
-      "uniqueItemProperties": ["id"],
+      "uniqueItemProperties": [
+        "id"
+      ],
       "items": {
         "properties": {
-          "id": {"type": "object"}
+          "id": {
+            "type": "object"
+          }
         }
       }
     },
@@ -189,18 +352,48 @@
       {
         "description": "with all unique object-ids",
         "data": [
-          {"id": {"_id": 1, "date": 1495213151726}},
-          {"id": {"_id": 2, "date": 1495213151727}},
-          {"id": {"_id": 3, "date": 1495213151728}}
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            }
+          },
+          {
+            "id": {
+              "_id": 2,
+              "date": 1495213151727
+            }
+          },
+          {
+            "id": {
+              "_id": 3,
+              "date": 1495213151728
+            }
+          }
         ],
         "valid": true
       },
       {
         "description": "without unique object-ids",
         "data": [
-          {"id": {"_id": 1, "date": 1495213151726}},
-          {"id": {"_id": 1, "date": 1495213151726}},
-          {"id": {"_id": 3, "date": 1495213151728}}
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            }
+          },
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            }
+          },
+          {
+            "id": {
+              "_id": 3,
+              "date": 1495213151728
+            }
+          }
         ],
         "valid": false
       }
@@ -209,22 +402,67 @@
   {
     "description": "uniqueItemProperties keyword validation with single property of multiple scalar types",
     "schema": {
-      "uniqueItemProperties": ["id"],
+      "uniqueItemProperties": [
+        "id"
+      ],
       "items": {
         "properties": {
-          "id": {"type": ["number", "string"]}
+          "id": {
+            "type": [
+              "number",
+              "string"
+            ]
+          }
         }
       }
     },
     "tests": [
       {
         "description": "with all unique ids",
-        "data": [{"id": 1}, {"id": 2}, {"id": 3}, {"id": "1"}, {"id": "2"}, {"id": "3"}],
+        "data": [
+          {
+            "id": 1
+          },
+          {
+            "id": 2
+          },
+          {
+            "id": 3
+          },
+          {
+            "id": "1"
+          },
+          {
+            "id": "2"
+          },
+          {
+            "id": "3"
+          }
+        ],
         "valid": true
       },
       {
         "description": "without unique ids",
-        "data": [{"id": 1}, {"id": 1}, {"id": 3}, {"id": "1"}, {"id": "2"}, {"id": "3"}],
+        "data": [
+          {
+            "id": 1
+          },
+          {
+            "id": 1
+          },
+          {
+            "id": 3
+          },
+          {
+            "id": "1"
+          },
+          {
+            "id": "2"
+          },
+          {
+            "id": "3"
+          }
+        ],
         "valid": false
       }
     ]
@@ -232,10 +470,17 @@
   {
     "description": "uniqueItemProperties keyword validation with single property of multiple types",
     "schema": {
-      "uniqueItemProperties": ["id"],
+      "uniqueItemProperties": [
+        "id"
+      ],
       "items": {
         "properties": {
-          "id": {"type": ["number", "object"]}
+          "id": {
+            "type": [
+              "number",
+              "object"
+            ]
+          }
         }
       }
     },
@@ -243,24 +488,66 @@
       {
         "description": "with all unique ids",
         "data": [
-          {"id": 1},
-          {"id": 2},
-          {"id": 3},
-          {"id": {"_id": 1, "date": 1495213151726}},
-          {"id": {"_id": 2, "date": 1495213151727}},
-          {"id": {"_id": 3, "date": 1495213151728}}
+          {
+            "id": 1
+          },
+          {
+            "id": 2
+          },
+          {
+            "id": 3
+          },
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            }
+          },
+          {
+            "id": {
+              "_id": 2,
+              "date": 1495213151727
+            }
+          },
+          {
+            "id": {
+              "_id": 3,
+              "date": 1495213151728
+            }
+          }
         ],
         "valid": true
       },
       {
         "description": "without unique ids",
         "data": [
-          {"id": 1},
-          {"id": 2},
-          {"id": 3},
-          {"id": {"_id": 1, "date": 1495213151726}},
-          {"id": {"_id": 1, "date": 1495213151726}},
-          {"id": {"_id": 3, "date": 1495213151728}}
+          {
+            "id": 1
+          },
+          {
+            "id": 2
+          },
+          {
+            "id": 3
+          },
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            }
+          },
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            }
+          },
+          {
+            "id": {
+              "_id": 3,
+              "date": 1495213151728
+            }
+          }
         ],
         "valid": false
       }
@@ -270,24 +557,45 @@
     "description": "uniqueItemProperties keyword validation with multiple properties",
     "schema": {
       "type": "array",
-      "uniqueItemProperties": ["id", "name"]
+      "uniqueItemProperties": [
+        "id",
+        "name"
+      ]
     },
     "tests": [
       {
         "description": "with all unique ids and names",
         "data": [
-          {"id": 1, "name": "taco"},
-          {"id": 2, "name": "burrito"},
-          {"id": 3, "name": "salsa"}
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 2,
+            "name": "burrito"
+          },
+          {
+            "id": 3,
+            "name": "salsa"
+          }
         ],
         "valid": true
       },
       {
         "description": "with unique ids but not unique names",
         "data": [
-          {"id": 1, "name": "taco"},
-          {"id": 2, "name": "taco"},
-          {"id": 3, "name": "salsa"}
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 2,
+            "name": "taco"
+          },
+          {
+            "id": 3,
+            "name": "salsa"
+          }
         ],
         "valid": false
       }
@@ -297,11 +605,18 @@
     "description": "uniqueItemProperties keyword validation with multiple properties of scalar types",
     "schema": {
       "type": "array",
-      "uniqueItemProperties": ["id", "name"],
+      "uniqueItemProperties": [
+        "id",
+        "name"
+      ],
       "items": {
         "properties": {
-          "id": {"type": "number"},
-          "name": {"type": "string"}
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          }
         }
       }
     },
@@ -309,18 +624,36 @@
       {
         "description": "with all unique ids and names",
         "data": [
-          {"id": 1, "name": "taco"},
-          {"id": 2, "name": "burrito"},
-          {"id": 3, "name": "salsa"}
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 2,
+            "name": "burrito"
+          },
+          {
+            "id": 3,
+            "name": "salsa"
+          }
         ],
         "valid": true
       },
       {
         "description": "with unique ids but not unique names",
         "data": [
-          {"id": 1, "name": "taco"},
-          {"id": 2, "name": "taco"},
-          {"id": 3, "name": "salsa"}
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 2,
+            "name": "taco"
+          },
+          {
+            "id": 3,
+            "name": "salsa"
+          }
         ],
         "valid": false
       }
@@ -330,11 +663,18 @@
     "description": "uniqueItemProperties keyword validation with multiple properties with some scalar types",
     "schema": {
       "type": "array",
-      "uniqueItemProperties": ["id", "name"],
+      "uniqueItemProperties": [
+        "id",
+        "name"
+      ],
       "items": {
         "properties": {
-          "id": {"type": "object"},
-          "name": {"type": "string"}
+          "id": {
+            "type": "object"
+          },
+          "name": {
+            "type": "string"
+          }
         }
       }
     },
@@ -342,18 +682,54 @@
       {
         "description": "with all unique ids and names",
         "data": [
-          {"id": {"_id": 1, "date": 1495213151726}, "name": "taco"},
-          {"id": {"_id": 2, "date": 1495213151727}, "name": "burrito"},
-          {"id": {"_id": 3, "date": 1495213151728}, "name": "salsa"}
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            },
+            "name": "taco"
+          },
+          {
+            "id": {
+              "_id": 2,
+              "date": 1495213151727
+            },
+            "name": "burrito"
+          },
+          {
+            "id": {
+              "_id": 3,
+              "date": 1495213151728
+            },
+            "name": "salsa"
+          }
         ],
         "valid": true
       },
       {
         "description": "with non-unique ids but unique names",
         "data": [
-          {"id": {"_id": 1, "date": 1495213151726}, "name": "taco"},
-          {"id": {"_id": 1, "date": 1495213151726}, "name": "burrito"},
-          {"id": {"_id": 3, "date": 1495213151727}, "name": "salsa"}
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            },
+            "name": "taco"
+          },
+          {
+            "id": {
+              "_id": 1,
+              "date": 1495213151726
+            },
+            "name": "burrito"
+          },
+          {
+            "id": {
+              "_id": 3,
+              "date": 1495213151727
+            },
+            "name": "salsa"
+          }
         ],
         "valid": false
       }
@@ -363,22 +739,44 @@
     "description": "uniqueItemProperties keyword with null item(s)",
     "schema": {
       "type": "array",
-      "uniqueItemProperties": ["id"],
+      "uniqueItemProperties": [
+        "id"
+      ],
       "items": {
         "properties": {
-          "id": {"type": "integer"}
+          "id": {
+            "type": "integer"
+          }
         }
       }
     },
     "tests": [
       {
         "description": "with all unique ids and null items is valid",
-        "data": [{"id": 1}, {"id": 2}, null, null],
+        "data": [
+          {
+            "id": 1
+          },
+          {
+            "id": 2
+          },
+          null,
+          null
+        ],
         "valid": true
       },
       {
         "description": "with non-unique ids and null item is invalid",
-        "data": [{"id": 1}, {"id": 1}, null, null],
+        "data": [
+          {
+            "id": 1
+          },
+          {
+            "id": 1
+          },
+          null,
+          null
+        ],
         "valid": false
       }
     ]
@@ -387,22 +785,168 @@
     "description": "uniqueItemProperties keyword with null item(s) and object keys",
     "schema": {
       "type": "array",
-      "uniqueItemProperties": ["id"],
+      "uniqueItemProperties": [
+        "id"
+      ],
       "items": {
         "properties": {
-          "id": {"type": "object"}
+          "id": {
+            "type": "object"
+          }
         }
       }
     },
     "tests": [
       {
         "description": "with all unique ids and null items is valid",
-        "data": [{"id": {"_id": 1}}, {"id": {"_id": 2}}, null, null],
+        "data": [
+          {
+            "id": {
+              "_id": 1
+            }
+          },
+          {
+            "id": {
+              "_id": 2
+            }
+          },
+          null,
+          null
+        ],
         "valid": true
       },
       {
         "description": "with non-unique ids and null item is invalid",
-        "data": [{"id": {"_id": 1}}, {"id": {"_id": 1}}, null, null],
+        "data": [
+          {
+            "id": {
+              "_id": 1
+            }
+          },
+          {
+            "id": {
+              "_id": 1
+            }
+          },
+          null,
+          null
+        ],
+        "valid": false
+      }
+    ]
+  },
+  {
+    "description": "uniqueItemProperties keyword arrays",
+    "schema": {
+      "type": "array",
+      "uniqueItemProperties": [
+        [
+          "id",
+          "name"
+        ]
+      ],
+      "items": {
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "tests": [
+      {
+        "description": "with all unique combination is valid",
+        "data": [
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 2,
+            "name": "burrito"
+          },
+          {
+            "id": 3,
+            "name": "salsa"
+          }
+        ],
+        "valid": true
+      },
+      {
+        "description": "with all unique combination but same id or name is valid",
+        "data": [
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 1,
+            "name": "burrito"
+          },
+          {
+            "id": 2,
+            "name": "burrito"
+          }
+        ],
+        "valid": true
+      },
+      {
+        "description": "with all unique combination but same id or name is valid",
+        "data": [
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 1,
+            "name": "burrito"
+          },
+          {
+            "id": 2,
+            "name": "burrito"
+          },
+          null
+        ],
+        "valid": true
+      },
+      {
+        "description": "with non-unique combination is invalid",
+        "data": [
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 1,
+            "name": "salsa"
+          }
+        ],
+        "valid": false
+      },
+      {
+        "description": "with non-unique combination and null items is invalid",
+        "data": [
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 1,
+            "name": "taco"
+          },
+          {
+            "id": 1,
+            "name": "salsa"
+          },
+          null
+        ],
         "valid": false
       }
     ]
